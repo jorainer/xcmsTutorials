@@ -1,0 +1,15 @@
+^Abstract\.md$
+^README\.md$
+^\.editorconfig$
+^\.git$
+^\.github$
+^\.gitignore$
+^\.lintr$
+^\.travis.yml$
+^pkgdown$
+^playground$
+^revdep$
+^scripts$
+^Dockerfile$
+_pkgdown.yml
+man/figures

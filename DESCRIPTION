@@ -1,0 +1,37 @@
+Package: xcmsTutorials
+Title:
+Version: 0.1.0
+Authors@R: c(
+	     person(given = "Johannes", family = "Rainer",
+		    email = "Johannes.Rainer@eurac.edu",
+		    role = c("aut", "cre"),
+		    comment = c(ORCID = "0000-0002-6977-7147")))
+Description: This resource contains examples and tutorials for the analysis of
+             LC-MS data using the *MsExperiment*, *Spectra* and *xcms* packages.
+             Various examples show data handling, representation, visualization
+             and analysis of LC-MS data with these packages. A special emphasis
+             is given on the definition of various data set-specific parameters
+             for analysis algorithms of the *xcms* package.
+License: Artistic-2.0
+Encoding: UTF-8
+LazyData: false
+Roxygen: list(markdown = TRUE)
+Depends:
+    R (>= 4.1),
+    xcms (>= 3.99.0),
+    Spectra (>= 1.5.8),
+    MsExperiment
+Suggests:
+    MetaboCoreUtils,
+    MsCoreUtils,
+    png,
+    msdata,
+    BiocStyle,
+    knitr,
+    rmarkdown
+Remotes:
+    sneumann/xcms
+URL: https://jorainer.github.io/xcmsTutorials/
+BugReports: https://github.com/jorainer/xcmsTutorials/issues/new
+VignetteBuilder: knitr
+RoxygenNote: 7.2.3
