@@ -1,5 +1,5 @@
 Package: xcmsTutorials
-Title:
+Title: Exploring and Analyzing LC-MS data with Spectra and xcms
 Version: 0.1.0
 Authors@R: c(
 	     person(given = "Johannes", family = "Rainer",

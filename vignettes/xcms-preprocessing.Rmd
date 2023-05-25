@@ -91,7 +91,7 @@ sample. Abundances are determined as ion counts for a specific mass-to-charge
 ratio m/z. The measured signal is represented as a spectrum: intensities along
 m/z.
 
-![](images/MS.png)
+![](MS.png)
 
 Many ions will result, when measured with MS alone, in a very similar m/z making
 it difficult or impossible to discriminate them. MS is thus frequently coupled
@@ -106,7 +106,7 @@ different dimensions, the retention time dimension (from the LC) and the
 mass-to-charge dimension (from the MS) making it easier to measure and identify
 molecules in more complex samples.
 
-![](images/LCMS.png)
+![](LCMS.png)
 
 In such GC/LC-MS based untargeted metabolomics experiments the data is analyzed
 along the retention time dimension and *chromatographic* peaks (which are
@@ -1307,7 +1307,9 @@ particular how to adapt peak detection setting on a rather noisy
 *chromatographic* data. Below we load the example data from a text file.
 
 ```{r peaks-load}
-data <- read.table("data/chromatogram.txt", sep = "\t", header = TRUE)
+data <- read.table(
+    system.file("txt", "chromatogram.txt", package = "xcmsTutorials"),
+    sep = "\t", header = TRUE)
 head(data)
 ```
 
@@ -1349,7 +1351,7 @@ fact, the signal we were analyzing here is not of chromatographic origin:
 ```{r peaks-solution, fig.width = 12, fig.height = 2.35, echo = FALSE, warning = FALSE}
 library(png)
 library(RColorBrewer)
-img <- readPNG("images/Paternkofel_DreiZinnen.png")
+img <- readPNG("Paternkofel_DreiZinnen.png")
 par(mar = c(0, 0, 0, 0))
 plot(3, 3, pch = NA, xlim = range(rtime(chr)), ylim = c(0, 235))
 rasterImage(img, 200, 0, 1200, 235)
