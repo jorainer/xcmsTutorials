@@ -28,7 +28,9 @@ Suggests:
     msdata,
     BiocStyle,
     knitr,
-    rmarkdown
+    rmarkdown,
+    RColorBrewer,
+    SummarizedExperiment
 Remotes:
     sneumann/xcms
 URL: https://jorainer.github.io/xcmsTutorials/
