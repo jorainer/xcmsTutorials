@@ -184,6 +184,7 @@ jobs:
           BiocManager::install("BiocStyle", dependencies = TRUE, ask = FALSE, update = FALSE)
           BiocManager::install("sneumann/mzR", dependencies = TRUE, ask = FALSE, update=FALSE)
           BiocManager::install("RforMassSpectrometry/ProtGenerics", dependencies = TRUE, ask = FALSE, update=FALSE)
+          BiocManager::install("lgatto/MSnbase", dependencies = TRUE, ask = FALSE, update=FALSE)
 
           ## Pass #1 at installing dependencies
           message(paste('****', Sys.time(), 'pass number 1 at installing dependencies: local dependencies ****'))
