@@ -199,6 +199,8 @@ jobs:
           ## Manually install required packages
           BiocManager::install('rhdf5', dependencies = TRUE, ask = FALSE, update = FALSE, INSTALL_opts = '--force-biarch')
           BiocManager::install("RforMassSpectrometry/Spectra")
+          BiocManager::install("pheatmap")
+          BiocManager::install("MsBackendMgf")
           BiocManager::install("sneumann/xcms", ask = FALSE, update = FALSE, build_vignettes = FALSE)
           BiocManager::install("SummarizedExperiment", ask = FALSE, update = FALSE)
           remotes::install_github("jorainer/xcmsTutorials")
