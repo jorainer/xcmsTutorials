@@ -185,8 +185,12 @@ jobs:
           BiocManager::install("faahKO", dependencies = TRUE, ask = FALSE)
           BiocManager::install("pander", dependencies = TRUE, ask = FALSE)
           BiocManager::install("sneumann/mzR", dependencies = TRUE, ask = FALSE, update=FALSE)
+          BiocManager::install("MsBackendMgf")
           BiocManager::install("RforMassSpectrometry/ProtGenerics", dependencies = TRUE, ask = FALSE, update=FALSE)
-          BiocManager::install("lgatto/MSnbase", dependencies = TRUE, ask = FALSE, update=FALSE)
+          BiocManager::install("signal")
+          BiocManager::install("pheatmap")
+          BiocManager::install("sneumann/xcms", ask = FALSE, update = TRUE, build_vignettes = FALSE)
+          BiocManager::install("lgatto/MSnbase", dependencies = TRUE, ask = FALSE, update=FALSE, build_vignettes = FALSE)
 
           ## Pass #1 at installing dependencies
           message(paste('****', Sys.time(), 'pass number 1 at installing dependencies: local dependencies ****'))
@@ -199,9 +203,6 @@ jobs:
           ## Manually install required packages
           BiocManager::install('rhdf5', dependencies = TRUE, ask = FALSE, update = FALSE, INSTALL_opts = '--force-biarch')
           BiocManager::install("RforMassSpectrometry/Spectra")
-          BiocManager::install("pheatmap")
-          BiocManager::install("MsBackendMgf")
-          BiocManager::install("sneumann/xcms", ask = FALSE, update = FALSE, build_vignettes = FALSE)
           BiocManager::install("SummarizedExperiment", ask = FALSE, update = FALSE)
           remotes::install_github("jorainer/xcmsTutorials")
           # BiocManager::install(c("devtools", "usethis", "vdiffr"), dependencies = TRUE, ask = FALSE, update = FALSE)
