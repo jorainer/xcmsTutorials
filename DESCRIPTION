@@ -37,3 +37,4 @@ URL: https://jorainer.github.io/xcmsTutorials/
 BugReports: https://github.com/jorainer/xcmsTutorials/issues/new
 VignetteBuilder: knitr
 RoxygenNote: 7.2.3
+DockerImage: jorainer/xcms_tutorials:latest
