@@ -96,12 +96,12 @@ jo_rainer<br><h4 data-toc-skip class="date">May 17 2023</h4>
 <h2 id="abstract">Abstract<a class="anchor" aria-label="anchor" href="#abstract"></a>
 </h2>
 <p>In this document we discuss mass spectrometry (MS) data handling and
-exploration using the <em><a href="https://bioconductor.org/packages/3.17/MsExperiment" class="external-link">MsExperiment</a></em>
-and <em><a href="https://bioconductor.org/packages/3.17/Spectra" class="external-link">Spectra</a></em>
+exploration using the <em><a href="https://bioconductor.org/packages/3.18/MsExperiment" class="external-link">MsExperiment</a></em>
+and <em><a href="https://bioconductor.org/packages/3.18/Spectra" class="external-link">Spectra</a></em>
 Bioconductor packages and perform the preprocessing of a small liquid
-chromatography (LC)-MS data set <em><a href="https://bioconductor.org/packages/3.17/xcms" class="external-link">xcms</a></em>
-package. In addition we use functionality from the <em><a href="https://bioconductor.org/packages/3.17/MetaboCoreUtils" class="external-link">MetaboCoreUtils</a></em>
-and <em><a href="https://bioconductor.org/packages/3.17/MsCoreUtils" class="external-link">MsCoreUtils</a></em>
+chromatography (LC)-MS data set <em><a href="https://bioconductor.org/packages/3.18/xcms" class="external-link">xcms</a></em>
+package. In addition we use functionality from the <em><a href="https://bioconductor.org/packages/3.18/MetaboCoreUtils" class="external-link">MetaboCoreUtils</a></em>
+and <em><a href="https://bioconductor.org/packages/3.18/MsCoreUtils" class="external-link">MsCoreUtils</a></em>
 package for general tasks frequently performed in metabolomics data
 analysis. The preprocessing of the LC-MS data comprises chromatographic
 peak detection, sample alignment and peak correspondence. Particular
@@ -128,22 +128,22 @@ normalization and annotation are not covered in this document.</p>
 <h3 id="prerequisites">Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites"></a>
 </h3>
 <p>The analysis in this document requires an R version &gt;= 4.3.0 and
-recent versions of the <em><a href="https://bioconductor.org/packages/3.17/MsExperiment" class="external-link">MsExperiment</a></em>
-and <em><a href="https://bioconductor.org/packages/3.17/Spectra" class="external-link">Spectra</a></em>
-Bioconductor packages as well as the developmental version of the <em><a href="https://bioconductor.org/packages/3.17/xcms" class="external-link">xcms</a></em>
+recent versions of the <em><a href="https://bioconductor.org/packages/3.18/MsExperiment" class="external-link">MsExperiment</a></em>
+and <em><a href="https://bioconductor.org/packages/3.18/Spectra" class="external-link">Spectra</a></em>
+Bioconductor packages as well as the developmental version of the <em><a href="https://bioconductor.org/packages/3.18/xcms" class="external-link">xcms</a></em>
 package. These can be installed using the code below.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Install the Bioconductor package manager</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#' Install the required packages</span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"msdata"</span>,</span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"msdata"</span>,</span>
 <span>                       <span class="st">"Spectra"</span>,</span>
 <span>                       <span class="st">"MsExperiment"</span>,</span>
 <span>                       <span class="st">"MetaboCoreUtils"</span>,</span>
 <span>                       <span class="st">"MsCoreUtils"</span>,</span>
 <span>                       <span class="st">"png"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"sneumann/xcms"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"sneumann/xcms"</span><span class="op">)</span></span></code></pre></div>
 <p>The <a href="https://github.com/jorainer/metabolomics2018/blob/master/xcms-preprocessing.Rmd" class="external-link">xcms-preprocessing.Rmd</a>
 file with all the code for the analysis can be downloaded from [github]
 (<a href="https://github.com/jorainer/metabolomics2018" class="external-link uri">https://github.com/jorainer/metabolomics2018</a>) ideally
@@ -210,9 +210,9 @@ chromatographic peaks grouped across files/samples.</li>
 and <em>xcms</em><a class="anchor" aria-label="anchor" href="#workflow-exploring-and-analyzing-lc-ms-data-with-spectra-and-xcms"></a>
 </h2>
 <p>This workflow describes the basic data handling (I/O) of mass
-spectrometry data using the <em><a href="https://bioconductor.org/packages/3.17/MsExperiment" class="external-link">MsExperiment</a></em>
-and <em><a href="https://bioconductor.org/packages/3.17/Spectra" class="external-link">Spectra</a></em>
-package, and the LC-MS data preprocessing using <em><a href="https://bioconductor.org/packages/3.17/xcms" class="external-link">xcms</a></em>. The
+spectrometry data using the <em><a href="https://bioconductor.org/packages/3.18/MsExperiment" class="external-link">MsExperiment</a></em>
+and <em><a href="https://bioconductor.org/packages/3.18/Spectra" class="external-link">Spectra</a></em>
+package, and the LC-MS data preprocessing using <em><a href="https://bioconductor.org/packages/3.18/xcms" class="external-link">xcms</a></em>. The
 first part of the workflow is focused on data import, access and
 visualization which is followed by the description of a simple data
 centroiding approach and finally the <em>xcms</em>-based LC-MS data
@@ -296,8 +296,8 @@ with the <code>sampleData</code> function from that object.</p>
 <pre><code><span><span class="co">## DataFrame with 2 rows and 5 columns</span></span>
 <span><span class="co">##            file injection_idx      sample       group spectraOrigin</span></span>
 <span><span class="co">##     &lt;character&gt;     &lt;numeric&gt; &lt;character&gt; &lt;character&gt;   &lt;character&gt;</span></span>
-<span><span class="co">## 1 20171016_P...             1      POOL_1        POOL /__w/_temp...</span></span>
-<span><span class="co">## 2 20171016_P...            19      POOL_2        POOL /__w/_temp...</span></span></code></pre>
+<span><span class="co">## 1 20171016_P...             1      POOL_1        POOL /usr/local...</span></span>
+<span><span class="co">## 2 20171016_P...            19      POOL_2        POOL /usr/local...</span></span></code></pre>
 <p>The MS data is stored as a <code>Spectra</code> object within the
 <code>MsExperiment</code> and can be accessed using the
 <code>spectra</code> function.</p>
@@ -410,7 +410,7 @@ to aggregate signal for the defined groups of spectra. It provides a
 large variety of possibilities to combine spectra, but in our case we
 simply want to sum the signal of peaks with a very similar m/z and hence
 we use parameters <code>intensityFun = max</code> and
-<code>ppm = 10</code>. See also <code><a href="https://rdrr.io/pkg/Spectra/man/combinePeaks.html" class="external-link">?combinePeaks</a></code> for the full
+<code>ppm = 10</code>. See also <code><a href="https://rdrr.io/pkg/Spectra/man/Spectra.html" class="external-link">?combinePeaks</a></code> for the full
 set of parameters and aggregation options.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Spectra/man/Spectra.html" class="external-link">combineSpectra</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">spectra</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>, f <span class="op">=</span> <span class="fu"><a href="https://lgatto.github.io/MSnbase/reference/Spectrum-class.html" class="external-link">fromFile</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>,</span>
@@ -471,7 +471,7 @@ measured between 180 and 181 seconds.</p>
 <span><span class="co">## 20171016_POOL_POS_1_105-134.mzML</span></span>
 <span><span class="co">## 20171016_POOL_POS_3_105-134.mzML</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Tue May 30 11:14:58 2023]</span></span></code></pre>
+<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Fri Sep  1 11:58:51 2023]</span></span></code></pre>
 <p>For the present data set there were 6 spectra measured within this
 one second in the two samples. By extracting the data as a
 <code>Spectra</code> object we have however lost now the direct
@@ -507,7 +507,7 @@ large variety of useful filters are available for
 <span><span class="co">## file(s):</span></span>
 <span><span class="co">## 20171016_POOL_POS_1_105-134.mzML</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Tue May 30 11:14:58 2023]</span></span></code></pre>
+<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Fri Sep  1 11:58:51 2023]</span></span></code></pre>
 <p>For the present purpose it is however not important to keep the
 sample association intact and we thus proceed to plot the previously
 extracted spectra.</p>
@@ -523,7 +523,7 @@ largest one at an m/z of about 130 and the second largest at about 106,
 which could represent signal for an ion of <a href="https://en.wikipedia.org/wiki/Serine" class="external-link">Serine</a>. Below we
 calculate the exact (monoisotopic) mass for serine from its chemical
 formula <em>C3H7NO3</em> using the <code>calculateMass</code> function
-from the <em><a href="https://bioconductor.org/packages/3.17/MetaboCoreUtils" class="external-link">MetaboCoreUtils</a></em>
+from the <em><a href="https://bioconductor.org/packages/3.18/MetaboCoreUtils" class="external-link">MetaboCoreUtils</a></em>
 package.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RforMassSpectrometry/MetaboCoreUtils" class="external-link">MetaboCoreUtils</a></span><span class="op">)</span></span>
@@ -679,7 +679,7 @@ Centroided data for Serine.
 <p>The centroiding reduced the data to a single data point for an ion in
 each spectrum. For more advanced centroiding options that can also
 fine-tune the m/z value of the reported centroid see the
-<code>pickPeaks</code> help or the centroiding vignette of the <em><a href="https://bioconductor.org/packages/3.17/MSnbase" class="external-link">MSnbase</a></em>
+<code>pickPeaks</code> help or the centroiding vignette of the <em><a href="https://bioconductor.org/packages/3.18/MSnbase" class="external-link">MSnbase</a></em>
 package.</p>
 <p>We next export the centroided MS data to files in mzML format and
 re-read the data set from these.</p>
@@ -1566,7 +1566,7 @@ function.</p>
 <pre><code><span><span class="co">## [[1]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak detection </span></span>
-<span><span class="co">##  date: Tue May 30 11:15:12 2023 </span></span>
+<span><span class="co">##  date: Fri Sep  1 11:59:02 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: CentWaveParam </span></span>
@@ -1575,7 +1575,7 @@ function.</p>
 <span><span class="co">## [[2]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak refinement </span></span>
-<span><span class="co">##  date: Tue May 30 11:15:14 2023 </span></span>
+<span><span class="co">##  date: Fri Sep  1 11:59:04 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: MergeNeighboringPeaksParam </span></span>
@@ -1584,7 +1584,7 @@ function.</p>
 <span><span class="co">## [[3]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak grouping </span></span>
-<span><span class="co">##  date: Tue May 30 11:15:19 2023 </span></span>
+<span><span class="co">##  date: Fri Sep  1 11:59:06 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakDensityParam </span></span>
@@ -1593,7 +1593,7 @@ function.</p>
 <span><span class="co">## [[4]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Retention time correction </span></span>
-<span><span class="co">##  date: Tue May 30 11:15:19 2023 </span></span>
+<span><span class="co">##  date: Fri Sep  1 11:59:06 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakGroupsParam </span></span>
@@ -1602,7 +1602,7 @@ function.</p>
 <span><span class="co">## [[5]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak grouping </span></span>
-<span><span class="co">##  date: Tue May 30 11:15:26 2023 </span></span>
+<span><span class="co">##  date: Fri Sep  1 11:59:11 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakDensityParam </span></span>
@@ -1611,7 +1611,7 @@ function.</p>
 <span><span class="co">## [[6]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Missing peak filling </span></span>
-<span><span class="co">##  date: Tue May 30 11:15:28 2023 </span></span>
+<span><span class="co">##  date: Fri Sep  1 11:59:13 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: ChromPeakAreaParam </span></span>
@@ -1644,7 +1644,7 @@ of the <code>SummarizedExperiment</code>:</p>
 <pre><code><span><span class="co">## [[1]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak detection </span></span>
-<span><span class="co">##  date: Tue May 30 11:15:12 2023 </span></span>
+<span><span class="co">##  date: Fri Sep  1 11:59:02 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: CentWaveParam </span></span>
@@ -1653,7 +1653,7 @@ of the <code>SummarizedExperiment</code>:</p>
 <span><span class="co">## [[2]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak refinement </span></span>
-<span><span class="co">##  date: Tue May 30 11:15:14 2023 </span></span>
+<span><span class="co">##  date: Fri Sep  1 11:59:04 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: MergeNeighboringPeaksParam </span></span>
@@ -1662,7 +1662,7 @@ of the <code>SummarizedExperiment</code>:</p>
 <span><span class="co">## [[3]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak grouping </span></span>
-<span><span class="co">##  date: Tue May 30 11:15:19 2023 </span></span>
+<span><span class="co">##  date: Fri Sep  1 11:59:06 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakDensityParam </span></span>
@@ -1671,7 +1671,7 @@ of the <code>SummarizedExperiment</code>:</p>
 <span><span class="co">## [[4]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Retention time correction </span></span>
-<span><span class="co">##  date: Tue May 30 11:15:19 2023 </span></span>
+<span><span class="co">##  date: Fri Sep  1 11:59:06 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakGroupsParam </span></span>
@@ -1680,7 +1680,7 @@ of the <code>SummarizedExperiment</code>:</p>
 <span><span class="co">## [[5]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak grouping </span></span>
-<span><span class="co">##  date: Tue May 30 11:15:26 2023 </span></span>
+<span><span class="co">##  date: Fri Sep  1 11:59:11 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakDensityParam </span></span>
@@ -1689,16 +1689,16 @@ of the <code>SummarizedExperiment</code>:</p>
 <span><span class="co">## [[6]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Missing peak filling </span></span>
-<span><span class="co">##  date: Tue May 30 11:15:28 2023 </span></span>
+<span><span class="co">##  date: Fri Sep  1 11:59:13 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: ChromPeakAreaParam </span></span>
 <span><span class="co">##  MS level(s) 1</span></span></code></pre>
 <p>Analysis could now proceed with by e.g. normalizing the data to
 remove any technical variances in the feature abundances, feature
-grouping (compounding) using the <em><a href="https://bioconductor.org/packages/3.17/MsFeatures" class="external-link">MsFeatures</a></em>
+grouping (compounding) using the <em><a href="https://bioconductor.org/packages/3.18/MsFeatures" class="external-link">MsFeatures</a></em>
 package, differential abundance analysis and ultimately also annotation
-and identification of the LC-MS features (e.g. with help of the <em><a href="https://bioconductor.org/packages/3.17/MetaboAnnotation" class="external-link">MetaboAnnotation</a></em>
+and identification of the LC-MS features (e.g. with help of the <em><a href="https://bioconductor.org/packages/3.18/MetaboAnnotation" class="external-link">MetaboAnnotation</a></em>
 package <span class="citation">(Rainer et al. 2022)</span>).</p>
 </div>
 </div>
@@ -1765,9 +1765,9 @@ Zinnen</em></a> (right tri-forked peak colored green).</p>
 </h2>
 <div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## R version 4.3.0 (2023-04-21)</span></span>
+<pre><code><span><span class="co">## R version 4.3.1 (2023-06-16)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
-<span><span class="co">## Running under: Ubuntu 22.04.2 LTS</span></span>
+<span><span class="co">## Running under: Ubuntu 22.04.3 LTS</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
 <span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
@@ -1781,7 +1781,7 @@ Zinnen</em></a> (right tri-forked peak colored green).</p>
 <span><span class="co">##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span></span>
 <span><span class="co">## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## time zone: UTC</span></span>
+<span><span class="co">## time zone: Etc/UTC</span></span>
 <span><span class="co">## tzcode source: system (glibc)</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## attached base packages:</span></span>
@@ -1790,67 +1790,68 @@ Zinnen</em></a> (right tri-forked peak colored green).</p>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
 <span><span class="co">##  [1] RColorBrewer_1.1-3          png_0.1-8                  </span></span>
-<span><span class="co">##  [3] SummarizedExperiment_1.30.1 GenomicRanges_1.52.0       </span></span>
-<span><span class="co">##  [5] GenomeInfoDb_1.36.0         IRanges_2.34.0             </span></span>
-<span><span class="co">##  [7] MatrixGenerics_1.12.0       matrixStats_0.63.0         </span></span>
-<span><span class="co">##  [9] MetaboCoreUtils_1.8.0       Spectra_1.11.2             </span></span>
-<span><span class="co">## [11] MsExperiment_1.2.0          xcms_3.99.3                </span></span>
-<span><span class="co">## [13] MSnbase_2.25.2              ProtGenerics_1.32.0        </span></span>
-<span><span class="co">## [15] S4Vectors_0.38.1            mzR_2.35.1                 </span></span>
-<span><span class="co">## [17] Rcpp_1.0.10                 Biobase_2.60.0             </span></span>
-<span><span class="co">## [19] BiocGenerics_0.46.0         BiocParallel_1.34.2        </span></span>
-<span><span class="co">## [21] rmarkdown_2.21              knitr_1.43                 </span></span>
-<span><span class="co">## [23] BiocStyle_2.28.0           </span></span>
+<span><span class="co">##  [3] SummarizedExperiment_1.31.1 GenomicRanges_1.53.1       </span></span>
+<span><span class="co">##  [5] GenomeInfoDb_1.37.3         IRanges_2.35.2             </span></span>
+<span><span class="co">##  [7] MatrixGenerics_1.13.1       matrixStats_1.0.0          </span></span>
+<span><span class="co">##  [9] MetaboCoreUtils_1.9.2       Spectra_1.11.9             </span></span>
+<span><span class="co">## [11] MsExperiment_1.3.0          xcms_3.99.3                </span></span>
+<span><span class="co">## [13] MSnbase_2.27.1              ProtGenerics_1.33.1        </span></span>
+<span><span class="co">## [15] S4Vectors_0.39.1            mzR_2.35.1                 </span></span>
+<span><span class="co">## [17] Rcpp_1.0.11                 Biobase_2.61.0             </span></span>
+<span><span class="co">## [19] BiocGenerics_0.47.0         BiocParallel_1.35.4        </span></span>
+<span><span class="co">## [21] rmarkdown_2.24              knitr_1.43                 </span></span>
+<span><span class="co">## [23] BiocStyle_2.29.1           </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
 <span><span class="co">##  [1] bitops_1.0-7                rlang_1.1.1                </span></span>
 <span><span class="co">##  [3] magrittr_2.0.3              clue_0.3-64                </span></span>
-<span><span class="co">##  [5] MassSpecWavelet_1.66.0      compiler_4.3.0             </span></span>
-<span><span class="co">##  [7] systemfonts_1.0.4           vctrs_0.6.2                </span></span>
+<span><span class="co">##  [5] MassSpecWavelet_1.67.0      compiler_4.3.1             </span></span>
+<span><span class="co">##  [7] systemfonts_1.0.4           vctrs_0.6.3                </span></span>
 <span><span class="co">##  [9] stringr_1.5.0               pkgconfig_2.0.3            </span></span>
 <span><span class="co">## [11] crayon_1.5.2                fastmap_1.1.1              </span></span>
-<span><span class="co">## [13] XVector_0.40.0              utf8_1.2.3                 </span></span>
-<span><span class="co">## [15] preprocessCore_1.62.1       ragg_1.2.5                 </span></span>
-<span><span class="co">## [17] purrr_1.0.1                 MultiAssayExperiment_1.26.0</span></span>
-<span><span class="co">## [19] xfun_0.39                   zlibbioc_1.46.0            </span></span>
-<span><span class="co">## [21] cachem_1.0.8                jsonlite_1.8.4             </span></span>
+<span><span class="co">## [13] XVector_0.41.1              utf8_1.2.3                 </span></span>
+<span><span class="co">## [15] preprocessCore_1.63.1       ragg_1.2.5                 </span></span>
+<span><span class="co">## [17] purrr_1.0.2                 MultiAssayExperiment_1.27.5</span></span>
+<span><span class="co">## [19] xfun_0.40                   zlibbioc_1.47.0            </span></span>
+<span><span class="co">## [21] cachem_1.0.8                jsonlite_1.8.7             </span></span>
 <span><span class="co">## [23] progress_1.2.2              highr_0.10                 </span></span>
-<span><span class="co">## [25] DelayedArray_0.26.3         prettyunits_1.1.1          </span></span>
-<span><span class="co">## [27] parallel_4.3.0              cluster_2.1.4              </span></span>
-<span><span class="co">## [29] R6_2.5.1                    bslib_0.4.2                </span></span>
-<span><span class="co">## [31] stringi_1.7.12              limma_3.56.1               </span></span>
-<span><span class="co">## [33] jquerylib_0.1.4             bookdown_0.34              </span></span>
-<span><span class="co">## [35] iterators_1.0.14            igraph_1.4.3               </span></span>
-<span><span class="co">## [37] Matrix_1.5-4.1              splines_4.3.0              </span></span>
-<span><span class="co">## [39] tidyselect_1.2.0            yaml_2.3.7                 </span></span>
-<span><span class="co">## [41] doParallel_1.0.17           codetools_0.2-19           </span></span>
-<span><span class="co">## [43] affy_1.78.0                 lattice_0.21-8             </span></span>
-<span><span class="co">## [45] tibble_3.2.1                plyr_1.8.8                 </span></span>
-<span><span class="co">## [47] evaluate_0.21               desc_1.4.2                 </span></span>
-<span><span class="co">## [49] survival_3.5-5              pillar_1.9.0               </span></span>
-<span><span class="co">## [51] affyio_1.70.0               BiocManager_1.30.20        </span></span>
-<span><span class="co">## [53] foreach_1.5.2               MALDIquant_1.22.1          </span></span>
-<span><span class="co">## [55] ncdf4_1.21                  generics_0.1.3             </span></span>
-<span><span class="co">## [57] rprojroot_2.0.3             RCurl_1.98-1.12            </span></span>
-<span><span class="co">## [59] hms_1.1.3                   ggplot2_3.4.2              </span></span>
-<span><span class="co">## [61] munsell_0.5.0               scales_1.2.1               </span></span>
-<span><span class="co">## [63] glue_1.6.2                  lazyeval_0.2.2             </span></span>
-<span><span class="co">## [65] MsFeatures_1.8.0            tools_4.3.0                </span></span>
-<span><span class="co">## [67] mzID_1.38.0                 robustbase_0.95-1          </span></span>
-<span><span class="co">## [69] QFeatures_1.10.0            vsn_3.68.0                 </span></span>
-<span><span class="co">## [71] RANN_2.6.1                  fs_1.6.2                   </span></span>
-<span><span class="co">## [73] XML_3.99-0.14               grid_4.3.0                 </span></span>
-<span><span class="co">## [75] impute_1.74.1               MsCoreUtils_1.12.0         </span></span>
-<span><span class="co">## [77] colorspace_2.1-0            GenomeInfoDbData_1.2.10    </span></span>
-<span><span class="co">## [79] cli_3.6.1                   textshaping_0.3.6          </span></span>
-<span><span class="co">## [81] fansi_1.0.4                 S4Arrays_1.0.4             </span></span>
-<span><span class="co">## [83] dplyr_1.1.2                 AnnotationFilter_1.24.0    </span></span>
-<span><span class="co">## [85] pcaMethods_1.92.0           gtable_0.3.3               </span></span>
-<span><span class="co">## [87] DEoptimR_1.0-13             sass_0.4.6                 </span></span>
-<span><span class="co">## [89] digest_0.6.31               memoise_2.0.1              </span></span>
-<span><span class="co">## [91] htmltools_0.5.5             pkgdown_2.0.7.9000         </span></span>
-<span><span class="co">## [93] multtest_2.56.0             lifecycle_1.0.3            </span></span>
-<span><span class="co">## [95] MASS_7.3-60</span></span></code></pre>
+<span><span class="co">## [25] DelayedArray_0.27.10        prettyunits_1.1.1          </span></span>
+<span><span class="co">## [27] parallel_4.3.1              cluster_2.1.4              </span></span>
+<span><span class="co">## [29] R6_2.5.1                    bslib_0.5.1                </span></span>
+<span><span class="co">## [31] stringi_1.7.12              limma_3.57.7               </span></span>
+<span><span class="co">## [33] jquerylib_0.1.4             bookdown_0.35              </span></span>
+<span><span class="co">## [35] iterators_1.0.14            igraph_1.5.1               </span></span>
+<span><span class="co">## [37] splines_4.3.1               Matrix_1.6-1               </span></span>
+<span><span class="co">## [39] tidyselect_1.2.0            abind_1.4-5                </span></span>
+<span><span class="co">## [41] yaml_2.3.7                  doParallel_1.0.17          </span></span>
+<span><span class="co">## [43] codetools_0.2-19            affy_1.79.3                </span></span>
+<span><span class="co">## [45] lattice_0.21-8              tibble_3.2.1               </span></span>
+<span><span class="co">## [47] plyr_1.8.8                  evaluate_0.21              </span></span>
+<span><span class="co">## [49] survival_3.5-7              desc_1.4.2                 </span></span>
+<span><span class="co">## [51] pillar_1.9.0                affyio_1.71.0              </span></span>
+<span><span class="co">## [53] BiocManager_1.30.22         foreach_1.5.2              </span></span>
+<span><span class="co">## [55] MALDIquant_1.22.1           ncdf4_1.21                 </span></span>
+<span><span class="co">## [57] generics_0.1.3              rprojroot_2.0.3            </span></span>
+<span><span class="co">## [59] RCurl_1.98-1.12             hms_1.1.3                  </span></span>
+<span><span class="co">## [61] ggplot2_3.4.3               munsell_0.5.0              </span></span>
+<span><span class="co">## [63] scales_1.2.1                glue_1.6.2                 </span></span>
+<span><span class="co">## [65] lazyeval_0.2.2              MsFeatures_1.9.0           </span></span>
+<span><span class="co">## [67] tools_4.3.1                 mzID_1.39.0                </span></span>
+<span><span class="co">## [69] robustbase_0.99-0           QFeatures_1.11.2           </span></span>
+<span><span class="co">## [71] vsn_3.69.0                  RANN_2.6.1                 </span></span>
+<span><span class="co">## [73] fs_1.6.3                    XML_3.99-0.14              </span></span>
+<span><span class="co">## [75] grid_4.3.1                  impute_1.75.1              </span></span>
+<span><span class="co">## [77] MsCoreUtils_1.13.1          colorspace_2.1-0           </span></span>
+<span><span class="co">## [79] GenomeInfoDbData_1.2.10     cli_3.6.1                  </span></span>
+<span><span class="co">## [81] textshaping_0.3.6           fansi_1.0.4                </span></span>
+<span><span class="co">## [83] S4Arrays_1.1.6              dplyr_1.1.2                </span></span>
+<span><span class="co">## [85] AnnotationFilter_1.25.0     pcaMethods_1.93.0          </span></span>
+<span><span class="co">## [87] gtable_0.3.4                DEoptimR_1.1-2             </span></span>
+<span><span class="co">## [89] sass_0.4.7                  digest_0.6.33              </span></span>
+<span><span class="co">## [91] SparseArray_1.1.11          multtest_2.57.0            </span></span>
+<span><span class="co">## [93] memoise_2.0.1               htmltools_0.5.6            </span></span>
+<span><span class="co">## [95] pkgdown_2.0.7               lifecycle_1.0.3            </span></span>
+<span><span class="co">## [97] statmod_1.5.0               MASS_7.3-60</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
@@ -1920,7 +1921,7 @@ resolution LC/MS.</span>”</span> <em>BMC Bioinformatics</em> 9 (1): 504.
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
     </footer>
