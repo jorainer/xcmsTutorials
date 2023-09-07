@@ -842,7 +842,7 @@ artifacts, such as overlapping peaks or artificially split peaks. The
 removing peaks not meeting predefined properties or by merging artificially
 split chromatographic peaks (see `?refineChromPeaks` for all options). Below we
 post-process the peak detection results merging peaks (within each sample) that
-overlap in a 4 second window if the signal between in between them is lower than
+overlap in a 4 second window if the signal between them is lower than
 75% of the smaller peak's largest intensity. See the
 `MergeNeighboringPeaksParam` help page for a detailed description of the
 settings and the approach.
