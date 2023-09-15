@@ -1694,7 +1694,7 @@ time range of the chromatographic peak. In the call below we provide the IDs
 retention time range from which to extract the data by 5 seconds (on either side
 of the peak) by setting `expandRt = 5`.
 
-```{r}
+```{r, eval = FALSE}
 #' Extract EIC for two identified chromatographic peaks
 chrs <- chromPeakChromatograms(data, peaks = c("CP499", "CP520"), expandRt = 5)
 ```
@@ -1702,7 +1702,7 @@ chrs <- chromPeakChromatograms(data, peaks = c("CP499", "CP520"), expandRt = 5)
 We next plot these chromatograms. The identified chromatographic peaks are
 automatically highlighted, if present, with a grey color.
 
-```{r}
+```{r, eval = FALSE}
 plot(chrs)
 ```
 

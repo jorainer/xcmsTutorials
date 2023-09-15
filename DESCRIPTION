@@ -8,8 +8,8 @@ Authors@R: c(
 		    comment = c(ORCID = "0000-0002-6977-7147")),
          person(given = "Philippine", family = "Louail",
             email = "philippine.louail@eurac.edu",
-            role = c("ctb")),
-            comment = c(ORCID = "0009-0007-5429-6846"))
+            role = c("ctb"),
+            comment = c(ORCID = "0009-0007-5429-6846")))
 Description: This resource contains examples and tutorials for the analysis of
              LC-MS data using the *MsExperiment*, *Spectra* and *xcms* packages.
              Various examples show data handling, representation, visualization
