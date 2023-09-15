@@ -43,7 +43,7 @@
     
     <a class="navbar-brand me-2" href="index.html">xcmsTutorials</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,31 +92,29 @@
 <p><a href="https://creativecommons.org/licenses/by-nc/4.0/" class="external-link"><img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg" alt="License: CC BY-NC 4.0"></a></p>
 <p><img src="reference/figures/xcms.png" alt="xcms"><img src="reference/figures/MsExperiment.png" alt="MsExperiment"><img src="reference/figures/Spectra-rainbow.png" alt="Spectra"><img src="reference/figures/MetaboCoreUtils.png" alt="MetaboCoreUtils"><img src="reference/figures/MsCoreUtils.png" alt="MsCoreUtils"></p>
 <p>This workshop provides an overview of recent developments in Bioconductor to work with mass spectrometry (<a href="https://github.com/RforMassSpectrometry/MsExperiment" class="external-link">MsExperiment</a>, <a href="https://github.com/RforMassSpectrometry/Spectra" class="external-link">Spectra</a>) and specifically LC-MS data (<a href="https://github.com/sneumann/xcms" class="external-link">xcms</a>) and walks through the preprocessing of a small data set emphasizing on selection of data-dependent settings for the individual pre-processing steps. The present workshop represents an updated version of the workshop given at the Metabolomics Society conference 2018 in Seattle (<a href="http://metabolomics2018.org" class="external-link uri">http://metabolomics2018.org</a>).</p>
-<p>Covered topics are: - Data import and representation. - Accessing, subsetting and visualizing data. - Centroiding of profile MS data. - Chromatographic peak detection. - Empirically determine appropriate settings for the analyzed data set. - Evaluation of identified peaks. - Alignment (retention time correction). - Correspondence (grouping of chromatographic peaks across samples).</p>
-<p>The full R code of all examples along with comprehensive descriptions is provided in the <a href="./xcms-preprocessing.Rmd">xcms-preprocessing.Rmd</a> file. This file can be opened with e.g. RStudio which allows execution of the individual R commands (see section below for additionally required R packages). The R command <code>rmarkdown::render("xcms-preprocessing.Rmd")</code> would generate the html file <a href="https://jorainer.github.io/metabolomics2018/xcms-preprocessing.html" class="external-link">xcms-preprocessing.html</a>.</p>
+<p>Covered topics are: - Data import and representation. - Accessing, subsetting and visualizing data. - Centroiding of profile mode MS data. - Chromatographic peak detection. - Empirically determine appropriate settings for the analyzed data set. - Evaluation of identified peaks. - Alignment (retention time correction). - Correspondence (grouping of chromatographic peaks across samples).</p>
+<p>The full R code of all examples along with comprehensive descriptions is provided in the <a href="./xcms-preprocessing.Rmd">xcms-preprocessing.Rmd</a> file. This file can be opened with e.g. RStudio which allows execution of the individual R commands (see section below for additionally required R packages). The R command <code>rmarkdown::render("xcms-preprocessing.Rmd")</code> would generate the html file <a href="https://jorainer.github.io/xcmsTutorials/xcms-preprocessing.html">xcms-preprocessing.html</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>The analysis in this document requires an R version &gt;= 4.3.0 and recent versions of the <code>MsExperiment</code>, <code>Spectra</code> and in particular the <code>xcms</code> (version &gt;= 3.99.0 is needed) packages.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<p>For on-line code evaluation, the workshop can also be run using a self-contained docker image with all R packages and a server version of RStudio (Posit) pre-installed:</p>
+<ul>
+<li><p>Get the <a href="https://hub.docker.com/r/jorainer/xcms_tutorials" class="external-link">docker image</a> of this tutorial with <code>docker pull jorainer/xcms_tutorials:latest</code>.</p></li>
+<li>
+<p>Start docker using</p>
+<pre><code>docker run \
+    -e PASSWORD=bioc \
+    -p 8787:8787 \
+    jorainer/xcms_tutorials:latest</code></pre>
+</li>
+<li><p>Enter <code>http://localhost:8787</code> in a web browser and log in with username <code>rstudio</code> and password <code>bioc</code>.</p></li>
+<li><p>In the RStudio server version: open any of the R-markdown (<em>.Rmd</em>) files in the <em>vignettes</em> folder and evaluate the R code blocks.</p></li>
+</ul>
+<p>For manual installation, an R version &gt;= 4.3.0 is required as well as recent versions of the packages <code>MsExperiment</code>, <code>Spectra</code> and in particular the <code>xcms</code> (version &gt;= 3.99.0 is needed). These can be installed using the code below:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
 <span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"jorainer/xcmsTutorials"</span>,</span>
 <span>    dependencies <span class="op">=</span> <span class="cn">TRUE</span>, ask <span class="op">=</span> <span class="cn">FALSE</span>, update <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>Alternatively, the individual packages used in this tutorial can be installed using the code below.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#' Install the Bioconductor package manager</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#' Install the required packages</span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"msdata"</span>,</span>
-<span>                       <span class="st">"Spectra"</span>,</span>
-<span>                       <span class="st">"MsExperiment"</span>,</span>
-<span>                       <span class="st">"MetaboCoreUtils"</span>,</span>
-<span>                       <span class="st">"MsCoreUtils"</span>,</span>
-<span>                       <span class="st">"png"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"sneumann/xcms"</span><span class="op">)</span></span></code></pre></div>
-<p>The source code for this document along with the test data can be downloaded from the github repository <a href="https://github.com/jorainer/xcmsTutorials" class="external-link uri">https://github.com/jorainer/xcmsTutorials</a> with the command (or alternatively downloading the zip archive directly from the github page).</p>
-<pre><code>git clone https://github.com/jorainer/xcmsTutorials</code></pre>
 </div>
 <div class="section level2">
 <h2 id="additional-documentation-resources-and-tutorials">Additional documentation resources and tutorials<a class="anchor" aria-label="anchor" href="#additional-documentation-resources-and-tutorials"></a>
@@ -164,6 +162,7 @@
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Johannes Rainer <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-6977-7147" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
