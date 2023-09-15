@@ -21,7 +21,7 @@ conference 2018 in Seattle (http://metabolomics2018.org).
 Covered topics are:
 - Data import and representation.
 - Accessing, subsetting and visualizing data.
-- Centroiding of profile MS data.
+- Centroiding of profile mode MS data.
 - Chromatographic peak detection.
 - Empirically determine appropriate settings for the analyzed data set.
 - Evaluation of identified peaks.
@@ -33,14 +33,33 @@ provided in the [xcms-preprocessing.Rmd](./xcms-preprocessing.Rmd) file. This
 file can be opened with e.g. RStudio which allows execution of the individual R
 commands (see section below for additionally required R packages). The R command
 `rmarkdown::render("xcms-preprocessing.Rmd")` would generate the html file
-[xcms-preprocessing.html](https://jorainer.github.io/metabolomics2018/xcms-preprocessing.html).
+[xcms-preprocessing.html](https://jorainer.github.io/xcmsTutorials/xcms-preprocessing.html).
 
 
 ## Installation
 
-The analysis in this document requires an R version >= 4.3.0 and recent versions
-of the `MsExperiment`, `Spectra` and in particular the `xcms` (version >= 3.99.0
-is needed) packages.
+For on-line code evaluation, the workshop can also be run using a self-contained
+docker image with all R packages and a server version of RStudio (Posit)
+pre-installed:
+
+- Get the [docker image](https://hub.docker.com/r/jorainer/xcms_tutorials) of
+  this tutorial with `docker pull jorainer/xcms_tutorials:latest`.
+- Start docker using
+  ```
+  docker run \
+      -e PASSWORD=bioc \
+      -p 8787:8787 \
+      jorainer/xcms_tutorials:latest
+  ```
+- Enter `http://localhost:8787` in a web browser and log in with username
+  `rstudio` and password `bioc`.
+- In the RStudio server version: open any of the R-markdown (*.Rmd*) files in
+  the *vignettes* folder and evaluate the R code blocks.
+
+
+For manual installation, an R version >= 4.3.0 is required as well as recent
+versions of the packages `MsExperiment`, `Spectra` and in particular the `xcms`
+(version >= 3.99.0 is needed). These can be installed using the code below:
 
 ```r
 install.packages("BiocManager")
@@ -48,31 +67,6 @@ BiocManager::install("jorainer/xcmsTutorials",
     dependencies = TRUE, ask = FALSE, update = TRUE)
 ```
 
-Alternatively, the individual packages used in this tutorial can be installed
-using the code below.
-
-```r
-#' Install the Bioconductor package manager
-install.packages("BiocManager")
-
-#' Install the required packages
-BiocManager::install(c("msdata",
-                       "Spectra",
-                       "MsExperiment",
-                       "MetaboCoreUtils",
-                       "MsCoreUtils",
-                       "png"))
-BiocManager::install("sneumann/xcms")
-```
-
-The source code for this document along with the test data can be downloaded
-from the github repository https://github.com/jorainer/xcmsTutorials
-with the command (or alternatively downloading the zip archive directly from the
-github page).
-
-```
-git clone https://github.com/jorainer/xcmsTutorials
-```
 
 
 ## Additional documentation resources and tutorials
