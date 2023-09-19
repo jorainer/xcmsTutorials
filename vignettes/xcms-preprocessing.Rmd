@@ -4,7 +4,7 @@ author:
 - name: "Johannes Rainer"
   affiliation: "Eurac Research, Bolzano, Italy; johannes.rainer@eurac.edu github: jorainer"
 graphics: yes
-date: "September 6 2023"
+date: "September 2023"
 output:
   BiocStyle::html_document:
     number_sections: true
@@ -32,19 +32,19 @@ opts_chunk$set(message = FALSE, error = FALSE, warning = FALSE,
 In this document we discuss liquid chromatography (LC) mass spectrometry (MS)
 data handling and exploration using the `r Biocpkg("MsExperiment")` and `r
 Biocpkg("Spectra")` Bioconductor packages and perform the preprocessing of a
-small LC-MS data set using the `r Biocpkg("xcms")` package. In addition we use
-functionality from the `r Biocpkg("MetaboCoreUtils")` and `r
-Biocpkg("MsCoreUtils")` packages for general tasks frequently performed in
-metabolomics data analysis. The first part of the workflow is focused on data
-import, access and visualization which is followed by the description of a
-simple data centroiding approach and finally the *xcms*-based LC-MS data
-preprocessing that comprises chromatographic peak detection, alignment and
-correspondence. Data normalization procedures, compound identificatoin and
-differential abundance analysis analysis are not covered. Particular emphasis is
-given on deriving and defining data-set dependent values for the most crucial
-parameters of popular preprocessing methods. The present workflow is only for
-illustration purposes, the infrastructure provided by the R packages would allow
-to implement custom, data set tailored workflows.
+small LC-MS data set using the `r Biocpkg("xcms")` package. Functionality from
+the `r Biocpkg("MetaboCoreUtils")` and `r Biocpkg("MsCoreUtils")` packages are
+used for general tasks frequently performed in metabolomics data
+analysis. Ultimately, the functionality from these packages can be combined to
+build custom, data set-specific (and reproducible) analysis workflows.
+
+In the present workshop, we first focus on data import, access and visualization
+which is followed by the description of a simple data centroiding approach and
+finally we present an *xcms*-based LC-MS data preprocessing that comprises
+chromatographic peak detection, alignment and correspondence. Data normalization
+procedures, compound identification and differential abundance analysis are not
+covered. Particular emphasis is given on deriving and defining data-set
+dependent values for the most critical *xcms* preprocessing parameters.
 
 
 # Introduction
@@ -58,7 +58,7 @@ abundances of the so called *LC-MS features* in all samples can then be further
 processed, e.g. by normalizing the data to remove differences due to sample
 processing, batch effects or injection order-dependent signal drifts. After
 preprocessing, the LC-MS features that are usually only characterized by their
-mass-to-charge ration (m/z) and retention time, have to be annotated to the
+mass-to-charge ration (*m/z*) and retention time, have to be annotated to the
 actual ions and metabolites they represent. Data normalization and annotation
 are not covered in this document.
 
@@ -67,23 +67,21 @@ are not covered in this document.
 
 Mass spectrometry allows to measure abundances of charged molecules (ions) in a
 sample. Abundances are determined as ion counts for a specific mass-to-charge
-ratio m/z. The measured signal is represented as a spectrum: intensities along
-m/z.
+ratio *m/z*. The measured signal is represented as a spectrum: intensities along
+*m/z*.
 
 ![](images/MS.png)
 
-Many ions will result, when measured with MS alone, in a very similar m/z making
-it difficult or impossible to discriminate them. MS is thus frequently coupled
-with a second technology to separate them prior quantification based on
-properties other than their mass (e.g. based on their polarity). Common choices
-are gas chromatography (GC) or liquid chromatography (LC). In a typical LC-MS
-setup a samples gets injected into the system, molecules are separated in the LC
-column while the MS instruments continuously (at discrete time points) continues
-to measure all ions that get generated from the molecules eluting at
-different time points from the LC-column. Molecules get thus separated on two
-different dimensions, the retention time dimension (from the LC) and the
-mass-to-charge dimension (from the MS) making it easier to measure and identify
-molecules in more complex samples.
+Many ions will result, when measured with MS alone, in a very similar *m/z*
+making it difficult or impossible to discriminate them. MS is thus frequently
+coupled with a second technology to separate compounds prior quantification
+based on properties other than their mass (e.g. based on their polarity). Common
+choices are gas chromatography (GC) or liquid chromatography (LC). In a typical
+LC-MS setup a samples gets injected into the system, molecules are separated in
+the LC column while the MS instruments continuously (at discrete time points)
+measures all ions. Molecules get thus separated on two different dimensions, the
+retention time dimension (from the LC) and the mass-to-charge dimension (from
+the MS) enabling to measure and identify molecules in more complex samples.
 
 ![](images/LCMS.png)
 
@@ -99,17 +97,17 @@ Naming conventions and terms used in this document are:
 
 - *chromatographic peak*: peak containing the signal from an ion in retention
   time dimension (different from a *mass* peak that represents the signal along
-  the m/z dimension within a spectrum).
+  the *m/z* dimension within one spectrum).
 - *chromatographic peak detection*: process in which chromatographic peaks are
-  identified within each file.
+  identified within a sample (file).
 - *alignment*: process that adjusts for retention time differences
   (i.e. possible signal drifts from the LC) between measurements/files.
 - *correspondence*: grouping of chromatographic peaks (presumably from the same
   ion) across files.
 - *feature* (or *LC-MS features*): entity representing signal from the same type
-  of ion/molecule, characterized by its specific retention time and
-  m/z. In *xcms*, features represent identified chromatographic peaks grouped
-  across files/samples.
+  of ion/molecule, characterized by its specific retention time and *m/z*. In
+  *xcms*, features represent identified chromatographic peaks grouped across
+  files/samples.
 
 
 # Data import and exploration
@@ -119,35 +117,36 @@ signals from pooled human serum samples measured with a ultra high performance
 liquid chromatography (UHPLC) system (Agilent 1290) coupled with a Q-TOF MS
 (TripleTOF 5600+ AB Sciex) instrument. Chromatographic separation was based on
 hydrophilic interaction liquid chromatography (HILIC) separating metabolites
-depending on their polarity. The input files contain all signals measured by
-the MS instrument (so called *profile mode* data). To reduce file sizes, the
-data set was restricted to an m/z range from 105 to 134 and retention times from
-0 to 260 seconds.
+based on their polarity. The input files contain all signals measured by the MS
+instrument (so called *profile mode* data). To reduce file sizes, the data set
+was restricted to an *m/z* range from 105 to 134 and retention times from 0 to
+260 seconds.
 
 In the code block below we first load all required libraries and define the
 location of the mzML files, which are part of the *msdata* R package. We also
 define a `data.frame` with the names of the mzML files, an arbitrary sample
-name, the index in which the respective sample was measured within the LC-MS run
-and the sample group of the samples. It is generally suggested to provide all
-experiment-relevant phenotypic and technical information through such a data
-frame, that could also imported e.g. from an xls sheet using the `read_xlsx`
-function from the *readxl* R package, to the `readMsExperiment` function. All
-this information will be available, along with the MS data, in the resulting
-`MsExperiment` object.
+name, the index in which the respective sample was measured within the actual
+LC-MS run and the sample group of the samples. It is generally suggested to
+provide all experiment-relevant phenotypic and technical information through
+such a data frame. Ideally, such data frame could be defined in an xls sheet
+that could then be imported with the `read_xlsx` function from the *readxl* R
+package. This data frame is then passed, along with the file names, to the
+`readMsExperiment` call to import the data.
 
 ```{r load-data}
 library(xcms)
 library(MsExperiment)
 library(Spectra)
 
-## Define the file names.
+#' Define the file names.
 fls <- dir(system.file("sciex", package = "msdata"), full.names = TRUE)
 
-## Define a data.frame with additional information on the files.
+#' Define a data.frame with additional information on these files.
 pd <- data.frame(file = basename(fls),
                  sample = c("POOL_1", "POOL_2"),
                  injection_index = c(1, 19),
                  group = "POOL")
+#' Import the data of the experiment
 data <- readMsExperiment(fls, sampleData = pd)
 data
 ```
@@ -173,13 +172,15 @@ spectra(data)
 
 This `Spectra` object represents the full LC-MS data of the experiment. Each
 element in this object is a spectrum (in one sample/file) with all information
-provided by the respective original data (mzML) file.
+provided by the respective original data (mzML) file. Note that, through
+additional packages such as the `r Biocpkg("MsBackendRawFileReader")`, it would
+also be possible import MS data from other files than mzML, mzXML or CDF files.
 
 
 # Basic data access
 
-In this section we explain how the experimental data is represented and how the
-MS data can be accessed and visualized.
+In this section we explain how the MS data from our small experiment can be
+accessed.
 
 The whole experimental data, including sample annotations as well as the MS
 data, is represented by the `MsExperiment` object. The `length` of such an
@@ -216,20 +217,23 @@ The spectra (and hence MS) data within the object can be accessed with the
 spectra(data)
 ```
 
-In the updated data representation MS data are thus represented with a `Spectra`
-object from the `r Biocpkg("Spectra")` package. In the next few examples we
-briefly explain the `Spectra` object and illustrate the use of such objects
-using some simple examples. More information on `Spectra` objects can be found
-in the package's [documentation](https://RforMassSpectrometry.github.io/Spectra)
-or the [SpectraTutorials](https://jorainer.github.io/SpectraTutorials). Usage of
-`Spectra` in *xcms* has several advantages and adds flexibility to the later
-described *xcms*-based data preprocessing. Besides the peak data (*m/z* and
-intensity values) also additional spectra variables (metadata) are
-available. These can be listed using the `spectraVariables` function. , for
-example by listing all available spectra variables using the `spectraVariables`
-function. To avoid nested function calls and hence improve the readability of
-the code, we use the R pipe operator `|>` that allows to concatenate consecutive
-calls in a more readable fashion.
+The new version of *xcms* uses thus the more modern and flexible infrastructure
+for MS data analysis provided by the `r Biocpkg("Spectra")` package. While it is
+still possible and supported to use *xcms* together with the `r
+Biocpkg("MSnbase")`, users are advised to switch to this new infrastructure as
+it provides more flexibility and a higher performance.
+
+In the next few examples we briefly explain the `Spectra` object and illustrate
+the use of such objects using some simple examples. More information on
+`Spectra` objects can be found in the package's
+[documentation](https://RforMassSpectrometry.github.io/Spectra) or the
+[SpectraTutorials](https://jorainer.github.io/SpectraTutorials). Besides the
+peak data (*m/z* and intensity values) also additional spectra variables
+(metadata) are available in a `Spectra` object. These can be listed using the
+`spectraVariables` function that we call on our example MS data. To avoid nested
+function calls and hence improve the readability of the code, we use the R pipe
+operator `|>` that allows to concatenate consecutive calls in a more readable
+fashion.
 
 ```{r}
 #' List available spectra variables
@@ -241,7 +245,7 @@ For most of these spectra variables dedicated accessor functions are available
 (such as `msLevel`, `rtime`) and in addition it is possible to access any
 variable using `$` and the name of the variable (like accessing the columns of
 a `data.frame`). As an example we extract below the `msLevel` spectra variable
-and use the `table` function on that to get an overview of the number of
+and use the `table` function on the result to get an overview of the number of
 spectra from different MS levels available in the object.
 
 ```{r}
@@ -286,8 +290,10 @@ data |>
 ```
 
 We could also check the number of peaks per spectrum in the different data
-sets. We use for that the `lengths` function that returns for each spectrum the
-number of peaks,
+files. The number of peaks per spectrum can be extracted with the `lengths`
+function. Below we are extracting these values, splitting these values by file
+and then calculate the quartiles of the peak counts using the `quantile`
+function.
 
 ```{r}
 #' Get the distribution of peak counts per file
@@ -323,19 +329,58 @@ mz(sp)
 intensity(sp)
 ```
 
+Alternatively, the `peaksData` function could be used to extract the *m/z* and
+intensity values of a spectrum as a (two column) numeric matrix.
+
+```{r}
+#' Extract the full peaks data
+peaksData(sp)[[1]] |> head()
+```
+
+Total ion signal per spectrum could be calculated simply by summing the
+intensities of all peaks per spectrum. Below we determine the quartiles of the
+total ion signal for the first file.
+
+```{r}
+#' Calculate the distribution of total ion signal of the first file
+spectra(data[1]) |>
+    intensity() |>
+    sum() |>
+    quantile()
+```
+
+We repeat that for the second file.
+
+```{r}
+#' Repeat for the second file
+spectra(data[2]) |>
+    intensity() |>
+    sum() |>
+    quantile()
+```
+
+Through the `Spectra` object we have thus the possibility to inspect and explore
+the (raw) MS data of an experiment and use its functionality to create own
+quality assessment functions. Alternatively, also the `r Biocpkg("MsQuality")`
+package could be to calculate core MS quality metrics on a full experiment
+(`MsExperiment`) or individual data files (`Spectra`). TODO: ADD REFERENCE TO
+MSQUALITY PAPER.
+
 
 # Data visualization
 
-Visualization is crucial for inspection and quality assessment of MS data. For
-LC-MS data visualizing a base peak chromatogram (BPC) or total ion chromatogram
-(TIC) would for example allow to evaluate the performance of the liquid
-chromatography of the various samples in an experiment. To create such a plot we
-below extract the BPC from our data. The BPC extracts the maximum peak signal
-from each spectrum in a data file and plots this information (on the y-axis)
-against the retention time for that spectrum. The BPC can be extracted using the
-`chromatogram` function. With parameter `aggregationFun = "max"` we define to
-report the maximum signal per spectrum (setting `aggregationFun = "sum"` would
-for example sum up all intensities of a spectrum and hence create a TIC).
+Visualization is crucial for quality assessment of MS data. For LC-MS data
+visualizing a base peak chromatogram (BPC) or total ion chromatogram (TIC) would
+for example allow to evaluate the performance of the liquid chromatography of
+the various samples in an experiment. To create such a plot we below extract the
+BPC from our data. The BPC extracts the maximum peak signal from each spectrum
+in a data file and plots this information (on the y-axis) against the retention
+time for that spectrum. While we could also extract these values similarly to
+the total ion intensity in the previous section, we use below the `chromatogram`
+function that allows extraction of chromatographic data from MS data. With
+parameter `aggregationFun = "max"` we define to report the maximum signal per
+spectrum (setting `aggregationFun = "sum"` would for example sum up all
+intensities of a spectrum and hence create a TIC).
 
 ```{r}
 #' Extract and plot a BPC
@@ -343,10 +388,12 @@ bpc <- chromatogram(data, aggregationFun = "max")
 plot(bpc)
 ```
 
-This plot hence shows the BPC for each of the two data files (each line
-representing one sample) and provides the information at what retention times
-signal was measured (thus at what retention times compounds eluted from the LC
-column).
+This plot shows the BPC for each of the two data files (each line representing
+one sample) and provides the information at what retention times signal was
+measured (thus at what retention times compounds eluted from the LC column). We
+can clearly spot regions along the retention time in which more compounds
+eluted. Also, the BPC of the two data files look similar, which is expected
+since both represent the same sample pool.
 
 The BPC collapsed the 3-dimensional LC-MS data (*m/z* by retention time by
 intensity) into 2 dimensions (retention time by intensity). An orthogonal
@@ -365,27 +412,39 @@ Below we plot the spectra for 2 consecutive scans.
 plotSpectra(spectra(data)[123:124], xlim = c(105, 130))
 ```
 
-These two spectra could now be merged by reporting for each m/z the maximal
-signal observed. In *Spectra*, such an operation can be performed with the
-`combineSpectra` function. By default, this function will combine spectra in
-sets of spectra (that can be defined with parameter `f`) creating an union of
-the peaks present in these spectra. For mass peaks with a similar *m/z* value
-(depending on parameter `ppm`) the peaks' intensieties are aggregated using the
-`intensityFun` function and only one peak is reported. With the setting below we
-combine all spectra from one file (by using `f = fromFile(data)`) into a single
-spectrum containing mass peaks present in any of the spectra. For mass
-peaks with a difference in their *m/z* smaller than `ppm` (parts-per-million of
-the *m/z* value) the maximal intensity is reported.
+These two spectra could now be merged by reporting for each *m/z* (or rather for
+peaks with very similar *m/z* in consecutive spectra) the maximal signal
+observed. In *Spectra*, the `combineSpectra` function allows to
+aggregate/combine sets of spectra into a single spectrum. By default, this
+function will combine sets of spectra (that can be defined with parameter `f`)
+creating an union of the peaks present in spectra of a set. For mass peaks with
+a similar *m/z* value (depending on parameter `ppm`) the peaks' intensities are
+aggregated using the `intensityFun` function and only one peak is reported. With
+the setting below we combine all spectra from one file (by using `f =
+fromFile(data)`) into a single spectrum containing mass peaks present in any of
+the spectra of that file. Mass peaks with a difference in their *m/z* that
+is smaller than `ppm` (parts-per-million of the *m/z* value) are combined into
+one peak for which the maximal intensity of the grouped peaks is reported. Note
+that we set `ppm` to a rather small value because the present data is in profile
+mode.
+
+```{r}
+#' Combine all spectra of one file into a single spectrum
+bps <- combineSpectra(spectra(data), f = fromFile(data),
+                      intensityFun = max, ppm = 5)
+bps
+```
+
+`bps` is thus a `Spectra` with two spectra representing the BPS of the two data
+files. Below we plot these.
 
 ```{r, fig.cap = "Base peak spectrum for each of the two samples."}
-bps <- combineSpectra(spectra(data), f = fromFile(data),
-                      intensityFun = max, ppm = 10)
 plotSpectra(bps)
 ```
 
 These BPS thus show the most common ions present in each of the two
-samples. Apparently there is some overlap in ion content between the two files,
-but also some quite distinct signals.
+samples. Apparently there is quite some overlap in ion content between the two
+files.
 
 Apart from such general data overview it is also possible (and also suggeested)
 to explore the data in more detail. To this end we next focus on a specific
@@ -398,12 +457,12 @@ seconds.
 
 ```{r}
 sps <- spectra(data) |>
-filterRt(c(180, 181))
+    filterRt(c(180, 181))
 sps
 ```
 
 For the present data set there are `r length(sps)` spectra measured within this
-one second in the two samples. By extracting the data as a `Spectra` object we
+one second in both samples. By extracting the data as a `Spectra` object we
 have however lost now the direct (inherent) association between spectra and
 samples of the experiment. We could extract the name of the original data file
 from which the data was imported (see example below) and use that to determine
@@ -414,16 +473,16 @@ basename(dataOrigin(sps))
 ```
 
 Alternatively, we could use the `filterRt` function also directly on the
-`MsExperiment` which would subset the `MsExperiment` and hence the link between
-samples and spectra would remain intact. Note however that only few filter and
-subset functions are at present available for `MsExperiment` objects while a
-large variety of useful filters are available for `Spectra`.
+`MsExperiment` which would subset the whole `MsExperiment` keeping hence the
+link between samples and spectra. Note however that only few filter and subset
+functions are at present available for `MsExperiment` objects while more are
+available for `Spectra` objects.
 
 ```{r}
 #' subset the whole MsExperiment
 data_sub <- filterRt(data, rt = c(180, 181))
 #' extract spectra from the subset for the first sample
-spectra(data_sub[1L])
+spectra(data_sub[1])
 ```
 
 For the present purpose it is however not important to keep the sample
@@ -434,8 +493,8 @@ plotSpectra(sps)
 ```
 
 We can immediately spot several mass peaks in the spectrum, with the largest one
-at an m/z of about 130 and the second largest at about 106, which could
-represent signal for an ion of
+at an *m/z* of about 130 seconds and the second largest at about 106, which
+could represent signal for an ion of
 [Serine](https://en.wikipedia.org/wiki/Serine). Below we calculate the exact
 (monoisotopic) mass for serine from its chemical formula *C3H7NO3* using the
 `calculateMass` function from the `r Biocpkg("MetaboCoreUtils")` package.
@@ -450,11 +509,11 @@ The *native* serine molecule is however uncharged and can thus not be measured
 by mass spectrometry. In order to be detectable, molecules need to be first
 ionized before being injected in an MS instrument. While different ions can (and
 will) be generated for a molecule, one of the most commonly created ions in
-positive polarity is the *[M+H]+* ion (protonated ion). To calculate the m/z
+positive polarity is the *[M+H]+* ion (protonated ion). To calculate the *m/z*
 values for specific ions/adducts of molecules, we can use the `mass2mz`
-function, also from the *MetaboCoreUtils* package. Below we calculate the m/z
+function, also from the *MetaboCoreUtils* package. Below we calculate the *m/z*
 for the *[M+H]+* ion of serine providing the monoisotopic mass of that molecule
-and specifying the ion we are interested in. Also other types of adducts are
+and specifying the adduct we are interested in. Also other types of adducts are
 supported. These could be listed with the `adductNames` function
 (`adductNames()` for all positively charged and `adductNames("negative")` for
 all negatively charge ions).
@@ -465,7 +524,7 @@ serine_mz
 ```
 
 The `mass2mz` function **always** returns a `matrix` with columns reporting the
-m/z for the requested adducts of the molecules which are available in the
+*m/z* for the requested adduct(s) of the molecule(s) which are available in the
 rows. Since we requested a single ion we reduce this `matrix` to a single
 `numeric` value.
 
@@ -474,8 +533,10 @@ serine_mz <- serine_mz[1, 1]
 ```
 
 We can now use this information to subset the MS data to the signal recorded for
-all ions with that particular m/z. We use again the `chromatogram` function and
-provide the m/z range of interest with the `mz` parameter.
+all ions with that particular *m/z*. We use again the `chromatogram` function
+and provide the *m/z* range of interest with the `mz` parameter of that
+function. Note that it would also be possible to first filter the data set by
+*m/z* using the `filterMzRange` function and then extract the chromatogram.
 
 ```{r, fig.cap = "Ion trace for an ion of serine"}
 #' Extract an full RT chromatogram for ions with an m/z similar than serine
@@ -490,29 +551,30 @@ extracting such chromatograms for the m/z of interest and the full retention
 time range can help determining its likely retention time.
 
 The object returned by the `chromatogram` function arranges the individual
-`Chromatogram` objects (one per sample) in a two-dimensional array, columns
-being samples (files) and rows data slices (i.e. m/z - rt ranges). This type of
-data representation is likely to be replaced in future with a more efficient and
-flexible data structure similar to `Spectra`. Data from the individual
-chromatograms can be accessed using the `intensity` and `rtime` functions
-(similar to the `mz` and `intensity` functions for a `Spectra` object).
+`MChromatogram` objects (one per sample) in a two-dimensional array, columns
+being samples (files) and rows data slices (i.e. *m/z* - rt ranges). Note that
+this type of data representation, defined in the `r Biocpkg("MSnbase")` package,
+is likely to be replaced in future with a more efficient and flexible data
+structure similar to `Spectra`. Data from the individual chromatograms can be
+accessed using the `intensity` and `rtime` functions (similar to the `mz` and
+`intensity` functions for a `Spectra` object).
 
 ```{r chromatogram}
 #' get intensity and retention times for the chromatogram of the first
 #' sample
-ints <- intensity(serine_chr[1, 1])
-head(ints)
+intensity(serine_chr[1, 1]) |>
+    head()
 
-rts <- rtime(serine_chr[1, 1])
-head(rts)
+rts <- rtime(serine_chr[1, 1]) |>
+    head()
 ```
 
 At last we further focus on the tentative signal of serine extracting the ion
 chromatogram restricting on the retention time range containing its
-signal. While we could also pass the retention time and m/z range with
+signal. While we could also pass the retention time and *m/z* range with
 parameters `rt` and `mz` to the `chromatogram` function we instead filter the
-whole experiment by retention time and m/z before calling `chromatogram` on the
-such created data subset. With the example code below we thus create an
+whole experiment by retention time and *m/z* before calling `chromatogram` on
+the such created data subset. With the example code below we thus create an
 extracted ion chromatogram (EIC, sometimes also referred to as XIC) for the
 *[M+H]+* ion of serine.
 
@@ -528,36 +590,43 @@ plot()
 The area of such a chromatographic peak is supposed to be proportional to the
 amount of the corresponding ion in the respective sample and identification and
 quantification of such peaks is one of the goals of the LC-MS data
-preprocessing. This workflow could be repeated on several expected ions as an
-initial data inspection step.
+preprocessing.
 
+While we inspected here the signal measured for ions of serine, this workflow
+could (and should) also be repeated for other potentially present ions (or
+internal standards) to evaluate the LC-MS data of an experiment.
 
 
 # Centroiding of profile MS data
 
 MS instruments allow to export data in profile or centroid mode. Profile data
-contains the signal for all discrete m/z values (and retention times) for which
-the instrument collected data [@Smith:2014di]. MS instruments continuously
+contains the signal for all discrete *m/z* values (and retention times) for
+which the instrument collected data [@Smith:2014di]. MS instruments continuously
 sample and record signals and a mass peak for a single ion in one spectrum will
-thus consist of a multiple intensities at discrete m/z values. Centroiding is
-the process to reduce these mass peaks to a single representative signal, the
-centroid. This results in much smaller file sizes, without loosing too much
-information. *xcms*, specifically the *centWave* chromatographic peak detection
-algorithm, was designed for centroided data, thus, prior to data analysis,
-profile data, such as the example data used here, should be centroided.
+thus consist of a multiple intensities at discrete (but highly similar) *m/z*
+values. The process to reduce this distribution of signals to a single
+representative mass peak (the centroid) is called centroiding. This process
+results in much smaller file sizes, without too much information loss. *xcms*,
+specifically the *centWave* chromatographic peak detection algorithm, was
+designed for centroided data, thus, prior to data analysis, profile data, such
+as the example data used here, should be centroided.
 
 Below we inspect the profile data for one of the spectra extracted above and
 focus on the mass peak for serine.
 
-```{r}
+```{r, fig.cap = "Profile-mode mass peak for the [M+H]+ ion of serine. The theoretical *m/z* of that ion is indicated with a dotted red line."}
+#' Visualize the profile-mode mass peak for [M+H]+ of serine
 sps[1] |>
     filterMzRange(c(106.02, 106.07)) |>
     plotSpectra()
+abline(v = serine_mz, col = "#ff000080", lty = 3)
 ```
 
 Instead of a single peak, several mass peaks were recorded by the MS instrument
-with an m/z very close to the theoretical one for the *[M+H]+* ion of serine. We
-can also visualize this information in a different fashion: the `plot` function
+with an *m/z* very close to the theoretical *m/z* for the *[M+H]+* ion of serine
+(indicated with a red dotted line).
+
+We can also visualize this information differently: the `plot` function
 for `MsExperiment` generates a two-dimensional visualization of the
 three-dimensional LC-MS data: peaks are drawn at their respective location in
 the two-dimensional *m/z* *vs* retention time plane with their intensity being
@@ -574,13 +643,14 @@ plot()
 
 The lower panel of the plot shows all mass peaks measured by the instrument,
 each *column* of data points representing the signal measured at one discrete
-time point (i.e. from one spectrum) with the intensities encoded with a color
+time point (i.e. for one spectrum) with the intensities encoded with a color
 scale (blue representing low, yellow high intensity). The upper panel of the
 plot shows a chromatographic visualization of the data from the lower panel,
 i.e., for each retention time (spectrum) the sum of intensities is shown.
 
 Note that, while it would be possible to create such a plot for the full MS data
-of an experiment, this type of visualization works best for subsets of the data.
+of an experiment, this type of visualization works best for small *m/z* -
+retention time regions.
 
 Next we *smooth* the data in each spectrum using a Savitzky-Golay filter, which
 usually improves data quality by reducing noise. Subsequently we perform the
@@ -624,11 +694,12 @@ lapply(basename(unique(dataOrigin(spectra(data)))), function (z) {
 ```
 
 We use the `export` function on our centroided `Spectra` object, defining the
-output format with `backend = MsBackendMzR()` to export the data to files in
-mzML format. With the additional parameter `file` we provide the names
-of these files. For the present example we simply use the file names (without
-path) of the input file names, hence exporting the data to files located in the
-current working directory.
+output format with `backend = MsBackendMzR()` which will export the data to
+files in mzML format. With the additional parameter `file` we provide the names
+of these files (we need to specify the output file name for each spectrum). For
+the present example we simply use the file names (without path) of the input
+file names, hence exporting the data to files located in the current working
+directory.
 
 ```{r export-centroided}
 #' Export the centroided data to new mzML files.
@@ -648,7 +719,10 @@ fls <- basename(fls)
 data <- readMsExperiment(fls, sampleData = pd)
 ```
 
+This code would thus also allow to create scripts to batch-perform an R-based
+centroiding, which would allow fine tuning of the individual parameters.
 
+LLLLLLLLL
 
 # Preprocessing of LC-MS data
 
