@@ -210,8 +210,7 @@ if (.Platform$OS.type == "unix") {
 
 ```
 
-The MS data of the experiment is now *represented* by a `MsExperiment`
-object.
+The MS data of the experiment is now *represented* by a `MsExperiment` object.
 
 
 ## Basic data access and visualization
