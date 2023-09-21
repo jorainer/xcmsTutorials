@@ -211,7 +211,21 @@ if (.Platform$OS.type == "unix") {
 ```
 
 The MS data of the experiment is now *represented* by a `MsExperiment`
-object. Phenotype information can be retrieved with the `sampleData` function
+object.
+
+
+## Basic data access and visualization
+
+The `MsExperiment` object manages the *linkage* between samples and spectra. 
+The `length` of an `MsExperiment` is defined by the number of samples within the
+object.
+
+```{r general-access}
+length(data)
+
+```
+
+Phenotype information can be retrieved with the `sampleData` function
 from that object.
 
 ```{r show-pData}
@@ -234,19 +248,7 @@ provided by the respective original data (mzML) file. Spectra are organized
 linearly, i.e. all spectra from all files are within the same `Spectra` object,
 one after the other.
 
-
-## Basic data access and visualization
-
-The `MsExperiment` object manages the *linkage* between samples and spectra. The `length` of an `MsExperiment` is defined by the number of samples within the
-object.
-
-```{r general-access}
-length(data)
-
-```
-
-As detailed above, the `spectra` function can be used to access the MS data of
-the experiment. As an example we below calculate the retention time range of the
+As an example we below calculate the retention time range of the
 full experiment. Retention times can be extracted with the `rtime` function from
 the `Spectra` object within `data`. To avoid nested function calls and hence
 improve the readability of the code, we use the R pipe operator `|>` that allows
@@ -258,12 +260,11 @@ rtime() |>
 range()
 ```
 
-The `Spectra` object returned by `spectra`, contains all spectra from all files
-(samples) of an experiment. To access MS data from only a single file (sample)
-we need to subset the `MsExperiment` object to that particular sample before
-extracting the spectra data with `spectra`. Below we subset the data to the
-second sample using the `[` function, access the spectra from that sample,
-extract their retention times and calculate their range.
+To access MS data from only a single file (sample) we need to subset the 
+`MsExperiment` object to that particular sample before extracting the spectra 
+data with `spectra`. Below we subset the data to the second sample using the `[`
+function, access the spectra from that sample, extract their retention times and
+calculate their range.
 
 ```{r}
 data[2] |>
