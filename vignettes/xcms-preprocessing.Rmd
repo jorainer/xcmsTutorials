@@ -237,10 +237,8 @@ one after the other.
 
 ## Basic data access and visualization
 
-The MS data of an experiment is stored as a `Spectra` object within the
-`MsExperiment` and this `MsExperiment` contains the experiment's sample
-information and manages the *linkage* between samples and spectra. The `length`
-of an `MsExperiment` is defined by the number of samples within the object.
+The `MsExperiment` object manages the *linkage* between samples and spectra. The `length` of an `MsExperiment` is defined by the number of samples within the
+object.
 
 ```{r general-access}
 length(data)
