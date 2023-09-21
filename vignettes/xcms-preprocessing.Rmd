@@ -93,8 +93,8 @@ m/z.
 
 ![](MS.png)
 
-Many ions will result, when measured with MS alone, in a very similar m/z making
-it difficult or impossible to discriminate them. MS is thus frequently coupled
+Many ions will result, when measured with MS alone, in a very similar m/z. Thus, making
+it difficult or impossible to discriminate them. MS is therefore frequently coupled
 with a second technology to separate them prior quantification based on
 properties other than their mass (e.g. based on their polarity). Common choices
 are gas chromatography (GC) or liquid chromatography (LC). In a typical LC-MS
@@ -108,7 +108,7 @@ molecules in more complex samples.
 
 ![](LCMS.png)
 
-In such GC/LC-MS based untargeted metabolomics experiments the data is analyzed
+In such GC/LC-MS based untargeted metabolomics experiments, the data is analyzed
 along the retention time dimension and *chromatographic* peaks (which are
 supposed to represent the signal from ions of a certain type of molecule) are
 quantified.
@@ -723,7 +723,7 @@ lengths(srn_sps)
 
 ```
 
-For some spectra with have more than one peak in the MS data subset. For these
+Some spectra will have more than one peak in the MS data subset. For these
 we next select the peak with the highest intensity. Here we can make use of the
 powerful infrastructure of the *Spectra* package, that allows to apply any
 user-provided function to the peak matrix of each spectrum. We thus next define
