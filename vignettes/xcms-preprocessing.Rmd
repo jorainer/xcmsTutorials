@@ -395,7 +395,7 @@ mass_serine <- calculateMass("C3H7NO3")
 mass_serine
 ```
 
-The *native* serine molecule is however uncharged and can thus not be measured
+The *native* serine molecule is however uncharged and thus can not be measured
 by mass spectrometry. In order to be detectable, molecules need to be first
 ionized before being injected in an MS instrument. While different ions can (and
 will) be generated for a molecule, one of the most commonly created ions
