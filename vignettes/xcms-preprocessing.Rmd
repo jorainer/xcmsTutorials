@@ -605,7 +605,7 @@ on that data subset using `findChromPeaks` and the default parameters for
 *centWave*.
 
 ```{r centWave-default}
-#' Get the XIC for serine in all files
+#' Get the EIC for serine in all files
 serine_chr <- chromatogram(data, rt = c(164, 200),
                            mz = serine_mz + c(-0.05, 0.05),
                            aggregationFun = "max")
@@ -613,7 +613,7 @@ serine_chr <- chromatogram(data, rt = c(164, 200),
 #' Get default centWave parameters
 cwp <- CentWaveParam()
 
-#' "dry-run" peak detection on the XIC.
+#' "dry-run" peak detection on the EIC.
 res <- findChromPeaks(serine_chr, param = cwp)
 chromPeaks(res)
 ```
@@ -627,7 +627,7 @@ cwp
 
 Particularly the settings for `peakwidth` does not fit our data. The default for
 this parameter expects chromatographic peaks between 20 and 50 seconds
-wide. When we plot the extracted ion chromatogram (XIC) for serine we can
+wide. When we plot the extracted ion chromatogram (EIC) for serine we can
 however see that these values are too large for the present data set (see
 below).
 
@@ -644,7 +644,7 @@ by setting `integrate = 2`. This works particularly well for non-gaussian peak
 shapes and ensures that also signal from peak's tail is integrated (eventually
 re-run the code with the default `integrate = 1` to compare the two approaches).
 
-```{r centWave-adapted, fig.cap = "XIC for Serine with detected chromatographic peak", results = "hide"}
+```{r centWave-adapted, fig.cap = "EIC for Serine with detected chromatographic peak", results = "hide"}
 cwp <- CentWaveParam(peakwidth = c(2, 10), integrate = 2)
 
 serine_chr <- findChromPeaks(serine_chr, param = cwp)
@@ -830,7 +830,7 @@ Similarly, peak detection results will be visualized in the generic plot of the
 result object (chromatogrphic peaks are highlighed as a red rectangle; see
 below).
 
-```{r xic-after}
+```{r EIC-after}
 srn <- data |>
 filterRt(rt = c(175, 188)) |>
 filterMz(mz = c(106.04, 106.06))
@@ -999,7 +999,7 @@ plot(chromatogram(data, aggregationFun = "max", chromPeaks = "none"))
 
 The BPCs are nicely aligned after retention time adjustment. The impact of the 
 alignment should also be evaluated on known compounds or internal standards. 
-We thus plot below the XIC for serine before and after alignment. To get raw 
+We thus plot below the EIC for serine before and after alignment. To get raw 
 retention times and hence be able to extract the ion chromatogram of serine 
 before alignment we have to *drop* the alignment results which can be done with 
 the `dropAdjustedRtime` function. This function will restore the retention 
@@ -1012,7 +1012,7 @@ data_raw <- dropAdjustedRtime(data)
 We can thus extract next the ion chromatogram for serine from the raw data as
 well as after alignment.
 
-```{r serine-xic-adjusted, fig.cap = "XIC for Serine before (left) and after (right) alignment", fig.width = 10, fig.height = 4}
+```{r serine-EIC-adjusted, fig.cap = "EIC for Serine before (left) and after (right) alignment", fig.width = 10, fig.height = 4}
 #' Use adjustedRtime parameter to access raw/adjusted retention times
 par(mfrow = c(1, 2), mar = c(4, 4.5, 1, 0.5))
 chromatogram(data_raw, mz = c(106.04, 106.06), rt = c(179, 186)) |>
@@ -1075,7 +1075,7 @@ analysis are:
 - `minSamples`: minimum number of samples a peak has to be present.
 
 The parameters `minFraction` and `minSamples` depend on the experimental layout
-and should be set accordingly. `binSize` should be set to a small enough value
+and should be set accordingly. `binSize` should be set to a value small enough
 to avoid peaks from different ions with similar m/z and retention time
 being grouped together. The most important parameter however is `bw` and, while
 its default value of 30 was able to correctly group the Serine peaks, it should
@@ -1214,7 +1214,7 @@ Note also that, in addition to the `featureValues` method that simply extracts
 the feature matrix, the preprocessing results can also be converted to a
 `SummarizedExperiment` that, besides containing the feature quantification,
 stores also the phenotype data (sample descriptions) and feature
-definitions. Below we use the `quantify` method to extract the preprocessing
+definitions. Below, we use the `quantify` method to extract the preprocessing
 results as a `SummarizedExperiment`. The function takes any parameter of the
 `featureValues` function as additional arguments, thus, with the call below we
 extract all values (from detected and gap-filled peaks) and sum up the signals
@@ -1246,22 +1246,21 @@ head(assay(res, "raw"))
 ```
 
 The `SummarizedExperiment` supports several such assay matrices (as long as they
-have the same dimensions). We can thus add for example the feature
-quantification excluding filled-in signal as an additional assay
-matrix:
+have the same dimensions). For example we can add the feature quantification 
+excluding filled-in signal as an additional assay matrix:
 
 ```{r}
 assays(res)$raw_detected <- featureValues(data, method = "sum",
                                           value = "into", filled = FALSE)
 ```
 
-With that we have now two assay matrices in our result object:
+We now have two assay matrices in our result object:
 
 ```{r}
 assayNames(res)
 ```
 
-Analogously we could add normalized data to this object or any other processed
+Analogously, we could add normalized data to this object or any other processed
 values. The advantage of having all the data within one object is obvious: any
 subsetting of the data ensures that all assays and annotations are subsetted
 correctly.
