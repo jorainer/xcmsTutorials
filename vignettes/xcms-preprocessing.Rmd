@@ -475,13 +475,15 @@ preprocessing.
 MS instruments allow to export data in profile or centroid mode. Profile data
 contains the signal for all discrete m/z values (and retention times) for which
 the instrument collected data [@Smith:2014di]. MS instruments continuously
-sample and record signals and a mass peak for a single ion in one spectrum will
-thus consist of a multiple intensities at discrete m/z values. Centroiding is
-the process to reduce these mass peaks to a single representative signal, the
-centroid. This results in much smaller file sizes, without loosing too much
-information. *xcms*, specifically the *centWave* chromatographic peak detection
-algorithm, was designed for centroided data, thus, prior to data analysis,
-profile data, such as the example data used here, should be centroided.
+sample and record signals, therefore a mass peak for a single ion in one 
+spectrum will consist of multiple intensities at discrete m/z values.
+
+Centroiding is the process to reduce these mass peaks to a single representative
+signal, the centroid. This results in much smaller file sizes, without loosing 
+too much information. *xcms*, specifically the *centWave* chromatographic peak 
+detection algorithm, was designed for centroided data, thus, prior to data 
+analysis, profile data, such as the example data used here, should be 
+centroided.
 
 Below we inspect the profile data for the *[M+H]+* ion adduct of Serine. We
 again subset the data to the m/z and retention time range containing signal from
@@ -543,9 +545,10 @@ lapply(basename(unique(dataOrigin(spectra(data)))), function (z) {
 
 We use the `export` function for data export of the centroided `Spectra`
 object. Parameter `backend` allows to specify the MS data backend that should be
-used for the export, and that will also define the data format (use `backend =
-MsBackendMzR()` to export data in mzML format. Parameter `file` defines, for
-each spectrum, the name of the file to which its data should be exported.
+used for the export, and that will also define the data format (use 
+`backend = MsBackendMzR()` to export data in mzML format.)Parameter `file` 
+defines, for each spectrum, the name of the file to which its data should be 
+exported.
 
 ```{r export-centroided}
 export(spectra(data), backend = MsBackendMzR(),
@@ -567,11 +570,11 @@ data <- readMsExperiment(fls, sampleData = pd)
 
 Preprocessing of (untargeted) LC-MS data aims at detecting and quantifying the
 signal from ions generated from all molecules present in a sample. It consists
-of the 3 steps chromatographic peak detection, alignment (also called retention
-time correction) and correspondence (also called peak grouping). The resulting
-matrix of feature abundances can then be used as an input in downstream analyses
-including data normalization, identification of features of interest and
-annotation of features to metabolites.
+of the following 3 steps: chromatographic peak detection, alignment (also 
+called retention time correction) and correspondence (also called peak 
+grouping). The resulting matrix of feature abundances can then be used as an 
+input in downstream analyses including data normalization, identification of 
+features of interest and annotation of features to metabolites.
 
 
 ### Chromatographic peak detection
@@ -841,7 +844,7 @@ artifacts, such as overlapping peaks or artificially split peaks. The
 removing peaks not meeting predefined properties or by merging artificially
 split chromatographic peaks (see `?refineChromPeaks` for all options). Below we
 post-process the peak detection results merging peaks (within each sample) that
-overlap in a 4 second window if the signal between them is lower than
+overlap in a 4 seconds window if the signal between them is lower than
 75% of the smaller peak's largest intensity. See the
 `MergeNeighboringPeaksParam` help page for a detailed description of the
 settings and the approach.
@@ -872,11 +875,11 @@ plot(chr_1)
 plot(chr_2)
 ```
 
-The signal is rather wide and noise and *centWave* thus was not able to
-integrate the whole peak and even defined partially overlapping
-chromatographic peaks (left in the image above). Peak refinement merged all
-the consecutive peaks as the signal between them never dropped below 75% of the
-smallest chromatographic peak's intensity.
+The signal is rather wide and noisy, thus *centWave* was not able to integrate 
+the whole peak and even defined partially overlapping chromatographic peaks 
+(left in the image above). Peak refinement merged all the consecutive peaks as 
+the signal between them never dropped below 75% of the smallest chromatographic 
+peak's intensity.
 
 At last we replace the `data` variable with the object containing also the
 peak refinement results.
@@ -914,7 +917,7 @@ bpc_raw <- chromatogram(data, aggregationFun = "max")
 plot(bpc_raw, peakType = "none")
 ```
 
-While both samples were measured with the same setup on the same day slight
+While both samples were measured with the same setup on the same day, slight
 drifts of the signal are visible.
 
 Alignment can be performed with *xcms* using the `adjustRtime` function that
@@ -981,12 +984,10 @@ measured within a short time period and differences are thus expected to be
 small. Also, hook peaks should ideally be present along the full retention time
 range to allow proper estimation of drifts along the full time of measurement.
 
-Next we plot the base peak chromatograms before and after alignment. Note
-that a `chromatogram` call will always include all detected chromatographic
-peaks in the requested rt range but for a base peak chromatogram we don't need
-this information. With `chromPeaks = "none"` in the `chromatogram` call we tell the
-function to **not** include any identified chromatographic peaks in the
-returned chromatographic data.
+Next we plot the base peak chromatograms before and after alignment. 
+In a similar way as before, we set `chromPeaks = "none"` in the `chromatogram` 
+call to tell the function to **not** include any identified chromatographic 
+peaks in the returned chromatographic data.
 
 ```{r bpc-raw-adjusted, fig.cap = "BPC before (top) and after (bottom) alignment.", fig.width = 10, fig.height = 8}
 par(mfrow = c(2, 1))
@@ -996,14 +997,13 @@ plot(bpc_raw, peakType = "none")
 plot(chromatogram(data, aggregationFun = "max", chromPeaks = "none"))
 ```
 
-The base peak chromatograms are nicely aligned after retention time
-adjustment. The impact of the alignment should also be evaluated on known
-compounds or internal standards. We thus plot below the XIC for serine before
-and after alignment. To get raw retention times and hence be able to extract the
-ion chromatogram of serine before alignment we have to *drop* the alignment
-results which can be done with the `dropAdjustedRtime` function. This function
-will restore the retention times of spectra (and chromatographic peaks)
-**before** alignment.
+The BPCs are nicely aligned after retention time adjustment. The impact of the 
+alignment should also be evaluated on known compounds or internal standards. 
+We thus plot below the XIC for serine before and after alignment. To get raw 
+retention times and hence be able to extract the ion chromatogram of serine 
+before alignment we have to *drop* the alignment results which can be done with 
+the `dropAdjustedRtime` function. This function will restore the retention 
+times of spectra (and chromatographic peaks) **before** alignment.
 
 ```{r}
 data_raw <- dropAdjustedRtime(data)
@@ -1076,7 +1076,7 @@ analysis are:
 
 The parameters `minFraction` and `minSamples` depend on the experimental layout
 and should be set accordingly. `binSize` should be set to a small enough value
-to avoid peaks from different ions, but with similar m/z and retention time,
+to avoid peaks from different ions with similar m/z and retention time
 being grouped together. The most important parameter however is `bw` and, while
 its default value of 30 was able to correctly group the Serine peaks, it should
 always be evaluated on other, more complicated, signals too. Below we evaluate
@@ -1094,7 +1094,7 @@ pdp <- PeakDensityParam(sampleGroups = sampleData(data)$group)
 plotChromPeakDensity(chr, param = pdp)
 ```
 
-With default settings all chromatographic peaks present in the m/z slice were
+With default settings, all chromatographic peaks present in the m/z slice were
 grouped into one feature. Signal from different ions would thus be treated
 as a single entity. Below we repeat the analysis with a strongly reduced value
 for `bw`.
@@ -1117,7 +1117,7 @@ pdp <- PeakDensityParam(sampleGroups = sampleData(data)$group, bw = 1.8,
 data <- groupChromPeaks(data, param = pdp)
 ```
 
-Next we evaluate the results from the correspondence analysis on a different m/z
+Next, we evaluate the results from the correspondence analysis on a different m/z
 slice containing isomers leucine and isoleucine ([M+H]+ m/z 132.10191). Setting
 `simulate = FALSE` in `plotChromPeakDensity` will show the actual results from
 the correspondence analysis.
