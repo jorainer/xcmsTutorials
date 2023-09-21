@@ -58,7 +58,7 @@ abundances of the so called *LC-MS features* in all samples can then be further
 processed, e.g. by normalizing the data to remove differences due to sample
 processing, batch effects or injection order-dependent signal drifts. After
 preprocessing, the LC-MS features that are usually only characterized by their
-mass-to-charge ration (m/z) and retention time, have to be annotated to the
+mass-to-charge ration (*m/z*) and retention time, have to be annotated to the
 actual ions and metabolites they represent. Data normalization and annotation
 are not covered in this document.
 
@@ -67,23 +67,23 @@ are not covered in this document.
 
 Mass spectrometry allows to measure abundances of charged molecules (ions) in a
 sample. Abundances are determined as ion counts for a specific mass-to-charge
-ratio m/z. The measured signal is represented as a spectrum: intensities along
-m/z.
+ratio *m/z*. The measured signal is represented as a spectrum: intensities along
+*m/z*.
 
 ![](images/MS.png)
 
-Many ions will result, when measured with MS alone, in a very similar m/z. Thus, making
-it difficult or impossible to discriminate them. MS is therefore frequently coupled
-with a second technology to separate them prior quantification based on
-properties other than their mass (e.g. based on their polarity). Common choices
-are gas chromatography (GC) or liquid chromatography (LC). In a typical LC-MS
-setup a samples gets injected into the system, molecules are separated in the LC
-column while the MS instruments continuously (at discrete time points) continues
-to measure all ions that get generated from the molecules eluting at
-different time points from the LC-column. Molecules get thus separated on two
-different dimensions, the retention time dimension (from the LC) and the
-mass-to-charge dimension (from the MS) making it easier to measure and identify
-molecules in more complex samples.
+Many ions will result, when measured with MS alone, in a very similar
+*m/z*. Thus, making it difficult or impossible to discriminate them. MS is
+therefore frequently coupled with a second technology to separate them prior
+quantification based on properties other than their mass (e.g. based on their
+polarity). Common choices are gas chromatography (GC) or liquid chromatography
+(LC). In a typical LC-MS setup a samples gets injected into the system,
+molecules are separated in the LC column while the MS instruments continuously
+(at discrete time points) continues to measure all ions that get generated from
+the molecules eluting at different time points from the LC-column. Molecules get
+thus separated on two different dimensions, the retention time dimension (from
+the LC) and the mass-to-charge dimension (from the MS) making it easier to
+measure and identify molecules in more complex samples.
 
 ![](images/LCMS.png)
 
@@ -99,7 +99,7 @@ Naming conventions and terms used in this document are:
 
 - *chromatographic peak*: peak containing the signal from an ion in retention
   time dimension (different from a *mass* peak that represents the signal along
-  the m/z dimension within a spectrum).
+  the *m/z* dimension within a spectrum).
 - *chromatographic peak detection*: process in which chromatographic peaks are
   identified within each file.
 - *alignment*: process that adjusts for retention time differences
@@ -108,7 +108,7 @@ Naming conventions and terms used in this document are:
   ion) across files.
 - *feature* (or *LC-MS features*): entity representing signal from the same type
   of ion/molecule, characterized by its specific retention time and
-  m/z. In *xcms*, features represent identified chromatographic peaks grouped
+  *m/z*. In *xcms*, features represent identified chromatographic peaks grouped
   across files/samples.
 
 
@@ -121,7 +121,7 @@ liquid chromatography (UHPLC) system (Agilent 1290) coupled with a Q-TOF MS
 hydrophilic interaction liquid chromatography (HILIC) separating metabolites
 depending on their polarity. The input files contain all signals measured by
 the MS instrument (so called *profile mode* data). To reduce file sizes, the
-data set was restricted to an m/z range from 105 to 134 and retention times from
+data set was restricted to an *m/z* range from 105 to 134 and retention times from
 0 to 260 seconds.
 
 In the code block below we first load all required libraries and define the
@@ -343,7 +343,7 @@ Below we plot the spectra for 2 consecutive scans.
 plotSpectra(spectra(data)[123:124], xlim = c(105, 130))
 ```
 
-These two spectra could now be merged by reporting for each m/z the maximal
+These two spectra could now be merged by reporting for each *m/z* the maximal
 signal observed. In *Spectra*, such an operation can be performed with the
 `combineSpectra` function. By default, this function will combine spectra in
 sets of spectra (that can be defined with parameter `f`) creating an union of
@@ -412,7 +412,7 @@ plotSpectra(sps)
 ```
 
 We can immediately spot several mass peaks in the spectrum, with the largest one
-at an m/z of about 130 and the second largest at about 106, which could
+at an *m/z* of about 130 and the second largest at about 106, which could
 represent signal for an ion of
 [Serine](https://en.wikipedia.org/wiki/Serine). Below we calculate the exact
 (monoisotopic) mass for serine from its chemical formula *C3H7NO3* using the
@@ -428,9 +428,9 @@ The *native* serine molecule is however uncharged and thus can not be measured
 by mass spectrometry. In order to be detectable, molecules need to be first
 ionized before being injected in an MS instrument. While different ions can (and
 will) be generated for a molecule, one of the most commonly created ions in
-positive polarity is the *[M+H]+* ion (protonated ion). To calculate the m/z
+positive polarity is the *[M+H]+* ion (protonated ion). To calculate the *m/z*
 values for specific ions/adducts of molecules, we can use the `mass2mz`
-function, also from the *MetaboCoreUtils* package. Below we calculate the m/z
+function, also from the *MetaboCoreUtils* package. Below we calculate the *m/z*
 for the *[M+H]+* ion of serine providing the monoisotopic mass of that molecule
 and specifying the ion we are interested in. Also other types of adducts are
 supported. These could be listed with the `adductNames` function
@@ -443,7 +443,7 @@ serine_mz
 ```
 
 The `mass2mz` function **always** returns a `matrix` with columns reporting the
-m/z for the requested adducts of the molecules which are available in the
+*m/z* for the requested adducts of the molecules which are available in the
 rows. Since we requested a single ion we reduce this `matrix` to a single
 `numeric` value.
 
@@ -452,8 +452,8 @@ serine_mz <- serine_mz[1, 1]
 ```
 
 We can now use this information to subset the MS data to the signal recorded for
-all ions with that particular m/z. We use again the `chromatogram` function and
-provide the m/z range of interest with the `mz` parameter.
+all ions with that particular *m/z*. We use again the `chromatogram` function and
+provide the *m/z* range of interest with the `mz` parameter.
 
 ```{r, fig.cap = "Ion trace for an ion of serine"}
 #' Extract an full RT chromatogram for ions with an m/z similar than serine
@@ -464,14 +464,14 @@ plot(serine_chr)
 A strong signal is visible around a retention time of 180 seconds which very
 likely represents signal for the *[M+H]+* ion of serine. Note that, if the
 retention time of a molecule for a specific LC-MS setup is not known beforehand,
-extracting such chromatograms for the m/z of interest and the full retention
+extracting such chromatograms for the *m/z* of interest and the full retention
 time range can help determining its likely retention time.
 
 The object returned by the `chromatogram` function arranges the individual
 `Chromatogram` objects (one per sample) in a two-dimensional array, columns
-being samples (files) and rows data slices (i.e. m/z - rt ranges). This type of
-data representation is likely to be replaced in future with a more efficient and
-flexible data structure similar to `Spectra`. Data from the individual
+being samples (files) and rows data slices (i.e. *m/z* - rt ranges). This type
+of data representation is likely to be replaced in future with a more efficient
+and flexible data structure similar to `Spectra`. Data from the individual
 chromatograms can be accessed using the `intensity` and `rtime` functions
 (similar to the `mz` and `intensity` functions for a `Spectra` object).
 
@@ -487,9 +487,9 @@ head(rts)
 
 At last we further focus on the tentative signal of serine extracting the ion
 chromatogram restricting on the retention time range containing its
-signal. While we could also pass the retention time and m/z range with
+signal. While we could also pass the retention time and *m/z* range with
 parameters `rt` and `mz` to the `chromatogram` function we instead filter the
-whole experiment by retention time and m/z before calling `chromatogram` on the
+whole experiment by retention time and *m/z* before calling `chromatogram` on the
 such created data subset. With the example code below we thus create an
 extracted ion chromatogram (EIC, sometimes also referred to as XIC) for the
 *[M+H]+* ion of serine.
@@ -514,10 +514,10 @@ initial data inspection step.
 # Centroiding of profile MS data
 
 MS instruments allow to export data in profile or centroid mode. Profile data
-contains the signal for all discrete m/z values (and retention times) for which
+contains the signal for all discrete *m/z* values (and retention times) for which
 the instrument collected data [@Smith:2014di]. MS instruments continuously
 sample and record signals, therefore a mass peak for a single ion in one
-spectrum will consist of multiple intensities at discrete m/z values.
+spectrum will consist of multiple intensities at discrete *m/z* values.
 
 Centroiding is the process to reduce these mass peaks to a single representative
 signal, the centroid. This results in much smaller file sizes, without loosing
@@ -536,7 +536,7 @@ sps[1] |>
 ```
 
 Instead of a single peak, several mass peaks were recorded by the MS instrument
-with an m/z very close to the theoretical one for the *[M+H]+* ion of serine. We
+with an *m/z* very close to the theoretical one for the *[M+H]+* ion of serine. We
 can also visualize this information in a different fashion: the `plot` function
 for `MsExperiment` generates a two-dimensional visualization of the
 three-dimensional LC-MS data: peaks are drawn at their respective location in
@@ -562,7 +562,7 @@ i.e., for each retention time (spectrum) the sum of intensities is shown.
 Note that, while it would be possible to create such a plot for the full MS data
 of an experiment, this type of visualization works best for subsets of the data.
 
-Next we *smooth* the data in each spectrum using a Savitzky-Golay filter, which
+Next, we *smooth* the data in each spectrum using a Savitzky-Golay filter, which
 usually improves data quality by reducing noise. Subsequently we perform the
 centroiding of the data based on a simple peak-picking strategy that reports the
 maximum signal for each mass peak in each spectrum and replace the spectra data
@@ -745,7 +745,7 @@ chromPeaks(serine_chr)
 ```
 
 The result is returned as a `matrix` with each row representing one identified
-chromatographic peak. The retention time and m/z ranges of the peaks are
+chromatographic peak. The retention time and *m/z* ranges of the peaks are
 provided in columns `"rtmin"`, `"rtmax"`, `"mzmin"` and `"mzmax"`, the
 integrated peak area (i.e., the *abundance* of the ion) in column `"into"`, the
 maximal signal of the peak in column `"maxo"` and the signal to noise ratio in
@@ -807,7 +807,7 @@ mz_diff
 ```
 
 We can also express these differences in ppm (parts per million) of the average
-m/z of the peaks.
+*m/z* of the peaks.
 
 ```{r}
 mz_diff * 1e6 / mean(unlist(mz(srn_1)))
@@ -875,7 +875,7 @@ As an additional visual quality assessment, we can also plot the location of the
 identified chromatographic peaks in the *m/z*-retention time space for each data
 file using the `plotChromPeaks` function.
 
-```{r plotChromPeaks, fig.cap = "Location of the identified chromatographic peaks in the m/z - rt space.", fig.height = 7, fig.width = 12}
+```{r plotChromPeaks, fig.cap = "Location of the identified chromatographic peaks in the *m/z* - rt space.", fig.height = 7, fig.width = 12}
 par(mfrow = c(1, 2))
 plotChromPeaks(data, 1)
 plotChromPeaks(data, 2)
@@ -1190,9 +1190,9 @@ and looks more like a vertical line). The default settings (`bw = 30`) thus seem
 to correctly define features. It is however advisable to evaluate settings on
 multiple, not a single example slice. We thus below extract a chromatogram for
 an *m/z* slice containing signal for known isomers betaine and valine ([M+H]+
-m/z 118.08625).
+*m/z* 118.08625).
 
-```{r correspondence-bw, fig.cap = "Correspondence analysis with default settings on an m/z slice containing signal from multiple ions.", fig.width = 10, fig.height = 7}
+```{r correspondence-bw, fig.cap = "Correspondence analysis with default settings on an *m/z* slice containing signal from multiple ions.", fig.width = 10, fig.height = 7}
 #' Plot the chromatogram for an m/z slice containing betaine and valine
 mzr <- 118.08625 + c(-0.01, 0.01)
 chr_2 <- chromatogram(data, mz = mzr, aggregationFun = "max")
@@ -1208,7 +1208,7 @@ feature (indicated with the grey rectangle). Signal from different ions would
 thus be treated as a single entity. We repeat the analysis below with a strongly
 reduced value for parameter `bw`.
 
-```{r correspondence-bw-fix, fig.cap = "Correspondence analysis with reduced bw setting on a m/z slice containing signal from multiple ions.", fig.width = 10, fig.height = 7}
+```{r correspondence-bw-fix, fig.cap = "Correspondence analysis with reduced bw setting on a *m/z* slice containing signal from multiple ions.", fig.width = 10, fig.height = 7}
 #' Reducing the bandwidth
 pdp <- PeakDensityParam(sampleGroups = sampleData(data)$group, bw = 1.8)
 plotChromPeakDensity(chr_2, param = pdp)
@@ -1262,7 +1262,7 @@ plotChromPeakDensity(chr_2, simulate = FALSE)
 ```
 
 We evaluate the results also on a different slice containing signal for ions
-from isomers leucine and isoleucine ([M+H]+ m/z 132.10191).
+from isomers leucine and isoleucine ([M+H]+ *m/z* 132.10191).
 
 ```{r correspondence-evaluate-2, fig.cap = "Result of correspondence on a slice containing the isomers leucine and isoleucine.", fig.width = 10, fig.heigt = 7}
 #' Extract chromatogram with signal for isomers leucine and isoleucine
@@ -1575,7 +1575,7 @@ particular, we show how multiple EICs can be combined in a single plot.
 TODO: continue here:
 
 - `plotChromPeaks`
-- extract chromatograms for a specific rt range and full m/z.
+- extract chromatograms for a specific rt range and full *m/z*.
 - visualize that as a stacked plot.
 
 
