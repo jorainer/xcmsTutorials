@@ -640,7 +640,7 @@ color coded. Below we subset the data to the *m/z* - retention time region
 containing signal for serine and visualize the full MS data measured for that
 region in both data files.
 
-```{r serine-profile-mode-data, fig.cap = "Profile data for Serine.", fig.width = 10, fig.height = 5, fig.pos = "h!"}
+```{r serine-profile-mode-data, fig.cap = "Profile data for Serine."}
 data |>
 filterRt(rt = c(175, 189)) |>
 filterMz(mz = c(106.02, 106.07)) |>
@@ -665,7 +665,7 @@ maximum signal for each mass peak in each spectrum. Finally, we replace the
 spectra in data (`MsExperiment`) object with the centroided spectra and
 visualize the result repeating the visualization from above.
 
-```{r centroiding, fig.cap = "Centroided data for Serine.", fig.width = 10, fig.height = 5, fig.pos = "h!"}
+```{r centroiding, fig.cap = "Centroided data for Serine."}
 #' Smooth and centroid the spectra data
 sps_cent <- spectra(data) |>
 smooth(method = "SavitzkyGolay", halfWindowSize = 6L) |>
@@ -978,7 +978,7 @@ As an additional visual quality assessment, we can also plot the location of the
 identified chromatographic peaks in the *m/z* - retention time space for each
 data file using the `plotChromPeaks` function.
 
-```{r plotChromPeaks, fig.cap = "Location of the identified chromatographic peaks in the *m/z* - rt space.", fig.height = 7, fig.width = 12}
+```{r plotChromPeaks, fig.cap = "Location of the identified chromatographic peaks in the *m/z* - rt space."}
 #' Plot the location of peaks in the m/z - rt plane
 par(mfrow = c(1, 2))
 plotChromPeaks(data, 1)
@@ -1059,7 +1059,7 @@ data <- refineChromPeaks(data, param = mpp)
 ```
 
 
-LLLLLLLLL
+
 ## Alignment
 
 While chromatography helps to better discriminate between analytes it is also
@@ -1070,15 +1070,15 @@ set. In the `chromatogram` call, we set the optional parameter `chromPeaks =
 "none"` to avoid the additional extraction of all identified chromatographic
 peaks.
 
-```{r alignment-bpc-raw, fig.cap = "BPC of all files.", fig.width = 8, fig.height = 4}
+```{r alignment-bpc-raw, fig.cap = "BPC of all files."}
 #' Extract base peak chromatograms
 bpc_raw <- chromatogram(data, aggregationFun = "max", chromPeaks = "none")
 plot(bpc_raw, peakType = "none")
 ```
 
-While both samples were measured with the same setup on the same day, slight
-drifts of the signal are visible. These were also already visible in the EIC for
-serine, that we plot again below.
+While both samples were measured with the same setup in the same measurement
+run, slight drifts of the signal are visible. These were also already visible in
+the EIC for serine, that we plot again below.
 
 ```{r}
 plot(serine_chr, xlim = c(175, 190))
@@ -1086,8 +1086,9 @@ grid()
 ```
 
 For the serine signal, there seems to be a retention time shift of about 1
-second. The alignment step aims to minimize these retention time differences
-between all samples within an experiment.
+second between the two samples. The alignment step aims to minimize these
+retention time differences between all samples within an experiment (see below
+for an illustration).
 
 ![Alignment](images/alignment.png)
 
@@ -1098,9 +1099,9 @@ with the respective parameter objects:
 - `PeakGroupsParam`: the *peakGroups* [@Smith:2006ic] method aligns samples
   based on the retention times of a set of so called *hook peaks* (or
   housekeeping peaks) in the different samples of an experiment. These peaks are
-  supposed to represent signal from ions expected to be present in most samples
-  and the method aligns the samples by minimizing the present differences
-  between the retention times of these peaks.
+  supposed to represent signal from ions expected to be present in most of the
+  samples of an experiment and the method aligns these samples by minimizing the
+  between-sample retention time differences observed for these peaks.
 
 - `ObiwarpParam`: *obiwarp* [@Prince:2006jj] performs retention time adjustment
   based on the full *m/z* - retention time data. See the documentation for
@@ -1113,27 +1114,28 @@ would also be possible to estimate them on a subset of samples, such as
 repeatedly measured QC samples (e.g. sample pools) and adjust the full
 experiment based on these. See the alignment section in the *xcms*
 [vignette](https://bioconductor.org/packages/release/bioc/vignettes/xcms/inst/doc/xcms.html)
-for more information on this subset-based alignment.
+for more information on this subset-based alignment. Note that such a
+subset-based alignment requires the samples to be loaded in the order in which
+they were measured.
 
 For our example we use the *peakGroups* method that, as mentioned above, aligns
 samples based on the retention times of *hook peaks* (or housekeeping peaks). To
-define these we need however to first group detected chromatographic peaks
-across samples using an initial correspondence analysis. Below we use the
-*peakDensity* method for correspondence. Details about this method and
-explanations on the choices of its parameters are provided in the next
-section. In brief, parameter `sampleGroups` defines to which sample group of the
-experiment individual samples belong to, and parameter `minFraction` specifies
-the proportion of samples (of one sample group) in which a chromatographic peak
-needs to be identified (for a particular *m/z* - retention time region) to group
-them into an LC-MS feature. For our example we use the sample group definition
-in `sampleData` of our `data` variable for parameter `sampleGroups` and set
-`minFraction = 1` requiring thus a chromatographic peak to be identified in both
-samples to define a feature. If a subset alignment is performed on
-e.g. repeatedly measured QC samples, the `minFraction` parameter could be set as
-high as 0.8 or 0.9 while otherwise lower values might be advisable. Since the
-aim of this initial correspondence is to define some (presumably well separated)
-groups of chromatographic peaks across the samples, its settings don't need to
-be fully optimized.
+define these, we need to first run an initial correspondence analysis to group
+chromatographic peaks across samples. Below we use the *peakDensity* method for
+correspondence. Details about this method and explanations on the choices of its
+parameters are provided in the next section. In brief, parameter `sampleGroups`
+defines to which sample group of the experiment individual samples belong to,
+and parameter `minFraction` specifies the proportion of samples (of one sample
+group) in which a chromatographic peak needs to be identified (for a particular
+*m/z* - retention time region) to group them into an LC-MS feature. For our
+example we use the sample group definition in the `sampleData` of our `data`
+variable and set `minFraction = 1` requiring thus a chromatographic peak to be
+identified in 100% of available samples to define a feature. Generally, if
+correspondence is performed on more heterogeneous samples `minFraction` values
+between 0.6 and 0.8 could be used instead. Since the aim of this initial
+correspondence is to define some (presumably well separated) groups of
+chromatographic peaks across the samples, its settings does not need to be fully
+optimized.
 
 ```{r}
 #' Define the settings for the initial peak grouping - details for
@@ -1145,16 +1147,23 @@ data <- groupChromPeaks(data, pdp)
 
 This step now grouped chromatographic peaks across samples and defined so called
 LC-MS features (or simply features). We can thus now run the alignment using the
-*peakGroups* algorithm. Parameter `minFraction` can be used to control the
-selection of the hook peaks. By setting `minFraction = 1` all features with
-identified chromatographic peaks in every sample will be used as hook peaks. The
-algorithm will minimize the between sample differences in retention time for all
-of these peaks. Parameter `span` defines the degree of smoothing of the loess
-function that is used to allow different regions along the retention time axis
-to be adjusted by a different factor. A value of 0 will most likely cause
-overfitting, while 1 would cause all retention times of a sample to be shifted
-by a constant value. Values between 0.4 and 0.6 seem to be reasonable for most
-experiments.
+*peakGroups* algorithm. The main parameter to define the hook peaks is (again)
+`minFraction`. Similar to the definition above, `minFraction` refers to the
+proportion of samples in which a chromatographic peak needs to be present. By
+setting `minFraction = 1` we base the alignment on features with peaks
+identified in 100% of the samples in the data set. For alignments that are
+based on repeatedly measured samples (e.g. also for subset-based alignment on
+sample pools) values `>= 0.9` can be used. Otherwise, values between 0.7 and 0.9
+might be more advisable to ensure that a reasonable set of features are
+selected.
+
+After having identified the features that should be used as *hook peaks* the
+algorithm minimizes the observed between-sample retention time differences for
+these. Parameter `span` defines the degree of smoothing of the loess function
+that is used to allow different regions along the retention time axis to be
+adjusted by a different factor. A value of 0 will most likely cause overfitting,
+while 1 would cause all retention times of a sample to be shifted by a constant
+value. Values between 0.4 and 0.6 seem to be reasonable for most experiments.
 
 ```{r alignment-correspondence}
 #' Define settings for the alignment
@@ -1162,22 +1171,16 @@ pgp <- PeakGroupsParam(minFraction = 1, span = 0.6)
 data <- adjustRtime(data, param = pgp)
 ```
 
-Alignment did not only adjust retention times of the individual (MS1) spectra of
-all files, but also adjusted the retention times of the identified
-chromatographic peaks, as well as the retention times of possibly present MS2
-spectra. The adjusted retention times are stored as a new spectra variable
-`"rtime_adjusted"` in the result object's `Spectra`. The `rtime` function on the
-result object will also by default return these values.
-
-After alignment it is suggested to evaluate its results using the
+After an alignment it is suggested to evaluate its results using the
 `plotAdjustedRtime` function. This function plots the differences between
 adjusted and raw retention times for each sample on the y-axis along the
-adjusted retention times on the x-axis. Points indicate the position of
+adjusted retention times on the x-axis (each line hence representing the
+retention time adjustment of one sample/file). Points indicate the position of
 individual hook peaks along the retention time axis, with a dotted line
 connecting the peaks belonging to the same feature (for which the algorithm
 minimized the difference in retention times).
 
-```{r alignment-result, fig.width = 8, fig.height = 4, fig.cap = "Alignment results."}
+```{r alignment-result, fig.cap = "Alignment results: differences between raw and adjusted retention times for each sample."}
 #' Plot the difference between raw and adjusted retention times
 plotAdjustedRtime(data)
 grid()
@@ -1186,11 +1189,11 @@ grid()
 As a rule of thumb, the differences between raw and adjusted retention times in
 the plot above should be reasonable. Also, if possible, hook peaks should be
 present along a wide span of the retention time range, to avoid the need for
-extrapolation (which usually results in a too strong adjustment).  For our
+extrapolation (which usually results in a too strong adjustment). For our
 example, the largest adjustments are between 1 and 2 seconds, which is
-reasonable given that the two samples were measured on the same day. Also,
-features used for the alignment (i.e. hook peaks) are spread across the full
-retention time range.
+reasonable given that the two samples were measured during the same measurement
+run. Also, features used for the alignment (i.e. hook peaks) are spread across
+the full retention time range.
 
 To evaluate the impact of the alignment we next also plot the BPC before and
 after alignment. In a similar way as before, we set `chromPeaks = "none"` in the
@@ -1198,7 +1201,7 @@ after alignment. In a similar way as before, we set `chromPeaks = "none"` in the
 chromatographic peaks in the returned chromatographic data.
 
 
-```{r bpc-raw-adjusted, fig.cap = "BPC before (top) and after (bottom) alignment.", fig.width = 10, fig.height = 8}
+```{r bpc-raw-adjusted, fig.cap = "BPC before (top) and after (bottom) alignment."}
 par(mfrow = c(2, 1))
 #' Plot the raw base peak chromatogram
 plot(bpc_raw)
@@ -1213,7 +1216,7 @@ adjustment. In addition to this general assessment, the alignment result should
 also be evaluated for selected compounds (or internal standards). We thus below
 plot the EIC for the *[M+H]+* ion for serine before and after alignment.
 
-```{r serine-xic-adjusted, fig.cap = "EIC for Serine before (left) and after (right) alignment", fig.width = 10, fig.height = 4}
+```{r serine-xic-adjusted, fig.cap = "EIC for Serine before (left) and after (right) alignment"}
 par(mfrow = c(1, 2), mar = c(4, 4.5, 1, 0.5))
 plot(serine_chr)
 grid()
@@ -1225,7 +1228,17 @@ plot(serine_chr_adj)
 grid()
 ```
 
-The serine peaks are also nicely aligned after retention time adjustment.
+The serine peaks are also nicely aligned after retention time adjustment. Again,
+it is advisable to evaluate the impact of the alignment on several EICs, ideally
+also spread along the retention time range.
+
+Note that `adjustRtime`, in addition to the retention times of the individual
+(MS1) spectra of all files, adjusted also the retention times of the identified
+chromatographic peaks, as well as retention times of possibly present MS2
+spectra. The adjusted retention times are stored as a new spectra variable
+`"rtime_adjusted"` in the result object's `Spectra`. The `rtime` function on the
+result object will by default return these (adjusted) values.
+
 
 
 ## Correspondence
@@ -1301,7 +1314,7 @@ multiple, not a single example slice. We thus below extract a chromatogram for
 an *m/z* slice containing signal for known isomers betaine and valine ([M+H]+
 *m/z* 118.08625).
 
-```{r correspondence-bw, fig.cap = "Correspondence analysis with default settings on an *m/z* slice containing signal from multiple ions.", fig.width = 10, fig.height = 7}
+```{r correspondence-bw, fig.cap = "Correspondence analysis with default settings on an *m/z* slice containing signal from multiple ions."}
 #' Plot the chromatogram for an m/z slice containing betaine and valine
 mzr <- 118.08625 + c(-0.01, 0.01)
 chr_2 <- chromatogram(data, mz = mzr, aggregationFun = "max")
@@ -1317,7 +1330,7 @@ feature (indicated with the grey rectangle). Signal from different ions would
 thus be treated as a single entity. We repeat the analysis below with a strongly
 reduced value for parameter `bw`.
 
-```{r correspondence-bw-fix, fig.cap = "Correspondence analysis with reduced bw setting on a *m/z* slice containing signal from multiple ions.", fig.width = 10, fig.height = 7}
+```{r correspondence-bw-fix, fig.cap = "Correspondence analysis with reduced bw setting on a *m/z* slice containing signal from multiple ions."}
 #' Reducing the bandwidth
 pdp <- PeakDensityParam(sampleGroups = sampleData(data)$group, bw = 1.8)
 plotChromPeakDensity(chr_2, param = pdp)
@@ -1362,7 +1375,7 @@ the results from the actual correspondence analysis (based also on the settings
 that were used) by setting `simulate = FALSE` in the `plotChromPeakDensity`
 call.
 
-```{r correspondence-evaluate, fig.cap = "Result of correspondence on a slice containing the isomers valine and betaine.", fig.width = 10, fig.heigt = 7}
+```{r correspondence-evaluate, fig.cap = "Result of correspondence on a slice containing the isomers valine and betaine."}
 #' Extract chromatogram including signal for betaine and valine
 chr_2 <- chromatogram(data, mz = 118.08625 + c(-0.01, 0.01),
                       aggregationFun = "max")
@@ -1373,7 +1386,7 @@ plotChromPeakDensity(chr_2, simulate = FALSE)
 We evaluate the results also on a different slice containing signal for ions
 from isomers leucine and isoleucine ([M+H]+ *m/z* 132.10191).
 
-```{r correspondence-evaluate-2, fig.cap = "Result of correspondence on a slice containing the isomers leucine and isoleucine.", fig.width = 10, fig.heigt = 7}
+```{r correspondence-evaluate-2, fig.cap = "Result of correspondence on a slice containing the isomers leucine and isoleucine."}
 #' Extract chromatogram with signal for isomers leucine and isoleucine
 chr_3 <- chromatogram(data, mz = 132.10191 + c(-0.01, 0.01),
                       aggregationFun = "max")
@@ -1448,7 +1461,7 @@ To illustrate this we below extract the *m/z* - retention time region for
 selected features, extract their EICs and plot them (using a different color for
 each sample).
 
-```{r gap-filling-example, fig.width = 10, fig.height = 8, fig.cap = "Examples of features for which a peak was only identified in one sample."}
+```{r gap-filling-example, fig.cap = "Examples of features for which a peak was only identified in one sample."}
 #' Extract the m/z-rt region for selected peaks
 mz_rt <- featureArea(data, features = c("FT026", "FT028", "FT246", "FT306"))
 mz_rt[, "rtmin"] <- mz_rt[, "rtmin"] - 2
@@ -1488,7 +1501,7 @@ sum(is.na(featureValues(data)))
 With `fillChromPeaks` we could thus *rescue* signal for all but 26
 features. Below we extract the EICs for these and visually inspect some of them.
 
-```{r gap-filling-missing, fig.width = 10, fig.height = 10, fig.cap = "Features with missing values even after gap-filling."}
+```{r gap-filling-missing, fig.cap = "Features with missing values even after gap-filling."}
 #' Identify features with missing values
 fts <- rownames(featureValues(data))[is.na(rowSums(featureValues(data)))]
 
@@ -1512,7 +1525,7 @@ chromatographic peak was detected.
 In contrast, for the 4 example features from above a signal was *rescued*. Below
 we visualize the gap-filled chromatographic peaks for these.
 
-```{r gap-filling-example-2, fig.width = 10, fig.height = 8}
+```{r gap-filling-example-2}
 #' Extract the m/z-rt region for selected peaks
 mz_rt <- featureArea(data, features = c("FT026", "FT028", "FT246", "FT306"))
 mz_rt[, "rtmin"] <- mz_rt[, "rtmin"] - 2
@@ -1535,7 +1548,7 @@ replaced with `NA`. Finally, after calculating the row averages for both
 matrices (excluding missing values), the values are plotted against each
 other.
 
-```{r comparison-detected-filled, fig.width = 8, fig.height = 8, fig.cap = "Detected (x-axis) against filled (y-axis) signal. The black solid line represents the identity line."}
+```{r comparison-detected-filled, fig.cap = "Detected (x-axis) against filled (y-axis) signal. The black solid line represents the identity line."}
 #' Define matrices with detected or filled-in feature values
 vals_detect <- featureValues(data, filled = FALSE)
 vals_filled <- featureValues(data)
