@@ -1245,7 +1245,7 @@ result object will by default return these (adjusted) values.
 
 The final step of the LC-MS preprocessing with *xcms* is the correspondence
 analysis, in which chromatographic peaks from the same types of ions (compounds)
-are grouped across samples to form a so called *LC-MS features*.
+are grouped across samples to form the so called *LC-MS features*.
 
 ![Correspondence](images/correspondence2_03.png)
 
@@ -1272,16 +1272,17 @@ similar retention time will result in a higher peak density at a certain
 retention time and are thus grouped together. The grouping depends on the
 *smoothness* of the density curve and can be configured with parameter `bw`.
 
-An illustration of this is shown in the sketch below.
+An illustration how chromatographic peaks within a small *m/z* range are grouped
+by the *peakDensity* method is shown in the sketch below.
 
 ![peak density](images/correspondence2_density.png)
 
-Settings for this type correspondence algorithm can be tested and evaluated in
-EICs. We thus below extract a chromatgram for a *m/z* slice containing signal
-for a *[M+H]+* ion of serine and evaluate the correspondence on that slice using
-the `plotChromPeakDensity` function with default parameters for the
-*peakDensity* method and using the sample group assignment defined in
-`sampleData`.
+Settings for this algorithm can be best tested and optimized using the
+`plotChromPeakDensity` function on extracted chromatograms. We below extract a
+chromatogram for a *m/z* slice containing signal for a *[M+H]+* ion of serine
+and evaluate the result from a *peakDensity* correspondence analysis using that
+function. We use the default settings (`bw = 30`) and use again the sample group
+assignment defined in `sampleData`.
 
 ```{r}
 #' Extract a chromatogram for a m/z range containing serine
@@ -1294,25 +1295,31 @@ pdp <- PeakDensityParam(sampleGroups = sampleData(data)$group, bw = 30)
 plotChromPeakDensity(chr_1, param = pdp)
 ```
 
-The upper panel in the plot above shows the chromatographic data with the
-identified peaks. The lower panel plots the retention time of identified
-chromatographic peaks on the x-axis against the index of the sample in which the
-peak was identified. Each chromatographic peak is thus indicated with a point in
-that plot. In our example there was one chromatographic peak identified in each
-sample at a retention time of about 180 seconds and these two peaks are thus
-shown. The black solid line represents the density estimation (distribution) of
-the identified chromatographic peaks along the retention time. The smoothness of
-this curve (which is created with the base R `density` function) is configured
-with the parameter `bw`. The *peakDensity* algorithm assigns all chromatographic
-peaks within the same *peak* of this density estimation curve to the same
-feature. Chromatographic peaks assigned to the same feature are indicated with a
-grey rectangle in that plot (for the present example, because retention times of
-the two chromatographic peaks are very similar, this rectangle is very narrow
-and looks more like a vertical line). The default settings (`bw = 30`) thus seem
-to correctly define features. It is however advisable to evaluate settings on
-multiple, not a single example slice. We thus below extract a chromatogram for
-an *m/z* slice containing signal for known isomers betaine and valine ([M+H]+
-*m/z* 118.08625).
+The upper panel in the plot shows the chromatographic data for the selected
+*m/z* slice with the identified peaks highlighted in grey. The lower panel plots
+the retention time of identified chromatographic peaks on the x-axis against the
+index of the sample in which the peak was identified. Each chromatographic peak
+is thus represented with a point in that plot (x-axis value being its retention
+time and the y-axis value the sample in which it was identified). In our example
+there was one chromatographic peak identified in each sample at a retention time
+of about 180 seconds and these two peaks are thus shown. The black solid line
+represents the density estimation (i.e. distribution or retention times) of the
+identified chromatographic peaks along the retention time axis. The smoothness
+of this curve (which is created with the base R `density` function) is
+configured with the parameter `bw`. The *peakDensity* algorithm assigns all
+chromatographic peaks within the same *peak* of this density estimation curve to
+the same feature. Chromatographic peaks assigned to the same feature are
+indicated with a grey rectangle in the plot. In the present example, because
+retention times of the two chromatographic peaks are very similar, this
+rectangle is very narrow and looks thus more like a vertical line. Based on this
+result, the default settings (`bw = 30`) seemed to correctly define features. It
+is however advisable to evaluate settings on multiple slices, ideally with
+signal from more than one compound being present. Such slices could be
+identified in e.g. a plot created with the `plotChromPeaks` function (see
+example in the chromatographic peak detection section).
+
+In our example we extract a chromatogram for an *m/z* slice containing signal
+for known isomers betaine and valine ([M+H]+ *m/z* 118.08625).
 
 ```{r correspondence-bw, fig.cap = "Correspondence analysis with default settings on an *m/z* slice containing signal from multiple ions."}
 #' Plot the chromatogram for an m/z slice containing betaine and valine
@@ -1325,7 +1332,7 @@ plotChromPeakDensity(chr_2, param = pdp)
 
 This slice contains signal from several ions resulting in multiple
 chromatographic peaks along the retention time axis. With the default settings,
-in particular `bw = 30`, all these peaks were however assigned to the same
+in particular with `bw = 30`, all these peaks were however assigned to the same
 feature (indicated with the grey rectangle). Signal from different ions would
 thus be treated as a single entity. We repeat the analysis below with a strongly
 reduced value for parameter `bw`.
@@ -1336,28 +1343,29 @@ pdp <- PeakDensityParam(sampleGroups = sampleData(data)$group, bw = 1.8)
 plotChromPeakDensity(chr_2, param = pdp)
 ```
 
-The `bw = 1.8` strongly reduced the smoothness of the density curve resulting in
-a higher number of density *peaks* and hence a nice grouping of (aligned)
-chromatographic peaks into separate features. Note that the height of the peaks
-of the density curve are not considered for the grouping. By having defined a
-`bw` appropriate for our data set we proceed and perform the correspondence
-analysis on the full data set. Other parameters of *peakDensity* are `binSize`
-and `minFraction`. The former defines the *m/z* widths of the slices along the
-*m/z* dimension the algorithm will iterate through. This value depends on the
-resolution (and noise) of the instrument, and should not be set to a too small
-value, but also not too large (to avoid peaks from different ions, with slightly
-different *m/z* but similar retention times, to be grouped into the same
-feature). The `minFraction` parameter (already discussed above) defines the
-proportion of samples within at least one sample group in which chromatographic
-peaks need to be identified in order to define a feature. For our example we use
-a `binSize = 0.02` hence grouping chromatographic peaks, with similar retention
-time, and with a difference in their *m/z* which is smaller than 0.02 into the
-same feature and `minFraction = 0.4` thus features will be defined if a
-chromatographic peak was identified in 50% of the samples (hence in at least on
-for the present data set).
+Setting `bw = 1.8` strongly reduced the smoothness of the density curve
+resulting in a higher number of density *peaks* and hence a nice grouping of
+(aligned) chromatographic peaks into separate features. Note that the height of
+the peaks of the density curve are not considered for the grouping.
+
+By having defined a `bw` appropriate for our data set, we proceed and perform
+the correspondence analysis on the full data set. Other parameters of
+*peakDensity* are `binSize` and `minFraction`. The former defines the *m/z*
+widths of the slices along the *m/z* dimension the algorithm will iterate
+through. This value depends on the resolution (and noise) of the instrument, and
+should not be set to a too small value, but also not too large (to avoid peaks
+from different ions, with slightly different *m/z* but similar retention times,
+to be grouped into the same feature). The `minFraction` parameter (already
+discussed above) defines the proportion of samples within at least one sample
+group in which chromatographic peaks need to be identified in order to define a
+feature. For our example we use a `binSize = 0.02` hence grouping
+chromatographic peaks, with similar retention time, and with a difference in
+their *m/z* that is smaller than 0.02 into the same feature and `minFraction =
+0.4` thus defining features for chromatographic peak that were identified in at
+least 50% of samples per sample group.
 
 ```{r correspondence-analysis}
-#' Define settings
+#' Set optimized settings
 pdp <- PeakDensityParam(sampleGroups = sampleData(data)$group, bw = 1.8,
                         minFraction = 0.4, binSize = 0.02)
 
@@ -1366,19 +1374,19 @@ data <- groupChromPeaks(data, param = pdp)
 data
 ```
 
-Over 300 features were thus identified in the present data set. Again, it is
-suggested to evaluate the results again for selected compounds/ions. We thus
-extract below again a chromatogram for an *m/z* range containing signals for
-betaine and valine (and several additional ions). After a correspondence
-analysis also features are extracted by the `chromatogram` call and we can show
-the results from the actual correspondence analysis (based also on the settings
-that were used) by setting `simulate = FALSE` in the `plotChromPeakDensity`
-call.
+Over 300 features were identified in our example data set. Again, it is
+suggested to evaluate the results on selected compounds/ions. We therefore
+extract below the chromatogram for the *m/z* range containing signals for
+betaine and valine. After a correspondence analysis also features are extracted
+by the `chromatogram` call and we can show the results from the actual
+correspondence analysis (based also on the settings that were used) by setting
+`simulate = FALSE` in the `plotChromPeakDensity` call.
 
 ```{r correspondence-evaluate, fig.cap = "Result of correspondence on a slice containing the isomers valine and betaine."}
 #' Extract chromatogram including signal for betaine and valine
 chr_2 <- chromatogram(data, mz = 118.08625 + c(-0.01, 0.01),
                       aggregationFun = "max")
+#' Setting simulate = FALSE to show the actual correspondence results
 plotChromPeakDensity(chr_2, simulate = FALSE)
 
 ```
@@ -1396,22 +1404,21 @@ plotChromPeakDensity(chr_3, simulate = FALSE)
 Despite being very close, chromatographic peaks of the two isomers were
 successfully grouped into separate features. Even the partially overlapping
 signal from a third ion eluting at about the same time and hence partially
-overlapping with the peak at a retention time of about 152 seconds was grouped
-into its own feature. It is at the discretion of the data analysts to define how
-fine or coarse the feature grouping should be. Especially for larger
+overlapping with the peak at a retention time of 152 seconds was grouped into
+its own, separate, feature. It is at the discretion of the data analysts to
+define how fine or coarse the feature grouping should be. Especially for larger
 experiments, with more samples and also larger variation in retention time it
 might not always be possible to completely separate all closely eluting ions
 from each other and sometimes it might be acceptable to group them into a single
-feature (keeping in mind that it could however represent signal from different
-ions/compounds).
+feature (keeping in mind that this feature would then however represent signal
+from different ions/compounds).
 
 Similar to the peak detection and alignment results, also the results from the
-correspondence analysis were added to the `XcmsExperiment` object. These
-can be extracted with the `featureDefinitions` function, that extracts the
-*definition* of the LC-MS features and the `featureValues` function that
-extracts the numerical matrix with the feature abundances (in all
-samples). Below we extract the definition of the features and display the first
-6 rows
+correspondence analysis were added to the `XcmsExperiment` object. These can be
+extracted with the `featureDefinitions` function, that extracts the *definition*
+of the LC-MS features and the `featureValues` function that extracts the
+numerical matrix with the feature abundances (in all samples). Below we extract
+the definition of the features and display the first 6 rows
 
 ```{r correspondence-featureDefinitions}
 #' Definition of the features
@@ -1423,45 +1430,50 @@ Each row defines one feature and provides information on it's *m/z* (column
 number of chromatographic peaks that were assigned to the feature and the MS
 level. Column `"peakidx"` provides the indices of the chromatographic peaks in
 the `chromPeaks` matrix that were assigned to the feature - but generally users
-will not need or extract that information. The feature abundance matrix, which
-is the final result of the *xcms* preprocessing, can be extracted with the
-`featureValues` function. By default, with parameter `method = "maxint"`, it
-returns for each feature the integrated peak signal of the chromatographic peak
-with the highest signal per sample. Note that this has only an effect for
-features with more than one chromatographic peak per sample (i.e., if multiple
-chromatographic peaks in the **same** sample were grouped into the same feature
-because of their closeness in retention time). An alternative to the above
-mentioned default would be to set `method = "sum"` that would sum the
-intensities for such multi-peak features. Below we extract the feature
+will not need or extract that information.
+
+The feature abundance matrix, which is the final result of the *xcms*
+preprocessing, can be extracted with the `featureValues` function. By default,
+with parameter `method = "maxint"`, it returns for each feature the integrated
+peak signal of the chromatographic peak with the highest signal per sample. Note
+that this has only an effect for features with more than one chromatographic
+peak per sample (i.e., if multiple chromatographic peaks in the **same** sample
+were grouped into the feature because of their closeness in retention
+time). Setting `method = "sum"` would in contrast sum the abundances of such
+chromatographic peaks. Note that `method = "sum"` is only suggested if, like in
+our example, neighboring and overlapping peaks per sample were merged to avoid
+an overestimation of the feature abundance. Below we extract the feature
 abundances and show the first 6 rows.
 
+
 ```{r}
+#' Get abundances for the first 6 features
 featureValues(data, method = "sum") |> head()
 ```
 
 We could now use this feature matrix for any downstream analysis. Such feature
-matrix might however, as can also be seen for the second row (feature *FT002*),
-contain missing values. These represent features for which no chromatographic
-peak was identified in one (or more) sample(s). While a number of methods exist
-to deal with such missing values, it might be sometimes more advisable to
-*rescue* signal instead of imputing it. This will be explained in the next
-section.
+matrix might however, as can also be seen in the second row above (feature
+*FT002*), contain missing values. These represent features for which no
+chromatographic peak was identified in one (or more) sample(s). While a number
+of imputation methods exist to deal with missing values, it might be more
+advisable to instead *rescue* signal. *xcms* provides such *gap filling* which
+is explained in the next section.
 
 
 ## Gap filling
 
 Missing values in feature matrices from an *xcms*-based preprocessing represent
 cases in which, in a particular sample, no chromatographic peak was identified
-in the *m/z* - retention time region of the feature. This could happen because
-the ion might simply not present in that sample, or because the peak
-detection algorithm failed to identify a chromatographic peak in that sample,
-either because the signal was too noisy, or too low (or a combination of both).
+in the *m/z* - retention time region of the feature. This could either represent
+a truly missing value (because the ion/compound was not present in that sample)
+or a failure of the peak detection algorithm to identify a peak (either because
+the measured signal was too noisy, or too low, or a combination of both).
 
 To illustrate this we below extract the *m/z* - retention time region for
 selected features, extract their EICs and plot them (using a different color for
 each sample).
 
-```{r gap-filling-example, fig.cap = "Examples of features for which a peak was only identified in one sample."}
+```{r features-missing-values, fig.cap = "Examples of features for which a peak was only identified in one sample."}
 #' Extract the m/z-rt region for selected peaks
 mz_rt <- featureArea(data, features = c("FT026", "FT028", "FT246", "FT306"))
 mz_rt[, "rtmin"] <- mz_rt[, "rtmin"] - 2
@@ -1473,18 +1485,20 @@ chrs <- chromatogram(data, mz = mz_rt[, c("mzmin", "mzmax")],
 plot(chrs, col = c("red", "blue"), lwd = 2)
 ```
 
-For all these feature, chromatographic peak detection failed to identify a peak
-in one of the two samples. For the features in the upper panel, the signal was
-most likely too low, while for the bottom left feature the signal was likely too
-noisy, and for the bottom right too sparse (i.e. to few data points to properly
-detect a peak). In all cases, however, some signal from presumably the same ion
-was measured in both samples, but in only one of the two a peak was
-identified. The aim of the *gap filling* is now to rescue signal for these
-features by integrating the intensities measured within the feature's *m/z* -
-retention time area in the sample in which no chromatographic peak was
-detected. In *xcms* this can be done with the `fillChromPeaks` function and the
-`ChromPeakAreaParam` to configure this step. Below we perform this gap filling
-showing also the number of missing values before and after running
+Indeed, for all these feature, chromatographic peak detection failed to identify
+a peak in one of the two samples. For the features in the upper panel, the
+signal was most likely too low, while for the bottom left feature the signal was
+likely too noisy, and for the bottom right too sparse (i.e. to few data points
+to properly detect a peak). In all cases, however, signal from (presumably)
+the same ion was measured in both samples. Thus, reporting a missing value would
+not be correct for these cases.
+
+The aim of the *gap filling* is now to rescue signal for such features by
+integrating the intensities measured within the feature's *m/z* - retention time
+area in the sample(s) in which no chromatographic peak was detected. In *xcms*
+this can be done with the `fillChromPeaks` function and the `ChromPeakAreaParam`
+which allows to configure this algorithm. Below we perform this gap filling
+summing also the number of missing values before and after running
 `fillChromPeaks`.
 
 ```{r fillChromPeaks}
@@ -1494,7 +1508,7 @@ sum(is.na(featureValues(data)))
 #' Perform gap filling
 data <- fillChromPeaks(data, param = ChromPeakAreaParam())
 
-#' How many missing values after
+#' Number of missing values after gap filling
 sum(is.na(featureValues(data)))
 ```
 
@@ -1525,7 +1539,7 @@ chromatographic peak was detected.
 In contrast, for the 4 example features from above a signal was *rescued*. Below
 we visualize the gap-filled chromatographic peaks for these.
 
-```{r gap-filling-example-2}
+```{r features-missing-values-filled}
 #' Extract the m/z-rt region for selected peaks
 mz_rt <- featureArea(data, features = c("FT026", "FT028", "FT246", "FT306"))
 mz_rt[, "rtmin"] <- mz_rt[, "rtmin"] - 2
@@ -1537,21 +1551,24 @@ chrs <- chromatogram(data, mz = mz_rt[, c("mzmin", "mzmax")],
 plot(chrs, col = c("red", "blue"), lwd = 2)
 ```
 
-A nice way to check that gap-filling was able to correctly *rescue* signals is
-to plot, for features with at least one missing value, the average detected
-against the average filled-in signal. Ideally, this should be done on QC samples
-or other repeatedly measured samples were no difference in abundance between
-features is expected. The code below extracts first only the detected feature
-values (by setting `filled = FALSE` in the `featureValues` call), then the
-detected and filled-in signal in which the detected signal is subsequently
-replaced with `NA`. Finally, after calculating the row averages for both
-matrices (excluding missing values), the values are plotted against each
-other.
+A nice way to check that gap-filling was able to correctly rescue signals is to
+plot, for features with at least one missing value, the average detected against
+the average filled-in signal. Ideally, this should be done on QC samples or
+other repeatedly measured samples were no difference in feature abundance
+between samples is expected.
+
+The code below extracts first only the detected feature values (by setting
+`filled = FALSE` in the `featureValues` call), then the detected **and**
+filled-in signal in which the detected signal is subsequently replaced with
+`NA`. Finally, after calculating the row averages for both matrices (excluding
+missing values), the values are plotted against each other.
 
 ```{r comparison-detected-filled, fig.cap = "Detected (x-axis) against filled (y-axis) signal. The black solid line represents the identity line."}
-#' Define matrices with detected or filled-in feature values
+#' Get only detected signal
 vals_detect <- featureValues(data, filled = FALSE)
+#' Get detected and filled-in signal
 vals_filled <- featureValues(data)
+#' Replace detected signal with NA
 vals_filled[!is.na(vals_detect)] <- NA
 
 #' Identify features with at least one filled peak
@@ -1568,14 +1585,15 @@ avg_filled <- avg_filled[has_filled]
 #' plot the values against each other (in log2 scale)
 plot(log2(avg_detect), log2(avg_filled),
      xlim = range(log2(c(avg_detect, avg_filled)), na.rm = TRUE),
-     ylim = range(log2(c(avg_detect, avg_filled)), na.rm = TRUE))
+     ylim = range(log2(c(avg_detect, avg_filled)), na.rm = TRUE),
+     pch = 21, bg = "#00000080")
 grid()
 abline(0, 1)
 ```
 
 As expected, detected signal is generally higher than filled-in signal. For the
 biggest part (in particular for higher intensities), filled-in and detected
-feature values are similar suggesting that the gap-filling step indeed rescued
+feature values are similar suggesting that the gap filling step indeed rescued
 signal.
 
 
@@ -1583,10 +1601,11 @@ signal.
 
 The *xcms* preprocessing results are all stored within an `XcmsExperiment`
 object. This includes the identified chromatographic peaks, the alignment
-results as well as the correspondence results. In addition, this result object
-keeps track of all performed processing steps and contains also the individual
-parameter objects used in the various preprocessing results. These can be
-extracted with the `processHistory` function:
+results as well as the correspondence results. In addition, to guarantee
+reproducibility, this result object keeps track of all performed processing
+steps and contains also the individual parameter objects used in the various
+preprocessing steps. These can be extracted with the `processHistory`
+function:
 
 ```{r}
 #' Process history
@@ -1600,15 +1619,18 @@ An individual parameter object can be extracted as follows:
 processHistory(data)[[1]]@param
 ```
 
+Thus, the used preprocessing algorithms along with all their settings are
+reported along the preprocessing results.
+
 As described above, values for the individual features can be extracted from the
 result object with the `featureValues` function and the definition of the
 features (which could be used for an initial annotation of the features based on
 their *m/z* and/or retention times) using the `featureDefinitions` function. In
 addition, the `XcmsExperiment` result object, through the internal `Spectra`
 object, keeps a *link* to the full MS data used for the analysis. For downstream
-analyses, that don't need access to these MS data anymore the preprocessing
+analyses, that don't need access to this MS data anymore the preprocessing
 results could be represented equally well using a `SummarizedExperiment` object,
-which is Bioconductor's standard container for large scale omics data. *xcms*
+which is Bioconductor's standard container for large-scale omics data. *xcms*
 provides with the `quantify` function a convenience function to extract all
 results from an `XcmsExperiment` result object and return it as a
 `SummarizedExperiment`. This function takes the same parameters than the
@@ -1641,7 +1663,6 @@ assay(res) |> head()
 ```
 
 
-
 ## What next?
 
 After preprocessing, the data could be normalized or scaled to remove any
@@ -1657,11 +1678,11 @@ available in R.
 As mentioned above, many chromatographic peaks (and subsequently also features)
 in untargeted metabolomics data sets will represent isotopes or also different
 ions/adducts of the same compound. The `r Biocpkg("CAMERA")` package aimed to
-identify and group such features in a data set. Such feature grouping
+identify and group such features in a data set. A similar feature grouping
 (compounding) can also be done for preprocessing results from newer versions of
-*xcms* using the `r Biocpkg("MsFeatures")` package, that enables grouping of
-features through a variety of different properties. See also the [feature
-grouping
+*xcms* using the `r Biocpkg("MsFeatures")` package. This package enables
+grouping of features through a variety of different methods. See also the
+[feature grouping
 vignette](https://sneumann.github.io/xcms/articles/LC-MS-feature-grouping.html)
 in *xcms* for more details.
 
