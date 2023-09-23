@@ -811,15 +811,16 @@ below).
 plot(serine_chr)
 ```
 
-For serine, the chromatographic peak is thus about 5 seconds wide. We thus adapt
-the `peakwidth` for the present data set and repeat the peak detection using
-these settings. In general, the lower and upper peak width should be set to
-include most of the chromatographic peak widths. For the present data set we set
-the values to 2 to 10 seconds. In addition, by setting `integrate = 2`, we
-select a different peak boundary estimation algorithm. This works particularly
-well for non-gaussian peak shapes and ensures that also signal from peak's tail
-is integrated (eventually re-run the code with the default `integrate = 1` to
-compare the two approaches).
+For serine, the chromatographic peak is about 5 seconds wide. We thus adapt the
+`peakwidth` for the present data set and repeat the peak detection using these
+settings. In general, the lower and upper peak width should be set to include
+most of the chromatographic peak widths. For the present data set we set the
+values to 2 to 10 seconds, i.e., to about half and two times the expected peak
+width. In addition, by setting `integrate = 2`, we select a different peak
+boundary estimation algorithm. This works particularly well for non-gaussian
+peak shapes and ensures that also signal from the peak's tail is integrated
+(eventually re-run the code with the default `integrate = 1` to compare the two
+approaches).
 
 ```{r centWave-adapted, fig.cap = "EIC for Serine with detected chromatographic peak", results = "hide"}
 cwp <- CentWaveParam(peakwidth = c(2, 10), integrate = 2)
@@ -832,7 +833,10 @@ plot(serine_chr)
 
 Acceptable values for parameter `peakwidth` can thus be derived through visual
 inspection of EICs for ions known to be present in the sample (e.g. of internal
-standards). Ideally, this should be done for several compounds/ions.
+standards). Ideally, this should be done for several compounds/ions. Tip:
+ensure that the EIC contains also enough signal left and right of the actual
+chromatographic peak to allow *centWave* to properly estimate the background
+noise. Alternatively, reduce the value for the `snthresh` parameter.
 
 With our data set-specific `peakwidth` we were able to detect the peak for
 serine (highlighted in grey in the plot above). We can now use the `chromPeaks`
@@ -844,18 +848,18 @@ chromPeaks(serine_chr)
 ```
 
 The result is returned as a `matrix` with each row representing one identified
-chromatographic peak. The retention time and *m/z* ranges of the peaks are
-provided in columns `"rtmin"`, `"rtmax"`, `"mzmin"` and `"mzmax"`, the
-integrated peak area (i.e., the *abundance* of the ion) in column `"into"`, the
-maximal signal of the peak in column `"maxo"` and the signal to noise ratio in
-column`"sn"`. With our adapted settings we were thus able to identify a
-chromatographic peak for the serine ion in each of the two samples.
+chromatographic peak. The retention time ranges of the peaks are provided in
+columns `"rtmin"` and `"rtmax"`, the integrated peak area (i.e., the *abundance*
+of the ion) in column `"into"`, the maximal signal of the peak in column
+`"maxo"` and the signal to noise ratio in column`"sn"`. With our adapted
+settings we were thus able to identify a chromatographic peak for the serine ion
+in each of the two samples.
 
 The second important parameter for *centWave* is `ppm` which is used in the
 initial definition of the *regions of interest* (ROI) in which the actual peak
 detection is then performed. To define these ROI, the algorithm evaluates for
 each mass peak in a spectrum whether a mass peak with a similar *m/z* (and a
-reasonable high intensity) is also found in the following spectrum. For this,
+reasonably high intensity) is also found in the subsequent spectrum. For this,
 only mass peaks with a difference in their *m/z* smaller than `ppm` in
 consecutive scans are considered. To illustrate this, we plot again the full
 MS data for the data subset containing signal for serine.
@@ -926,29 +930,28 @@ data <- findChromPeaks(data, param = cwp)
 ```
 
 The results form the chromatographic peak detection were added by the
-`findChromPeaks` to our `data` variable which now is an
-`XcmsExperiment` object that, by extending the `MsExperiment` class inherits all
-of its functionality and properties, but in addition contains also all *xcms*
-preprocessing results.
+`findChromPeaks` to our `data` variable which now is an `XcmsExperiment` object
+that, by extending the `MsExperiment` class inherits all of its functionality
+and properties, but in addition contains also all *xcms* preprocessing results.
 
 ```{r}
 data
 ```
 
 We can extract the results from the peak detection step (as above) with the
-`chromPeaks` function. The optional parameters `rt` and `mz` would allow in
-addition to extract peak detection results for a specific *m/z* - retention time
-region. In our example we extract all chromatographic peaks between a *m/z*
-range from 106 to 108 and a retention time from 150 to 190.
+`chromPeaks` function. The optional parameters `rt` and `mz` would allow to
+extract peak detection results for a specified *m/z* - retention time region. In
+our example we extract all chromatographic peaks between an *m/z* range from 106
+to 108 and a retention time from 150 to 190.
 
-```{r xcmsnexp}
+```{r}
 #' Access the peak detection results from a specific m/z - rt area
 chromPeaks(data, mz = c(106, 108), rt = c(150, 190))
 ```
 
 Again, each row in this matrix contains one identified chromatographic peak with
 columns `"mz"`, `"mzmin"`, `"mzmax"`, `"rt"`, `"rtmin"` and `"rtmax"` defining
-it's *position* (and size) in the *m/z*-rt plane and `"into"` and `"maxo"` its
+it's *position* (and size) in the *m/z* - rt plane and `"into"` and `"maxo"` its
 (integrated and maximum) intensity. Column `"sample"` indicates in which of our
 samples (data files) the peak was identified.
 
@@ -963,18 +966,20 @@ determine (and eventually) plot the number of identified chromatographic peaks
 per sample. Below we count the number of peaks per sample.
 
 ```{r}
+#' Count peaks per file
 chromPeaks(data)[, "sample"] |>
     table()
 ```
 
 About the same number of peaks was identified, which is to be expected since
-both files contain measurements from the same QC sample pool.
+both files contain measurements from the same sample (the QC pool).
 
 As an additional visual quality assessment, we can also plot the location of the
-identified chromatographic peaks in the *m/z*-retention time space for each data
-file using the `plotChromPeaks` function.
+identified chromatographic peaks in the *m/z* - retention time space for each
+data file using the `plotChromPeaks` function.
 
 ```{r plotChromPeaks, fig.cap = "Location of the identified chromatographic peaks in the *m/z* - rt space.", fig.height = 7, fig.width = 12}
+#' Plot the location of peaks in the m/z - rt plane
 par(mfrow = c(1, 2))
 plotChromPeaks(data, 1)
 plotChromPeaks(data, 2)
@@ -985,10 +990,10 @@ Again, similar pattern are expected to be present for the two data files.
 After chromatographic peak detection it is generally a good idea to visually
 inspect individual chromatographic peaks to evaluate the performance of the peak
 detection step. This could be done by plotting EICs of known compounds/ions in
-the data or by randomly selected chromatographic peaks. To illustrate this we
+the data or of randomly selected chromatographic peaks. To illustrate this we
 define below a matrix with *m/z* and retention time ranges for a set of
-(pre)selected peaks. The same matrix could also be created for randomly selected
-peaks or it could also be defined manually. For our example we further expand
+(pre)selected peaks. The same matrix could also be created either by randomly
+selecting peaks or by defining it manually. For our example we further expand
 the retention time and *m/z* ranges of the peaks, extract the EICs with the
 `chromatogram` function and finally plot these. Identified chromatographic peaks
 within the plotted regions will by default be highlighted in a semitransparent
@@ -1014,20 +1019,23 @@ plot(eics)
 
 While the peak detection worked nicely for the signals in the upper row, it
 failed to define chromatographic peaks containing the full signal in the lower
-row. In both cases, the signal was split into separate chromatographic
-peaks. This is a common problem with *centWave* on noisy and broad signals. We
-could either try to adapt the *centWave* settings and repeat the chromatographic
-peak detection or use the `refineChromPeaks` function that allows to
-post-process peak detection results and fix problems such as those observed
-above (see also the documentation of the `refineChromPeaks` function for all
-possible refinement options). To fuse the wrongly split peaks in the second row,
-we use the `MergeNeighboringPeaksParam` algorithm and configure it to merge all
+row. In both cases, the signal was split into separate chromatographic peaks
+within the same sample. This is a common problem with *centWave* on noisy and
+broad signals. We could either try to adapt the *centWave* settings and repeat
+the chromatographic peak detection or use the `refineChromPeaks` function that
+allows to post-process peak detection results and fix problems such as those
+observed above (see also the documentation of the `refineChromPeaks` function
+for all possible refinement options).
+
+To fuse the wrongly split peaks in the second row, we use the
+`MergeNeighboringPeaksParam` algorithm and configure it to merge all
 chromatographic peaks with a similar *m/z* that are less than 8 seconds apart
-from each other on the retention time axis (parameter `expandRt = 4`, distance
-tail to head of the peaks should thus be less than `2 * expandRt`) and for which
-the signal (intensity) between the two peaks is higher than 75% of the smaller
-apex intensity of the two peaks (parameter `minProp = 0.75`). We below apply
-these settings on the EICs and evaluate the result of this post-processing.
+from each other on the retention time axis (parameter `expandRt = 4`; the
+distance tail to head of the peaks evaluated for merging should thus be less
+than `2 * expandRt`) and for which the signal (intensity) between the two peaks
+is higher than 75% of the smaller apex intensity of the two peaks (parameter
+`minProp = 0.75`). We below apply these settings on the EICs and evaluate the
+result of this post-processing.
 
 ```{r}
 #' Define the setting for the peak refinement
@@ -1042,14 +1050,16 @@ plot(eics)
 
 The peak post-processing was able to fuse the signal for the neighboring peaks
 in the lower panel, while keeping the peaks for the different isomers present in
-the top right plot separate. We thus next apply the peak refinement on the full
+the top right plot separate. We next apply this same peak refinement on the full
 data set.
 
 ```{r}
+#' Perform peak refinement
 data <- refineChromPeaks(data, param = mpp)
 ```
 
 
+LLLLLLLLL
 ## Alignment
 
 While chromatography helps to better discriminate between analytes it is also
