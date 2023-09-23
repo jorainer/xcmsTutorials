@@ -606,21 +606,16 @@ internal standards) to evaluate the LC-MS data of an experiment.
 # Centroiding of profile MS data
 
 MS instruments allow to export data in profile or centroid mode. Profile data
-
-contains the signal for all discrete *m/z* values (and retention times) for which
-the instrument collected data [@Smith:2014di]. MS instruments continuously
-sample and record signals, therefore a mass peak for a single ion in one
-spectrum will consist of multiple intensities at discrete *m/z* values.
 contains the signal for all discrete *m/z* values (and retention times) for
 which the instrument collected data [@Smith:2014di]. MS instruments continuously
-sample and record signals and a mass peak for a single ion in one spectrum will
-thus consist of a multiple intensities at discrete (but highly similar) *m/z*
-values. The process to reduce this distribution of signals to a single
-representative mass peak (the centroid) is called centroiding. This process
-results in much smaller file sizes, without too much information loss. *xcms*,
-specifically the *centWave* chromatographic peak detection algorithm, was
-designed for centroided data, thus, prior to data analysis, profile data, such
-as the example data used here, should be centroided.
+sample and record signals, therefore a mass peak for a single ion in one
+spectrum will consist of multiple intensities at discrete *m/z* values. The
+process to reduce this distribution of signals to a single representative mass
+peak (the centroid) is called centroiding. This process results in much smaller
+file sizes, with only little information loss. *xcms*, specifically the
+*centWave* chromatographic peak detection algorithm, was designed for centroided
+data, thus, prior to data analysis, profile data, such as the example data used
+here, should be centroided.
 
 Below we inspect the profile data for one of the spectra extracted above and
 focus on the mass peak for serine.
@@ -637,8 +632,8 @@ Instead of a single peak, several mass peaks were recorded by the MS instrument
 with an *m/z* very close to the theoretical *m/z* for the *[M+H]+* ion of serine
 (indicated with a red dotted line).
 
-We can also visualize this information differently: the `plot` function
-for `MsExperiment` generates a two-dimensional visualization of the
+We can also visualize this information differently: the `plot` function for
+`MsExperiment` generates a two-dimensional visualization of the
 three-dimensional LC-MS data: peaks are drawn at their respective location in
 the two-dimensional *m/z* *vs* retention time plane with their intensity being
 color coded. Below we subset the data to the *m/z* - retention time region
@@ -652,12 +647,12 @@ filterMz(mz = c(106.02, 106.07)) |>
 plot()
 ```
 
-The lower panel of the plot shows all mass peaks measured by the instrument,
-each *column* of data points representing the signal measured at one discrete
-time point (i.e. for one spectrum) with the intensities encoded with a color
-scale (blue representing low, yellow high intensity). The upper panel of the
-plot shows a chromatographic visualization of the data from the lower panel,
-i.e., for each retention time (spectrum) the sum of intensities is shown.
+The lower panel of the plot shows all mass peaks measured by the instrument:
+each point represents one mass peak with its intensity being color coded (blue
+representing low, yellow high intensity). Each column of data points represents
+data from the same spectrum. The upper panel of the plot shows a chromatographic
+visualization of the data from the lower panel, i.e., for each retention time
+(spectrum) the sum of intensities is shown.
 
 Note that, while it would be possible to create such a plot for the full MS data
 of an experiment, this type of visualization works best for small *m/z* -
@@ -666,9 +661,9 @@ retention time regions.
 Next, we *smooth* the data in each spectrum using a Savitzky-Golay filter, which
 usually improves data quality by reducing noise. Subsequently we perform the
 centroiding of the data based on a simple peak-picking strategy that reports the
-maximum signal for each mass peak in each spectrum and replace the spectra data
-in our data (`MsExperiment`) object. Finally, we create the previous data
-visualization also on the such centroided data.
+maximum signal for each mass peak in each spectrum. Finally, we replace the
+spectra in data (`MsExperiment`) object with the centroided spectra and
+visualize the result repeating the visualization from above.
 
 ```{r centroiding, fig.cap = "Centroided data for Serine.", fig.width = 10, fig.height = 5, fig.pos = "h!"}
 #' Smooth and centroid the spectra data
@@ -688,9 +683,9 @@ plot()
 
 The impact of the centroiding is clearly visible: each signal for an ion in a
 spectrum was reduced to a single data point. For more advanced centroiding
-options that can also fine-tune the *m/z* value of the reported centroid see the
-documentation of the `pickPeaks` function or the centroiding vignette of the `r
-Biocpkg("MSnbase")` package.
+options, that can also fine-tune the *m/z* value of the reported centroid, see
+the documentation of the `pickPeaks` function or the centroiding vignette of the
+`r Biocpkg("MSnbase")` package.
 
 While we could now simply proceed with the data analysis, we below save the
 centroided MS data to mzML files to also illustrate how the *Spectra* package
@@ -718,8 +713,8 @@ export(spectra(data), backend = MsBackendMzR(),
 
 ```
 
-We can then import the centroided data again from the newly generated mzML
-files and proceed with the analysis.
+We can then import the centroided data again from the newly generated mzML files
+and proceed with the analysis.
 
 ```{r}
 #' Re-import the centroided data.
@@ -729,10 +724,10 @@ fls <- basename(fls)
 data <- readMsExperiment(fls, sampleData = pd)
 ```
 
-This code would thus also allow to create scripts to batch-perform an R-based
-centroiding, which would allow fine tuning of the individual parameters.
+This, or similar, code would allow to create scripts to batch-perform an R-based
+centroiding.
 
-LLLLLLLLL
+
 
 # Preprocessing of LC-MS data
 
