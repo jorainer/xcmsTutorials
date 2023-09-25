@@ -1272,8 +1272,8 @@ similar retention time will result in a higher peak density at a certain
 retention time and are thus grouped together. The grouping depends on the
 *smoothness* of the density curve and can be configured with parameter `bw`.
 
-An illustration how chromatographic peaks within a small *m/z* range are grouped
-by the *peakDensity* method is shown in the sketch below.
+An illustration showing how chromatographic peaks within a small *m/z* range are
+grouped by the *peakDensity* method is shown in the sketch below.
 
 ![peak density](images/correspondence2_density.png)
 
