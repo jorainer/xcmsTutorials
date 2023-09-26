@@ -14,12 +14,6 @@ jobs:
       ## If they update their steps, we will also need to update ours.
       - uses: actions/checkout@v2
 
-      - name: Query dependencies
-        run: |
-          install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
-        shell: Rscript {0}
-
       - name: Install rcmdcheck
         run: |
           install.packages('rcmdcheck')
