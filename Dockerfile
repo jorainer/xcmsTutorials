@@ -10,7 +10,7 @@ WORKDIR /home/rstudio
 
 COPY --chown=rstudio:rstudio . /home/rstudio/
 
-## Install the SpectraTutorials package and additional required packages
-RUN Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); BiocManager::install(ask = FALSE); BiocManager::install('RforMassSpectrometry/MsBackendMassbank'); BiocManager::install('mzR')"
+## Install the xcmsTutorials package and additional required packages
+RUN Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); BiocManager::install(ask = FALSE); BiocManager::install('sneumann/xcms')"
 
 RUN Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); devtools::install('.', dependencies = TRUE, build_vignettes = TRUE, repos = BiocManager::repositories())"
