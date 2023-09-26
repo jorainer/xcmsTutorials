@@ -23,6 +23,7 @@ bibliography: references.bib
 library("BiocStyle")
 library("knitr")
 library("rmarkdown")
+set.seed(123)
 opts_chunk$set(message = FALSE, error = FALSE, warning = FALSE,
                cache = FALSE, fig.width = 10, fig.height = 7)
 ```
@@ -1539,7 +1540,7 @@ chromatographic peak was detected.
 In contrast, for the 4 example features from above a signal was *rescued*. Below
 we visualize the gap-filled chromatographic peaks for these.
 
-```{r features-missing-values-filled}
+```{r features-missing-values-filled, fig.cap = "Features with filled-in signal."}
 #' Extract the m/z-rt region for selected peaks
 mz_rt <- featureArea(data, features = c("FT026", "FT028", "FT246", "FT306"))
 mz_rt[, "rtmin"] <- mz_rt[, "rtmin"] - 2
@@ -1706,23 +1707,82 @@ workshops/tutorials at
 
 # Final words
 
-- don't use defaults of `xcms`.
+- don't use defaults of *xcms*.
 - use the infrastructure to inspect and summarize the data.
-- don't limit yourself to just `xcms`, use the vast of additional packages,
-  methods, visualizations in R.
+- don't limit yourself to just *xcms*, use the vast number of additional
+  packages, methods, visualizations in R.
 - build custom workflows, data visualization approaches or your own analysis
   method.
+
 
 # Appendix
 
 ## Additional visualizations
 
 Visualization is key to understand the signal measured by the MS instrument and
-also to evaluate the performance (and quality) of the . LC-MS data is
+also to evaluate the performance (and quality) of a preprocessing. LC-MS data is
 particularly difficult to visualize because its 3-dimensional nature. Focusing
 on specific *m/z* retention time ranges (EICs) can help. In this section we
-provide some additional possibilities how such data can be visualized. In
-particular, we show how multiple EICs can be combined in a single plot.
+provide some additional examples how such data can be visualized. In particular,
+we show how multiple EICs can be combined in a single plot.
+
+```{r}
+data_1 <- data[1]
+plotChromPeaks(data)
+
+```
+
+- same data, just "3 dimensional"
+
+```{r}
+#' Full data for rt range
+cpks <- chromPeaks(data_1, rt = c(20, 220), type = "any")
+
+chrs_1 <- chromatogram(data_1, mz = cpks[, c("mzmin", "mzmax")],
+                       rt = cbind(rep(20, nrow(cpks)),
+                                  rep(220, nrow(cpks))))
+
+y <- plotChromatogramsOverlay(chrs_1, stacked = 1, bty = "n",
+                              col = "#00000020", peakCol = "#00000020",
+                              peakBg = "#00000020")
+
+#' focus on an area, where peaks seem "darker"
+abline(v = c(130, 150), lty = 3, col = "#ff000080")
+chrs_1s <- filterRt(chrs_1, rt = c(130, 150))
+
+y <- plotChromatogramsOverlay(chrs_1s, stacked = 1, bty = "n",
+                              col = "#00000020", peakCol = "#00000020",
+                              peakBg = "#00000020")
+
+#' Focus on an area with "darker" peaks.
+plotChromPeaks(data_1)
+rect(125, 113, 145, 119, lty = 3, border = "#ff000080")
+
+cpks <- chromPeaks(data_1, rt = c(125, 145), mz = c(113, 119))
+chrs_1s <- chromatogram(data_1, mz = cpks[, c("mzmin", "mzmax")],
+                        rt = cbind(rep(125, nrow(cpks)),
+                                   rep(145, nrow(cpks))))
+y <- plotChromatogramsOverlay(chrs_1s, stacked = 1, bty = "n",
+                              col = "#00000020", peakCol = "#00000020",
+                              peakBg = "#00000020")
+abline(h = y[[1]], col = "grey")
+mzs <- format(rowMeans(mz(chrs_1s)), digits = 5)
+text(x = rep(126, length(mzs)), y = y[[1]],
+     labels = paste0("m/z = ", mzs), pos = 1)
+
+
+#' Focus on a whole rt range
+plotChromPeaks(data_1)
+abline(v = c(185, 210), lty = 3, col = "#ff000080")
+
+chrs_1s <- filterRt(chrs_1, rt = c(185, 210))
+y <- plotChromatogramsOverlay(chrs_1s, stacked = 1, bty = "n",
+                              col = "#00000020", peakCol = "#00000020",
+                              peakBg = "#00000020")
+
+
+
+```
 
 TODO: continue here:
 
