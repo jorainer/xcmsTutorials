@@ -1,3 +1,10 @@
+# xcmsTutorials 0.99
+
+## Changes in xcmsTutorials 0.99.1
+
+- Add requirements for `xcms` and `Spectra` packages as well as R version.
+
+
 # xcmsTutorials 0.2
 
 ## Changes in xcmsTutorials 0.2.0
