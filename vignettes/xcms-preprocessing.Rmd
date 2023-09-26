@@ -1,5 +1,5 @@
 ---
-title: "Exploring and Analyzing LC-MS data with *Spectra* and *xcms*"
+title: "Exploring and Analyzing LC-MS data with Spectra and xcms"
 author:
 - name: "Philippine Louail, Johannes Rainer"
   affiliation: "Eurac Research, Bolzano, Italy; johannes.rainer@eurac.edu github: jorainer"
@@ -11,7 +11,7 @@ output:
     toc_float: true
     toc_depth: 2
 vignette: >
-  %\VignetteIndexEntry{Exploring and Analyzing LC-MS Data with *Spectra* and *xcms*}
+  %\VignetteIndexEntry{Exploring and Analyzing LC-MS Data with Spectra and xcms}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding[utf8]{inputenc}
   %\VignettePackage{xcmsTutorials}
