@@ -1,5 +1,9 @@
 # xcmsTutorials 0.99
 
+## Changes in xcmsTutorials 0.99.2
+
+- Add additional visualization options. Require `xcms` version >= 3.99.4.
+
 ## Changes in xcmsTutorials 0.99.1
 
 - Add requirements for `xcms` and `Spectra` packages as well as R version.
