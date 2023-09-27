@@ -46,7 +46,8 @@ which is followed by the description of a simple data centroiding approach and
 finally we present an *xcms*-based LC-MS data preprocessing that comprises
 chromatographic peak detection, alignment and correspondence. Data normalization
 procedures, compound identification and differential abundance analysis are not
-covered here. Particular emphasis is given on deriving and defining data set-dependent values for the most critical *xcms* preprocessing parameters.
+covered here. Particular emphasis is given on deriving and defining data
+set-dependent values for the most critical *xcms* preprocessing parameters.
 
 
 # Introduction
