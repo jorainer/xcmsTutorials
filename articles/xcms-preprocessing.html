@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">xcmsTutorials</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -576,8 +576,9 @@ value because the present data is in profile mode.</p>
 <span><span class="co">## 2         1     0.275         1</span></span>
 <span><span class="co">##  ... 33 more variables/columns.</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Tue Sep 26 13:29:55 2023]</span></span>
-<span><span class="co">##  Merge 2 Spectra into one [Tue Sep 26 13:29:59 2023]</span></span></code></pre>
+<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Wed Sep 27 07:52:35 2023]</span></span>
+<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Wed Sep 27 07:52:37 2023]</span></span>
+<span><span class="co">##  Merge 2 Spectra into one [Wed Sep 27 07:52:39 2023]</span></span></code></pre>
 <p><code>bps</code> is thus a <code>Spectra</code> with two spectra
 representing the BPS of the two data files. Below we plot these.</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
@@ -620,7 +621,7 @@ measured between 180 and 181 seconds.</p>
 <span><span class="co">## 20171016_POOL_POS_1_105-134.mzML</span></span>
 <span><span class="co">## 20171016_POOL_POS_3_105-134.mzML</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Tue Sep 26 13:30:00 2023]</span></span></code></pre>
+<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Wed Sep 27 07:52:40 2023]</span></span></code></pre>
 <p>For the present data set there are 6 spectra measured within this one
 second in both samples. By extracting the data as a <code>Spectra</code>
 object we have however lost now the direct (inherent) association
@@ -655,7 +656,7 @@ available for <code>Spectra</code> objects.</p>
 <span><span class="co">## file(s):</span></span>
 <span><span class="co">## 20171016_POOL_POS_1_105-134.mzML</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Tue Sep 26 13:30:00 2023]</span></span></code></pre>
+<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Wed Sep 27 07:52:40 2023]</span></span></code></pre>
 <p>For the present purpose it is however not important to keep the
 sample association intact and we thus proceed to plot the previously
 extracted spectra.</p>
@@ -1048,7 +1049,7 @@ information on identified chromatographic peaks from our object.</p>
 <div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-class.html" class="external-link">chromPeaks</a></span><span class="op">(</span><span class="va">serine_chr</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##           rt   rtmin   rtmax     into     intb     maxo  sn row column</span></span>
-<span><span class="co">## [1,] 181.356 178.566 189.447 74443.95 71734.01 37664.94 110   1      1</span></span>
+<span><span class="co">## [1,] 181.356 178.566 189.447 74443.95 71731.60 37664.94 110   1      1</span></span>
 <span><span class="co">## [2,] 181.072 178.561 187.210 70352.22 69008.98 38517.76 224   1      2</span></span></code></pre>
 <p>The result is returned as a <code>matrix</code> with each row
 representing one identified chromatographic peak. The retention time
@@ -1156,7 +1157,7 @@ preprocessing results.</p>
 <span><span class="co">##  Sample data links:</span></span>
 <span><span class="co">##   - spectra: 2 sample(s) to 1862 element(s).</span></span>
 <span><span class="co">##  xcms results:</span></span>
-<span><span class="co">##   - chromatographic peaks: 653 in MS level(s): 1</span></span></code></pre>
+<span><span class="co">##   - chromatographic peaks: 644 in MS level(s): 1</span></span></code></pre>
 <p>We can extract the results from the peak detection step (as above)
 with the <code>chromPeaks</code> function. The optional parameters
 <code>rt</code> and <code>mz</code> would allow to extract peak
@@ -1168,23 +1169,23 @@ In our example we extract all chromatographic peaks between an
 <code class="sourceCode R"><span><span class="co">#' Access the peak detection results from a specific m/z - rt area</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-class.html" class="external-link">chromPeaks</a></span><span class="op">(</span><span class="va">data</span>, mz <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">106</span>, <span class="fl">108</span><span class="op">)</span>, rt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">150</span>, <span class="fl">190</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##             mz    mzmin    mzmax      rt   rtmin   rtmax       into       intb</span></span>
-<span><span class="co">## CP133 106.0625 106.0606 106.0636 173.264 171.869 174.380   516.3588   510.5323</span></span>
-<span><span class="co">## CP146 107.0653 107.0652 107.0653 173.543 171.032 179.682 11318.2801 11308.5538</span></span>
-<span><span class="co">## CP156 107.0532 107.0522 107.0537 181.356 179.682 183.309  2905.1158  2899.2205</span></span>
-<span><span class="co">## CP167 106.0506 106.0505 106.0506 181.356 178.845 187.773 74181.7823 73916.8683</span></span>
-<span><span class="co">## CP475 106.0633 106.0609 106.0652 172.701 170.748 174.654   559.5491   553.2785</span></span>
-<span><span class="co">## CP482 107.0656 107.0655 107.0657 172.980 169.632 178.003 11372.6845 11166.3372</span></span>
-<span><span class="co">## CP497 107.0538 107.0510 107.0540 181.072 178.840 183.304  3155.0100  3149.2053</span></span>
-<span><span class="co">## CP516 106.0496 106.0494 106.0508 181.072 178.282 187.210 70373.6099 70106.7152</span></span>
-<span><span class="co">##             maxo  sn sample</span></span>
-<span><span class="co">## CP133   426.6084  38      1</span></span>
-<span><span class="co">## CP146  4936.6783 833      1</span></span>
-<span><span class="co">## CP156  1628.9510 129      1</span></span>
-<span><span class="co">## CP167 37664.9371 688      1</span></span>
-<span><span class="co">## CP475   381.6084  53      2</span></span>
-<span><span class="co">## CP482  4569.1399  79      2</span></span>
-<span><span class="co">## CP497  2297.7972 230      2</span></span>
-<span><span class="co">## CP516 38517.7622 826      2</span></span></code></pre>
+<span><span class="co">## CP133 106.0625 106.0606 106.0636 173.264 171.869 174.380   516.3588   509.4463</span></span>
+<span><span class="co">## CP146 107.0653 107.0652 107.0653 173.543 171.032 179.682 11318.2801 11309.9091</span></span>
+<span><span class="co">## CP157 107.0532 107.0522 107.0537 181.356 179.682 183.309  2905.1158  2901.7678</span></span>
+<span><span class="co">## CP167 106.0506 106.0505 106.0506 181.356 178.845 187.773 74181.7823 73905.2115</span></span>
+<span><span class="co">## CP469 106.0633 106.0609 106.0652 172.701 170.748 174.654   559.5491   553.7921</span></span>
+<span><span class="co">## CP477 107.0656 107.0655 107.0657 172.980 169.632 178.003 11372.6845 11166.3372</span></span>
+<span><span class="co">## CP492 107.0538 107.0510 107.0540 181.072 178.840 183.304  3155.0100  3149.2053</span></span>
+<span><span class="co">## CP512 106.0496 106.0494 106.0508 181.072 178.282 187.210 70373.6099 70109.3562</span></span>
+<span><span class="co">##             maxo   sn sample</span></span>
+<span><span class="co">## CP133   426.6084   35      1</span></span>
+<span><span class="co">## CP146  4936.6783 4936      1</span></span>
+<span><span class="co">## CP157  1628.9510  186      1</span></span>
+<span><span class="co">## CP167 37664.9371  685      1</span></span>
+<span><span class="co">## CP469   381.6084   54      2</span></span>
+<span><span class="co">## CP477  4569.1399   79      2</span></span>
+<span><span class="co">## CP492  2297.7972  230      2</span></span>
+<span><span class="co">## CP512 38517.7622  830      2</span></span></code></pre>
 <p>Again, each row in this matrix contains one identified
 chromatographic peak with columns <code>"mz"</code>,
 <code>"mzmin"</code>, <code>"mzmax"</code>, <code>"rt"</code>,
@@ -1209,7 +1210,7 @@ sample.</p>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
 <span><span class="co">##   1   2 </span></span>
-<span><span class="co">## 326 327</span></span></code></pre>
+<span><span class="co">## 323 321</span></span></code></pre>
 <p>About the same number of peaks was identified, which is to be
 expected since both files contain measurements from the same sample (the
 QC pool).</p>
@@ -1649,9 +1650,9 @@ of samples per sample group.</p>
 <span><span class="co">##  Sample data links:</span></span>
 <span><span class="co">##   - spectra: 2 sample(s) to 1862 element(s).</span></span>
 <span><span class="co">##  xcms results:</span></span>
-<span><span class="co">##   - chromatographic peaks: 595 in MS level(s): 1 </span></span>
-<span><span class="co">##   - adjusted retention times: mean absolute difference 0.301 seconds</span></span>
-<span><span class="co">##   - correspondence results: 361 features in MS level(s): 1</span></span></code></pre>
+<span><span class="co">##   - chromatographic peaks: 589 in MS level(s): 1 </span></span>
+<span><span class="co">##   - adjusted retention times: mean absolute difference 0.328 seconds</span></span>
+<span><span class="co">##   - correspondence results: 357 features in MS level(s): 1</span></span></code></pre>
 <p>Over 300 features were identified in our example data set. Again, it
 is suggested to evaluate the results on selected compounds/ions. We
 therefore extract below the chromatogram for the <em>m/z</em> range
@@ -1711,19 +1712,19 @@ definition of the features and display the first 6 rows</p>
 <code class="sourceCode R"><span><span class="co">#' Definition of the features</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-class.html" class="external-link">featureDefinitions</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##          mzmed    mzmin    mzmax     rtmed     rtmin     rtmax npeaks POOL</span></span>
-<span><span class="co">## FT001 105.0418 105.0417 105.0418 167.68597 167.48455 167.88740      2    2</span></span>
-<span><span class="co">## FT002 105.0415 105.0415 105.0415 157.71871 157.71871 157.71871      1    1</span></span>
-<span><span class="co">## FT003 105.0697 105.0691 105.0703  31.80794  31.68918  31.92670      2    2</span></span>
-<span><span class="co">## FT004 105.1103 105.1100 105.1105  63.75047  63.35239  64.14855      2    2</span></span>
-<span><span class="co">## FT005 105.4734 105.4732 105.4736 201.57593 201.36133 201.79053      2    2</span></span>
-<span><span class="co">## FT006 105.7166 105.7160 105.7172 181.21578 181.08901 181.34256      2    2</span></span>
+<span><span class="co">## FT001 105.0418 105.0417 105.0418 167.68279 167.48793 167.87765      2    2</span></span>
+<span><span class="co">## FT002 105.0415 105.0415 105.0415 157.71770 157.71770 157.71770      1    1</span></span>
+<span><span class="co">## FT003 105.0697 105.0691 105.0703  31.80814  31.67350  31.94279      2    2</span></span>
+<span><span class="co">## FT004 105.1103 105.1100 105.1105  63.71309  63.37961  64.04656      2    2</span></span>
+<span><span class="co">## FT005 105.4734 105.4732 105.4736 201.57632 201.37059 201.78204      2    2</span></span>
+<span><span class="co">## FT006 105.7166 105.7160 105.7172 181.21585 181.08578 181.34592      2    2</span></span>
 <span><span class="co">##        peakidx ms_level</span></span>
-<span><span class="co">## FT001 112, 396        1</span></span>
-<span><span class="co">## FT002      111        1</span></span>
-<span><span class="co">## FT003  19, 317        1</span></span>
-<span><span class="co">## FT004  48, 348        1</span></span>
-<span><span class="co">## FT005 260, 580        1</span></span>
-<span><span class="co">## FT006 135, 444        1</span></span></code></pre>
+<span><span class="co">## FT001 115, 393        1</span></span>
+<span><span class="co">## FT002      114        1</span></span>
+<span><span class="co">## FT003  21, 317        1</span></span>
+<span><span class="co">## FT004  49, 348        1</span></span>
+<span><span class="co">## FT005 261, 573        1</span></span>
+<span><span class="co">## FT006 138, 440        1</span></span></code></pre>
 <p>Each row defines one feature and provides information on it’s
 <em>m/z</em> (column <code>"mzmed"</code>) and retention time (column
 <code>"rtmed"</code>). Additional columns list the number of
@@ -1813,14 +1814,14 @@ missing values before and after running <code>fillChromPeaks</code>.</p>
 <div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Number of missing values</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-peak-grouping-results.html" class="external-link">featureValues</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 135</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 133</span></span></code></pre>
 <div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Perform gap filling</span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/fillChromPeaks.html" class="external-link">fillChromPeaks</a></span><span class="op">(</span><span class="va">data</span>, param <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/fillChromPeaks.html" class="external-link">ChromPeakAreaParam</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#' Number of missing values after gap filling</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-peak-grouping-results.html" class="external-link">featureValues</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 28</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 25</span></span></code></pre>
 <p>With <code>fillChromPeaks</code> we could thus <em>rescue</em> signal
 for all but 26 features. Below we extract the EICs for these and
 visually inspect some of them.</p>
@@ -1930,7 +1931,7 @@ function:</p>
 <pre><code><span><span class="co">## [[1]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak detection </span></span>
-<span><span class="co">##  date: Tue Sep 26 13:30:15 2023 </span></span>
+<span><span class="co">##  date: Wed Sep 27 07:52:57 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: CentWaveParam </span></span>
@@ -1939,7 +1940,7 @@ function:</p>
 <span><span class="co">## [[2]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak refinement </span></span>
-<span><span class="co">##  date: Tue Sep 26 13:30:19 2023 </span></span>
+<span><span class="co">##  date: Wed Sep 27 07:53:01 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: MergeNeighboringPeaksParam </span></span>
@@ -1948,7 +1949,7 @@ function:</p>
 <span><span class="co">## [[3]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak grouping </span></span>
-<span><span class="co">##  date: Tue Sep 26 13:30:22 2023 </span></span>
+<span><span class="co">##  date: Wed Sep 27 07:53:03 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakDensityParam </span></span>
@@ -1957,7 +1958,7 @@ function:</p>
 <span><span class="co">## [[4]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Retention time correction </span></span>
-<span><span class="co">##  date: Tue Sep 26 13:30:22 2023 </span></span>
+<span><span class="co">##  date: Wed Sep 27 07:53:03 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakGroupsParam </span></span>
@@ -1966,7 +1967,7 @@ function:</p>
 <span><span class="co">## [[5]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak grouping </span></span>
-<span><span class="co">##  date: Tue Sep 26 13:30:29 2023 </span></span>
+<span><span class="co">##  date: Wed Sep 27 07:53:09 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakDensityParam </span></span>
@@ -1975,7 +1976,7 @@ function:</p>
 <span><span class="co">## [[6]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Missing peak filling </span></span>
-<span><span class="co">##  date: Tue Sep 26 13:30:34 2023 </span></span>
+<span><span class="co">##  date: Wed Sep 27 07:53:15 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: ChromPeakAreaParam </span></span>
@@ -2042,20 +2043,20 @@ to extract the feature value matrix.</p>
 <div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Get feature annotations</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">rowData</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## DataFrame with 361 rows and 9 columns</span></span>
+<pre><code><span><span class="co">## DataFrame with 357 rows and 9 columns</span></span>
 <span><span class="co">##           mzmed     mzmin     mzmax     rtmed     rtmin     rtmax    npeaks</span></span>
 <span><span class="co">##       &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;</span></span>
-<span><span class="co">## FT001   105.042   105.042   105.042  167.6860  167.4845  167.8874         2</span></span>
-<span><span class="co">## FT002   105.042   105.042   105.042  157.7187  157.7187  157.7187         1</span></span>
-<span><span class="co">## FT003   105.070   105.069   105.070   31.8079   31.6892   31.9267         2</span></span>
-<span><span class="co">## FT004   105.110   105.110   105.111   63.7505   63.3524   64.1486         2</span></span>
-<span><span class="co">## FT005   105.473   105.473   105.474  201.5759  201.3613  201.7905         2</span></span>
+<span><span class="co">## FT001   105.042   105.042   105.042  167.6828  167.4879  167.8776         2</span></span>
+<span><span class="co">## FT002   105.042   105.042   105.042  157.7177  157.7177  157.7177         1</span></span>
+<span><span class="co">## FT003   105.070   105.069   105.070   31.8081   31.6735   31.9428         2</span></span>
+<span><span class="co">## FT004   105.110   105.110   105.111   63.7131   63.3796   64.0466         2</span></span>
+<span><span class="co">## FT005   105.473   105.473   105.474  201.5763  201.3706  201.7820         2</span></span>
 <span><span class="co">## ...         ...       ...       ...       ...       ...       ...       ...</span></span>
-<span><span class="co">## FT357   133.928   133.928   133.928  198.5823  198.5823  198.5823         1</span></span>
-<span><span class="co">## FT358   133.960   133.960   133.961   30.8309   30.8063   30.8554         2</span></span>
-<span><span class="co">## FT359   133.956   133.956   133.956  199.0661  198.9950  199.1372         2</span></span>
-<span><span class="co">## FT360   133.973   133.973   133.973  206.8712  206.3899  207.3524         2</span></span>
-<span><span class="co">## FT361   133.973   133.973   133.973  200.2484  200.2484  200.2484         1</span></span>
+<span><span class="co">## FT353   133.928   133.928   133.928   198.587  198.5874  198.5874         1</span></span>
+<span><span class="co">## FT354   133.960   133.960   133.961    30.831   30.8218   30.8402         2</span></span>
+<span><span class="co">## FT355   133.956   133.956   133.956   199.067  198.9900  199.1432         2</span></span>
+<span><span class="co">## FT356   133.973   133.973   133.973   206.872  206.4049  207.3387         2</span></span>
+<span><span class="co">## FT357   133.973   133.973   133.973   200.256  200.2561  200.2561         1</span></span>
 <span><span class="co">##            POOL  ms_level</span></span>
 <span><span class="co">##       &lt;numeric&gt; &lt;integer&gt;</span></span>
 <span><span class="co">## FT001         2         1</span></span>
@@ -2064,11 +2065,11 @@ to extract the feature value matrix.</p>
 <span><span class="co">## FT004         2         1</span></span>
 <span><span class="co">## FT005         2         1</span></span>
 <span><span class="co">## ...         ...       ...</span></span>
-<span><span class="co">## FT357         1         1</span></span>
-<span><span class="co">## FT358         2         1</span></span>
-<span><span class="co">## FT359         2         1</span></span>
-<span><span class="co">## FT360         2         1</span></span>
-<span><span class="co">## FT361         1         1</span></span></code></pre>
+<span><span class="co">## FT353         1         1</span></span>
+<span><span class="co">## FT354         2         1</span></span>
+<span><span class="co">## FT355         2         1</span></span>
+<span><span class="co">## FT356         2         1</span></span>
+<span><span class="co">## FT357         1         1</span></span></code></pre>
 <p>The feature values are stored as an <em>assay</em> within the object.
 To access that we simply use the <code>assay</code> function.</p>
 <div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
@@ -2076,7 +2077,7 @@ To access that we simply use the <code>assay</code> function.</p>
 <span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##       20171016_POOL_POS_1_105-134.mzML 20171016_POOL_POS_3_105-134.mzML</span></span>
 <span><span class="co">## FT001                        3202.7445                        2285.2830</span></span>
-<span><span class="co">## FT002                        3605.3915                        3183.9546</span></span>
+<span><span class="co">## FT002                        3605.3915                        3186.1339</span></span>
 <span><span class="co">## FT003                         744.8752                        1057.4312</span></span>
 <span><span class="co">## FT004                       18126.4603                       19369.4039</span></span>
 <span><span class="co">## FT005                       23243.6129                       31960.3709</span></span>
@@ -2142,73 +2143,257 @@ instrument and also to evaluate the performance (and quality) of a
 preprocessing. LC-MS data is particularly difficult to visualize because
 its 3-dimensional nature. Focusing on specific <em>m/z</em> retention
 time ranges (EICs) can help. In this section we provide some additional
-examples how such data can be visualized. In particular, we show how
-multiple EICs can be combined in a single plot.</p>
+examples how such data can be visualized. In particular, we show an
+alternative way to evaluate and investigate identified chromatographic
+peaks in a data file.</p>
+<p>We below subset the data to the first sample and visualize the
+identified chromatographic peaks in the <em>m/z</em> - retention time
+plane.</p>
 <div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data_1</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<code class="sourceCode R"><span><span class="co">#' Plot identified chromatographic peaks in the first sample</span></span>
+<span><span class="va">data_1</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/plotChromPeaks.html" class="external-link">plotChromPeaks</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code></pre></div>
-<p><img src="xcms-preprocessing_files/figure-html/unnamed-chunk-49-1.png" width="960"></p>
-<ul>
-<li>same data, just “3 dimensional”</li>
-</ul>
+<div class="figure">
+<img src="xcms-preprocessing_files/figure-html/unnamed-chunk-49-1.png" alt="Position of identified chromatographic peaks in the first sample." width="960"><p class="caption">
+Position of identified chromatographic peaks in the first sample.
+</p>
+</div>
+<p>While this plot provides some information on the region in which
+peaks were identified and on the retention time widths of the peaks, it
+does not allow to investigate peak shapes or intensities. Such
+information would be provided, for a single ion, by an extracted ion
+chromatogram. We thus below extract ion chromatograms for every
+identified chromatographic peak in the first sample. With parameter
+<code>expandRt = 4</code> we extract also signal measured 2 seconds
+before and after the peak.</p>
 <div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#' Full data for rt range</span></span>
-<span><span class="va">cpks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-class.html" class="external-link">chromPeaks</a></span><span class="op">(</span><span class="va">data_1</span>, rt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">220</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"any"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">chrs_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">chromatogram</a></span><span class="op">(</span><span class="va">data_1</span>, mz <span class="op">=</span> <span class="va">cpks</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mzmin"</span>, <span class="st">"mzmax"</span><span class="op">)</span><span class="op">]</span>,</span>
-<span>                       rt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">cpks</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                                  <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">220</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">cpks</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/plotChromatogramsOverlay.html" class="external-link">plotChromatogramsOverlay</a></span><span class="op">(</span><span class="va">chrs_1</span>, stacked <span class="op">=</span> <span class="fl">1</span>, bty <span class="op">=</span> <span class="st">"n"</span>,</span>
-<span>                              col <span class="op">=</span> <span class="st">"#00000020"</span>, peakCol <span class="op">=</span> <span class="st">"#00000020"</span>,</span>
-<span>                              peakBg <span class="op">=</span> <span class="st">"#00000020"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#' focus on an area, where peaks seem "darker"</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">130</span>, <span class="fl">150</span><span class="op">)</span>, lty <span class="op">=</span> <span class="fl">3</span>, col <span class="op">=</span> <span class="st">"#ff000080"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="xcms-preprocessing_files/figure-html/unnamed-chunk-50-1.png" width="960"></p>
+<code class="sourceCode R"><span><span class="va">chrs_all</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/chromPeakChromatograms.html" class="external-link">chromPeakChromatograms</a></span><span class="op">(</span><span class="va">data_1</span>, expandRt <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
+<p>We could now plot each of the 356 EICs separately (using the
+<code>plot</code> function). As an alternative, we can use the
+<code>plotChromatogramsOverlay</code> function from the <em>xcms</em>
+package to plot multiple EICs into the same plot. By setting parameter
+<code>stacked</code> to a value different then <code>0</code> it is
+possible to <em>stack</em> the chromatograms along the y-axis hence
+providing a 3-dimensional impression of the data. For easier
+visualization we in addition increase the transparency of the colors for
+the individual lines (parameter <code>col</code>), and the identified
+chromatographic peaks (parameter <code>peakCol</code> and
+<code>peakBg</code> for the foreground and background color,
+respectively).</p>
 <div class="sourceCode" id="cb129"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">chrs_1s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">filterRt</a></span><span class="op">(</span><span class="va">chrs_1</span>, rt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">130</span>, <span class="fl">150</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/plotChromatogramsOverlay.html" class="external-link">plotChromatogramsOverlay</a></span><span class="op">(</span><span class="va">chrs_1s</span>, stacked <span class="op">=</span> <span class="fl">1</span>, bty <span class="op">=</span> <span class="st">"n"</span>,</span>
-<span>                              col <span class="op">=</span> <span class="st">"#00000020"</span>, peakCol <span class="op">=</span> <span class="st">"#00000020"</span>,</span>
-<span>                              peakBg <span class="op">=</span> <span class="st">"#00000020"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="xcms-preprocessing_files/figure-html/unnamed-chunk-50-2.png" width="960"></p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/plotChromatogramsOverlay.html" class="external-link">plotChromatogramsOverlay</a></span><span class="op">(</span><span class="va">chrs_all</span>, stacked <span class="op">=</span> <span class="fl">1</span>, bty <span class="op">=</span> <span class="st">"n"</span>,</span>
+<span>                         col <span class="op">=</span> <span class="st">"#00000020"</span>, peakCol <span class="op">=</span> <span class="st">"#00000020"</span>,</span>
+<span>                         peakBg <span class="op">=</span> <span class="st">"#00000020"</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="xcms-preprocessing_files/figure-html/unnamed-chunk-51-1.png" alt="All identified chromatographic peaks in one sample shown as a pseudo 3-dimensional plot." width="960"><p class="caption">
+All identified chromatographic peaks in one sample shown as a pseudo
+3-dimensional plot.
+</p>
+</div>
+<p>Instead of the full data range we can also extract EICs from selected
+regions of the data. Below we define an area from a <em>m/z</em> value
+from 113 to 119 and a retention time from 125 to 145 seconds.</p>
 <div class="sourceCode" id="cb130"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#' Focus on an area with "darker" peaks.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/plotChromPeaks.html" class="external-link">plotChromPeaks</a></span><span class="op">(</span><span class="va">data_1</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/rect.html" class="external-link">rect</a></span><span class="op">(</span><span class="fl">125</span>, <span class="fl">113</span>, <span class="fl">145</span>, <span class="fl">119</span>, lty <span class="op">=</span> <span class="fl">3</span>, border <span class="op">=</span> <span class="st">"#ff000080"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="xcms-preprocessing_files/figure-html/unnamed-chunk-50-3.png" width="960"></p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/plotChromPeaks.html" class="external-link">plotChromPeaks</a></span><span class="op">(</span><span class="va">data_1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/rect.html" class="external-link">rect</a></span><span class="op">(</span><span class="fl">125</span>, <span class="fl">113</span>, <span class="fl">145</span>, <span class="fl">119</span>, lty <span class="op">=</span> <span class="fl">3</span>, border <span class="op">=</span> <span class="st">"#ff000080"</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<p><img src="xcms-preprocessing_files/figure-html/unnamed-chunk-52-1.png" width="960"></p>
+<p>We next extract chromatographic peaks from that region, define
+<em>m/z</em> and retention time ranges from that and extract ion
+chromatograms for these slices.</p>
 <div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cpks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-class.html" class="external-link">chromPeaks</a></span><span class="op">(</span><span class="va">data_1</span>, rt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">125</span>, <span class="fl">145</span><span class="op">)</span>, mz <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">113</span>, <span class="fl">119</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">chrs_1s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">chromatogram</a></span><span class="op">(</span><span class="va">data_1</span>, mz <span class="op">=</span> <span class="va">cpks</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mzmin"</span>, <span class="st">"mzmax"</span><span class="op">)</span><span class="op">]</span>,</span>
-<span>                        rt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">125</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">cpks</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                                   <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">145</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">cpks</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/plotChromatogramsOverlay.html" class="external-link">plotChromatogramsOverlay</a></span><span class="op">(</span><span class="va">chrs_1s</span>, stacked <span class="op">=</span> <span class="fl">1</span>, bty <span class="op">=</span> <span class="st">"n"</span>,</span>
+<code class="sourceCode R"><span><span class="co">#' Extract chrom peaks from that region</span></span>
+<span><span class="va">pks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-class.html" class="external-link">chromPeaks</a></span><span class="op">(</span><span class="va">data_1</span>, mz <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">113</span>, <span class="fl">119</span><span class="op">)</span>, rt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">125</span>, <span class="fl">145</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#' Extract EICs for the m/z slices of the chromatographic peaks</span></span>
+<span><span class="co">#' and the full retention time window of the area</span></span>
+<span><span class="va">chrs_sub</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">chromatogram</a></span><span class="op">(</span><span class="va">data_1</span>, mz <span class="op">=</span> <span class="va">pks</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mzmin"</span>, <span class="st">"mzmax"</span><span class="op">)</span><span class="op">]</span>,</span>
+<span>                         rt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">125</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">pks</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                                    <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">145</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">pks</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>We can now plot the EICs from that region with the
+<code>plotChromatogramsOverlay</code>. This function also silently
+returns the y-position of the individual EICs in the plot which we
+assign to a variable <code>y</code> and use that information to indicate
+the <em>m/z</em> for the EICs along the y-axis.</p>
+<div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#' Plot the EICs of the selected area</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/plotChromatogramsOverlay.html" class="external-link">plotChromatogramsOverlay</a></span><span class="op">(</span><span class="va">chrs_sub</span>, stacked <span class="op">=</span> <span class="fl">1</span>, bty <span class="op">=</span> <span class="st">"n"</span>,</span>
 <span>                              col <span class="op">=</span> <span class="st">"#00000020"</span>, peakCol <span class="op">=</span> <span class="st">"#00000020"</span>,</span>
 <span>                              peakBg <span class="op">=</span> <span class="st">"#00000020"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>h <span class="op">=</span> <span class="va">y</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, col <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span></span>
-<span><span class="va">mzs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/MatrixGenerics/man/rowMeans.html" class="external-link">rowMeans</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">mz</a></span><span class="op">(</span><span class="va">chrs_1s</span><span class="op">)</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#' Draw horizonal lines</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>h <span class="op">=</span> <span class="va">y</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, col <span class="op">=</span> <span class="st">"#00000020"</span>, lty <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#' Add m/z values of the EICs to the plot</span></span>
+<span><span class="va">mzs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/MatrixGenerics/man/rowMeans.html" class="external-link">rowMeans</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">mz</a></span><span class="op">(</span><span class="va">chrs_sub</span><span class="op">)</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">126</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">mzs</span><span class="op">)</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
 <span>     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"m/z = "</span>, <span class="va">mzs</span><span class="op">)</span>, pos <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
-<p><img src="xcms-preprocessing_files/figure-html/unnamed-chunk-50-4.png" width="960"></p>
-<div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#' Focus on a whole rt range</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/plotChromPeaks.html" class="external-link">plotChromPeaks</a></span><span class="op">(</span><span class="va">data_1</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">185</span>, <span class="fl">210</span><span class="op">)</span>, lty <span class="op">=</span> <span class="fl">3</span>, col <span class="op">=</span> <span class="st">"#ff000080"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="xcms-preprocessing_files/figure-html/unnamed-chunk-50-5.png" width="960"></p>
+<div class="figure">
+<img src="xcms-preprocessing_files/figure-html/unnamed-chunk-54-1.png" alt="EICs from a selected *m/z* - retention time region." width="960"><p class="caption">
+EICs from a selected <em>m/z</em> - retention time region.
+</p>
+</div>
+<p>Some of the EICs seem to represent signals from isotopes (e.g. the
+EIC at 114.07 and 115.07). The infrastructure around <em>xcms</em> thus
+allows to create customized visualizations of the data. Note however,
+that the plots created above only showed <strong>detected</strong>
+chromatographic peaks in a sample but not the <em>full</em> MS data
+(i.e. signals outside of identified chromatographic peaks).</p>
 <div class="sourceCode" id="cb133"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">chrs_1s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">filterRt</a></span><span class="op">(</span><span class="va">chrs_1</span>, rt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">185</span>, <span class="fl">210</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/plotChromatogramsOverlay.html" class="external-link">plotChromatogramsOverlay</a></span><span class="op">(</span><span class="va">chrs_1s</span>, stacked <span class="op">=</span> <span class="fl">1</span>, bty <span class="op">=</span> <span class="st">"n"</span>,</span>
-<span>                              col <span class="op">=</span> <span class="st">"#00000020"</span>, peakCol <span class="op">=</span> <span class="st">"#00000020"</span>,</span>
-<span>                              peakBg <span class="op">=</span> <span class="st">"#00000020"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="xcms-preprocessing_files/figure-html/unnamed-chunk-50-6.png" width="960"></p>
-<p>TODO: continue here:</p>
-<ul>
-<li><code>plotChromPeaks</code></li>
-<li>extract chromatograms for a specific rt range and full
-<em>m/z</em>.</li>
-<li>visualize that as a stacked plot.</li>
-</ul>
+<code class="sourceCode R"><span><span class="co">#' What could the differences be?</span></span>
+<span><span class="va">pks</span> <span class="op">&lt;-</span> <span class="va">pks</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">pks</span><span class="op">[</span>, <span class="st">"mz"</span><span class="op">]</span><span class="op">)</span>, <span class="op">]</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RforMassSpectrometry/MetaboCoreUtils" class="external-link">MetaboCoreUtils</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/MetaboCoreUtils/man/isotopologues.html" class="external-link">isotopologues</a></span><span class="op">(</span><span class="va">pks</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mz"</span>, <span class="st">"into"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [[1]]</span></span>
+<span><span class="co">##       CP053 </span></span>
+<span><span class="co">##     2     3 </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## [[2]]</span></span>
+<span><span class="co">##       CP054 </span></span>
+<span><span class="co">##     4     5</span></span></code></pre>
+<div class="sourceCode" id="cb135"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MetaboCoreUtils/man/mass2mz.html" class="external-link">mass2mz</a></span><span class="op">(</span><span class="fl">123</span>, <span class="fu"><a href="https://rdrr.io/pkg/MetaboCoreUtils/man/adductNames.html" class="external-link">adductNames</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">diffs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html" class="external-link">outer</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>, <span class="va">tmp</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>, <span class="st">"-"</span><span class="op">)</span></span>
+<span><span class="va">diffs</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html" class="external-link">lower.tri</a></span><span class="op">(</span><span class="va">diffs</span>, <span class="cn">TRUE</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
+<span><span class="va">diffs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">diffs</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pk_diffs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html" class="external-link">outer</a></span><span class="op">(</span><span class="va">pks</span><span class="op">[</span>, <span class="st">"mz"</span><span class="op">]</span>, <span class="va">pks</span><span class="op">[</span>, <span class="st">"mz"</span><span class="op">]</span>, <span class="st">"-"</span><span class="op">)</span></span>
+<span><span class="va">pk_diffs</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lower.tri.html" class="external-link">lower.tri</a></span><span class="op">(</span><span class="va">pk_diffs</span>, <span class="cn">TRUE</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
+<span><span class="va">pk_diffs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">pk_diffs</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html" class="external-link">outer</a></span><span class="op">(</span><span class="va">pk_diffs</span>, <span class="va">diffs</span>, <span class="st">"-"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">diffs</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##   [1]   0.0398250   0.9840060   0.9840156   1.0072760   1.0471010   1.4686690</span></span>
+<span><span class="co">##   [7]   1.4819440   1.5353330   2.1021720   2.4628858   2.4776950   2.9373380</span></span>
+<span><span class="co">##  [13]   2.9509840   3.0040020   3.0706660   3.0706660   3.4469013   3.4834209</span></span>
+<span><span class="co">##  [19]   3.4969271   3.9713840   4.0391600   4.5035491   4.9553900   4.9553900</span></span>
+<span><span class="co">##  [25]   4.9655961   5.0101940   5.0187539   5.8453707   5.9296740   5.9683550</span></span>
+<span><span class="co">##  [31]   5.9942000   6.0080040   6.0081800   6.0081800   6.1413320   6.4874229</span></span>
+<span><span class="co">##  [37]   6.5009291   6.9812441   7.0154560   7.0313330   7.3273147   7.3273147</span></span>
+<span><span class="co">##  [43]   7.3273147   7.9869700   8.5132770   9.0003400   9.5090280   9.5223030</span></span>
+<span><span class="co">##  [49]   9.9655840   9.9843499  10.0442660  10.4646650  10.9909720  10.9909720</span></span>
+<span><span class="co">##  [55]  11.0183740  11.9376780  11.9765350  11.9999980  12.0023800  12.0163600</span></span>
+<span><span class="co">##  [61]  12.9032740  13.0236360  13.1726853  13.4686670  14.0125771  14.0156500</span></span>
+<span><span class="co">##  [67]  14.3586477  14.4878991  14.6546293  14.6546293  14.9996560  15.0054460</span></span>
+<span><span class="co">##  [73]  15.4945211  15.5476789  15.8542580  15.9737640  15.9739400  15.9739400</span></span>
+<span><span class="co">##  [79]  16.0192727  16.0936220  16.8363427  16.9655941  16.9867290  17.0032882</span></span>
+<span><span class="co">##  [85]  17.0265487  17.0265540  17.0265540  17.0663737  17.4959980  17.9564300</span></span>
+<span><span class="co">##  [91]  17.9707350  18.0105600  18.0105642  18.0105647  18.0338300  18.0503892</span></span>
+<span><span class="co">##  [97]  18.9779420  18.9945803  19.0178360  19.0309600  19.0313310  19.0446060</span></span>
+<span><span class="co">## [103]  19.0446060  19.0446060  19.0446060  19.0446060  19.4661740  19.9453240</span></span>
+<span><span class="co">## [109]  20.0098500  20.4734500  20.5000000  20.5000000  20.5132750  20.5132750</span></span>
+<span><span class="co">## [115]  20.5132750  20.9293300  20.9293300  21.3398918  21.5074918  21.6859623</span></span>
+<span><span class="co">## [121]  21.9421190  21.9819440  21.9819440  21.9819440  21.9819440  21.9819440</span></span>
+<span><span class="co">## [127]  21.9819440  21.9819440  21.9955900  22.0486080  22.1016260  22.4915073</span></span>
+<span><span class="co">## [133]  22.9761608  22.9892200  23.0159900  23.0347287  23.9601763  23.9969271</span></span>
+<span><span class="co">## [139]  23.9999960  23.9999960  24.0187442  24.1636573  24.5114938  24.8233127</span></span>
+<span><span class="co">## [145]  25.0526100  25.0526100  25.4788711  25.4955093  25.5320289  25.9395240</span></span>
+<span><span class="co">## [151]  25.9533280  26.0180300  26.3586457  26.4816300  26.9373340  27.8273147</span></span>
+<span><span class="co">## [157]  27.9949146  28.0313000  28.6672065  28.9789302  29.0101900  29.0132770</span></span>
+<span><span class="co">## [163]  29.0429087  30.0269242  30.0355780  30.9822840  31.3242417  31.4909720</span></span>
+<span><span class="co">## [169]  31.9475280  31.9477040  31.9478800  31.9863850  32.0262100  32.1506273</span></span>
+<span><span class="co">## [175]  32.4898100  32.4984638  32.5132730  33.0334860  33.4824793  33.6859603</span></span>
+<span><span class="co">## [181]  34.0500520  34.0531026  34.8852180  34.9761588  35.0138529  35.0183700</span></span>
+<span><span class="co">## [187]  35.0371086  35.0371182  35.1546293  35.9601743  35.9945211  36.0211242</span></span>
+<span><span class="co">## [193]  36.0211289  36.0609539  36.9873900  37.5000040  37.9160590  37.9557080</span></span>
+<span><span class="co">## [199]  37.9558840  37.9558840  37.9558840  38.0755660  38.0892120  38.4840100</span></span>
+<span><span class="co">## [205]  38.5107800  38.6515564  38.9631600  39.0084926  39.4779420  39.5180560</span></span>
+<span><span class="co">## [211]  39.5446060  39.5578810  39.9794490  39.9925082  40.0580560  40.9469000</span></span>
+<span><span class="co">## [217]  40.9867250  40.9867250  41.0132750  41.0265500  41.0265500  41.0265500</span></span>
+<span><span class="co">## [223]  41.0265500  41.0265500  41.0265500  41.0265500  41.5147820  42.0074918</span></span>
+<span><span class="co">## [229]  42.0293089  42.0338260  42.0469500  42.4553940  42.4819440  42.5220580</span></span>
+<span><span class="co">## [235]  42.5618830  42.9915074  43.0309560  43.4894358  43.8855580  43.9240630</span></span>
+<span><span class="co">## [241]  43.9638880  44.0972160  44.4734513  44.9711640  44.9860600  44.9979340</span></span>
+<span><span class="co">## [247]  44.9982029  45.5262360  45.9788711  45.9819400  45.9819400  45.9877300</span></span>
+<span><span class="co">## [253]  46.0054789  46.0453039  46.8719207  46.9949050  47.0882320  48.0374889</span></span>
+<span><span class="co">## [259]  48.0411500  48.5302380  49.0527587  49.3348064  49.5017520  50.0268900</span></span>
+<span><span class="co">## [265]  50.0367742  50.3188220  50.5090280  50.5488530  50.9921340  51.5344160</span></span>
+<span><span class="co">## [271]  51.9794470  52.0136589  52.4996600  52.9867230  53.0030850  53.0265480</span></span>
+<span><span class="co">## [277]  53.0476829  53.9298240  54.0316889  54.0493300  54.1992353  54.5384180</span></span>
+<span><span class="co">## [283]  54.9824327  55.9664482  56.0319960  56.5172080  56.5446100  56.6621211</span></span>
+<span><span class="co">## [289]  57.0003140  57.5286160  57.6461367  57.9012080  57.9734540  58.0030729</span></span>
+<span><span class="co">## [295]  58.0132790  58.0218389  58.0530987  58.4293340  58.8852140  58.9949030</span></span>
+<span><span class="co">## [301]  58.9972850  59.0107800  59.0371142  59.5486120  59.9915060  59.9915060</span></span>
+<span><span class="co">## [307]  60.0033800  60.0176850  60.0180560  60.0575100  60.0578810  60.0711560</span></span>
+<span><span class="co">## [313]  60.4927240  60.5326180  60.9873860  60.9904366  61.0647860  61.5000000</span></span>
+<span><span class="co">## [319]  61.5000000  61.5000000  61.5265500  61.5398250  61.9744522  62.0126140</span></span>
+<span><span class="co">## [325]  62.5253880  62.9288440  62.9424900  62.9686690  62.9686690  63.0084940</span></span>
+<span><span class="co">## [331]  63.0084940  63.0320329  63.8954080  63.9894358  64.0157700  64.0160389</span></span>
+<span><span class="co">## [337]  64.0425400  64.1147860  64.4373380  64.5040020  64.9734514  65.0030830</span></span>
+<span><span class="co">## [343]  65.0265460  65.9975800  66.0262360  66.3380947  66.9680040  67.3453707</span></span>
+<span><span class="co">## [349]  67.3851957  67.5081800  67.5355820  67.9874229  68.0473389  68.5195880</span></span>
+<span><span class="co">## [355]  69.0701760  69.9035880  70.0132770  70.0367400  70.9972830  71.5442660</span></span>
+<span><span class="co">## [361]  72.0057600  72.0344160  72.4909720  73.0129350  73.3535507  73.5163600</span></span>
+<span><span class="co">## [367]  73.6654093  73.9770129  74.5482680  74.6726853  74.7125103  74.9686670</span></span>
+<span><span class="co">## [373]  75.8719430  75.9117680  76.0449200  76.9190440  77.0180600  77.0446100</span></span>
+<span><span class="co">## [379]  77.0476789  77.0840587  77.4739400  77.9741150  78.0139400  78.0286160</span></span>
+<span><span class="co">## [385]  78.0316889  78.0680742  78.5265540  78.9027840  78.9426090  79.0212160</span></span>
+<span><span class="co">## [391]  79.0361120  79.3617307  79.5105600  79.9690440  79.9850169  80.0350427</span></span>
+<span><span class="co">## [397]  80.0528295  80.4779420  80.5309600  80.5446060  80.6808653  80.9927240</span></span>
+<span><span class="co">## [403]  81.0190582  81.9734500  81.9734500  81.9734500  81.9734500  82.0000000</span></span>
+<span><span class="co">## [409]  82.0000000  82.0132750  82.0132750  82.0398250  82.0531000  82.5352380</span></span>
+<span><span class="co">## [415]  82.9419440  83.0603760  83.4819440  83.4819440  83.4819440  83.5486080</span></span>
+<span><span class="co">## [421]  83.9613629  84.3719247  84.9244340  84.9506130  85.0129330  85.0441160</span></span>
+<span><span class="co">## [427]  85.0441160  85.0441160  85.3559307  86.0126100  86.4859460  86.6890453</span></span>
+<span><span class="co">## [433]  87.0320289  87.3801442  88.0081800  88.1147820  88.4649120  89.3273147</span></span>
+<span><span class="co">## [439]  89.9693669  90.9426070  90.9737900  91.5355780  91.6992393  92.0442660</span></span>
+<span><span class="co">## [445]  92.6832453  92.9383166  93.5262100  93.9223322  94.0132730  94.0163600</span></span>
+<span><span class="co">## [451]  94.4729160  94.7074588  95.0404886  96.0245042  96.0626660  96.0786389</span></span>
+<span><span class="co">## [457]  96.3852180  96.6546293  96.9506110  97.9473900  97.9739400  98.4873900</span></span>
+<span><span class="co">## [463]  99.0000040  99.0265540  99.0296229  99.0796487  99.3715807  99.4558840</span></span>
+<span><span class="co">## [469]  99.5755660 100.0105600 100.0636642 100.5528295 100.8983740 101.0180560</span></span>
+<span><span class="co">## [475] 101.0180560 101.0180560 101.0180560 101.0442350 101.0446060 102.0347735</span></span>
+<span><span class="co">## [481] 102.0706700 102.5265500 102.5265500 102.5265500 102.5795680 103.9553940</span></span>
+<span><span class="co">## [487] 103.9553940 103.9690400 103.9819440 103.9819440 103.9952190 104.9894400</span></span>
+<span><span class="co">## [493] 105.3012547 105.4638880 105.5305520 105.9734460 105.9734460 106.0629889</span></span>
+<span><span class="co">## [499] 106.6988953 107.0260600 107.9945540 108.0003440 108.3719207 109.0139729</span></span>
+<span><span class="co">## [505] 109.0661065 110.0967260 110.5665380 110.9836400 111.3092587 111.5438015</span></span>
+<span><span class="co">## [511] 111.9328969 112.6285693 112.9557340 113.0442330 113.5175220 114.0262100</span></span>
+<span><span class="co">## [517] 114.0350689 115.4298240 115.6992353 115.9952170 116.0473506 116.8984930</span></span>
+<span><span class="co">## [523] 116.9918200 116.9919960 117.5319960 118.0446100 118.0742289 118.4338260</span></span>
+<span><span class="co">## [529] 118.6365733 119.0006650 119.5307715 119.9293340 119.9558840 120.0626620</span></span>
+<span><span class="co">## [535] 120.0755660 120.5359980 121.0661045 121.5575100 121.5711560 121.9172469</span></span>
+<span><span class="co">## [541] 122.0159940 122.5347735 122.9601750 123.0000000 123.0000000 123.0000000</span></span>
+<span><span class="co">## [547] 123.0000000 123.0000000 123.0000000 123.0000000 123.0265500 123.0265500</span></span>
+<span><span class="co">## [553] 123.0398250 124.0072760 124.0194189 124.5084940 124.5751580 125.9509840</span></span>
+<span><span class="co">## [559] 125.9638880 126.0317006 126.0706660 126.4207960 126.9713840 127.4028807</span></span>
+<span><span class="co">## [565] 127.9553900 128.0101940 128.0585789 128.5229680 128.8984910 128.9296740</span></span>
+<span><span class="co">## [571] 130.3538647 131.0006630 132.0003400 132.5621280 132.9655840 134.0183740</span></span>
+<span><span class="co">## [577] 134.7301953 135.0398230 135.9298240 137.4117680 137.6811793 138.0319960</span></span>
+<span><span class="co">## [583] 138.9737640 138.9739400 139.5139400 139.9867290 140.0265486 140.0265540</span></span>
+<span><span class="co">## [589] 141.0105642 141.0338300 141.5793795 142.0446060 142.0446060 142.0575100</span></span>
+<span><span class="co">## [595] 142.0711560 142.9453240 143.2571387 143.4734500 143.5531000 143.9293300</span></span>
+<span><span class="co">## [601] 144.0422653 144.9421190 144.9819440 144.9819440 145.0084940 145.0262809</span></span>
+<span><span class="co">## [607] 145.3593107 145.9892200 146.0159900 146.9999960 148.0526100 148.9395240</span></span>
+<span><span class="co">## [613] 149.3984707 150.5844533 152.0101900 152.6866253 153.9822840 154.9477040</span></span>
+<span><span class="co">## [619] 156.7257853 157.0531027 157.9117680 158.0183700 158.0371182 159.0211289</span></span>
+<span><span class="co">## [625] 160.0139400 160.5000040 160.9160590 160.9558840 161.0455535 161.9631600</span></span>
+<span><span class="co">## [631] 162.0084926 162.0528295 162.0926545 162.5180560 162.9925082 163.9469000</span></span>
+<span><span class="co">## [637] 163.9867250 163.9867250 164.0265500 164.0265500 164.0531000 165.0338260</span></span>
+<span><span class="co">## [643] 165.4553940 165.5220580 167.9860600 167.9979340 168.0610095 168.9819400</span></span>
+<span><span class="co">## [649] 169.0054789 170.0882320 173.5090280 173.9921340 174.0691895 175.9867230</span></span>
+<span><span class="co">## [655] 176.0476829 177.9824327 178.9664482 179.0793835 179.5446100 180.0003140</span></span>
+<span><span class="co">## [661] 180.0633895 181.0030729 181.0132790 181.0530986 181.4293340 182.0371142</span></span>
+<span><span class="co">## [667] 182.5486120 182.9915060 183.0180560 184.0347735 184.5000000 184.5000000</span></span>
+<span><span class="co">## [673] 184.5000000 185.9424900 185.9686690 185.9686690 186.0084940 186.0320329</span></span>
+<span><span class="co">## [679] 187.0157700 187.5040020 190.3453707 190.5355820 190.9874229 193.0132770</span></span>
+<span><span class="co">## [685] 194.0790395 195.4909720 196.9770129 197.6726853 197.9686670 200.0087135</span></span>
+<span><span class="co">## [691] 200.0446100 200.0476789 200.4739400 201.5265540 201.9426090 202.0361120</span></span>
+<span><span class="co">## [697] 203.0350426 203.0793795 203.4779420 203.5446060 204.0190582 204.9734500</span></span>
+<span><span class="co">## [703] 205.0000000 205.0000000 205.0132750 206.0167175 206.4819440 206.4819440</span></span>
+<span><span class="co">## [709] 206.5486080 206.9613629 207.3719247 208.0441160 210.0320289 211.4649120</span></span>
+<span><span class="co">## [715] 212.3273147 213.9426070 213.9737900 214.5355780 214.6992393 217.0132730</span></span>
+<span><span class="co">## [721] 219.6546293 220.9739400 222.0265540 222.0296229 222.1103395 222.4558840</span></span>
+<span><span class="co">## [727] 224.0180560 224.0446060 225.0613235 225.5265500 225.5265500 226.9819440</span></span>
+<span><span class="co">## [733] 226.9952190 227.9894400 228.3012547 228.5305520 228.9734460 231.3719207</span></span>
+<span><span class="co">## [739] 232.0139729 233.9836400 235.6285693 236.5175220 237.9645975 238.6992353</span></span>
+<span><span class="co">## [745] 238.9952170 239.9918200 240.0667695 242.9558840 244.1059295 245.9601750</span></span>
+<span><span class="co">## [751] 246.0000000 246.0265500 246.0265500 247.0072760 247.5084940 253.3538647</span></span>
+<span><span class="co">## [757] 260.6811793 263.0265486 264.0105642 266.4734500 268.0084940 282.0211289</span></span>
+<span><span class="co">## [763] 285.0528295 285.5180560 286.9867250 288.5220580 292.0054789 296.5090280</span></span>
+<span><span class="co">## [769] 298.9867230 302.0793835 306.0180560 307.0347735 307.5000000 313.3453707</span></span>
+<span><span class="co">## [775] 320.6726853 323.0087135 326.0793795 328.0000000 348.0613235 408.0528295</span></span></code></pre>
+<p>LLLLLLLL</p>
 <p>As an alternative, is it also possible to visualize the two EICs in a
 combined plot using the <code>plotChromatogramsOverlay</code> functions.
 This allows an immediate visual comparison of the peak shapes which, for
@@ -2220,7 +2405,7 @@ a little 3-dimensional impression of the data. The
 <code>plotChromatogramsOverlay</code> also returns the y-positions of
 each EIC which we can then use to draw a horizontal line and indicate
 the <em>m/z</em> for each of the EICs.</p>
-<div class="sourceCode" id="cb134"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb137"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/plotChromatogramsOverlay.html" class="external-link">plotChromatogramsOverlay</a></span><span class="op">(</span><span class="va">chrs</span>, stacked <span class="op">=</span> <span class="fl">0.1</span>, bty <span class="op">=</span> <span class="st">"n"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>h <span class="op">=</span> <span class="va">y</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, col <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span></span>
 <span><span class="va">mzs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/MatrixGenerics/man/rowMeans.html" class="external-link">rowMeans</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">mz</a></span><span class="op">(</span><span class="va">chrs</span><span class="op">)</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
@@ -2234,7 +2419,7 @@ the <em>m/z</em> for each of the EICs.</p>
 in particular how to adapt peak detection setting on a rather noisy
 <em>chromatographic</em> data. Below we load the example data from a
 text file.</p>
-<div class="sourceCode" id="cb135"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb138"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"txt"</span>, <span class="st">"chromatogram.txt"</span>, package <span class="op">=</span> <span class="st">"xcmsTutorials"</span><span class="op">)</span>,</span>
 <span>    sep <span class="op">=</span> <span class="st">"\t"</span>, header <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -2249,7 +2434,7 @@ text file.</p>
 <p>Our data has two columns, one with <em>retention times</em> and one
 with <em>intensities</em>. We can now create a <code>Chromatogram</code>
 object from that and plot the data.</p>
-<div class="sourceCode" id="cb137"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://lgatto.github.io/MSnbase/reference/Chromatogram-class.html" class="external-link">Chromatogram</a></span><span class="op">(</span>rtime <span class="op">=</span> <span class="va">data</span><span class="op">$</span><span class="va">rt</span>, intensity <span class="op">=</span> <span class="va">data</span><span class="op">$</span><span class="va">intensity</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">chr</span><span class="op">)</span></span></code></pre></div>
@@ -2266,7 +2451,7 @@ choices? Go ahead and try different settings or setting combination to
 see if you can succeed in detecting the two peaks. Eventually you might
 even try a different peak detection algorithm
 (e.g. <code>MatchedFilterParam</code>).</p>
-<div class="sourceCode" id="cb138"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">xchr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/findChromPeaks.html" class="external-link">findChromPeaks</a></span><span class="op">(</span><span class="va">chr</span>, param <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/findChromPeaks-centWave.html" class="external-link">CentWaveParam</a></span><span class="op">(</span>sn <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">xchr</span><span class="op">)</span></span></code></pre></div>
@@ -2298,18 +2483,18 @@ the call below we provide the IDs (row names) of the chromatographic
 peaks with parameter <code>peaks</code> and expand the retention time
 range from which to extract the data by 5 seconds (on either side of the
 peak) by setting <code>expandRt = 5</code>.</p>
-<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Extract EIC for two identified chromatographic peaks</span></span>
-<span><span class="va">chrs</span> <span class="op">&lt;-</span> <span class="fu">chromPeakChromatograms</span><span class="op">(</span><span class="va">data</span>, peaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CP499"</span>, <span class="st">"CP520"</span><span class="op">)</span>, expandRt <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">chrs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/chromPeakChromatograms.html" class="external-link">chromPeakChromatograms</a></span><span class="op">(</span><span class="va">data</span>, peaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CP499"</span>, <span class="st">"CP520"</span><span class="op">)</span>, expandRt <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <p>We next plot these chromatograms. The identified chromatographic
 peaks are automatically highlighted, if present, with a grey color.</p>
-<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">chrs</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
 </h2>
-<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## R version 4.3.1 (2023-06-16)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
@@ -2339,8 +2524,8 @@ peaks are automatically highlighted, if present, with a grey color.</p>
 <span><span class="co">##  [3] SummarizedExperiment_1.31.1 GenomicRanges_1.53.1       </span></span>
 <span><span class="co">##  [5] GenomeInfoDb_1.37.4         IRanges_2.35.2             </span></span>
 <span><span class="co">##  [7] MatrixGenerics_1.13.1       matrixStats_1.0.0          </span></span>
-<span><span class="co">##  [9] MetaboCoreUtils_1.9.2       Spectra_1.11.10            </span></span>
-<span><span class="co">## [11] MsExperiment_1.3.0          xcms_3.99.3                </span></span>
+<span><span class="co">##  [9] MetaboCoreUtils_1.9.2       Spectra_1.11.11            </span></span>
+<span><span class="co">## [11] MsExperiment_1.3.0          xcms_3.99.4                </span></span>
 <span><span class="co">## [13] MSnbase_2.27.1              ProtGenerics_1.33.1        </span></span>
 <span><span class="co">## [15] S4Vectors_0.39.2            mzR_2.35.1                 </span></span>
 <span><span class="co">## [17] Rcpp_1.0.11                 Biobase_2.61.0             </span></span>
