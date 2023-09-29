@@ -14,9 +14,7 @@ work with mass spectrometry
 [Spectra](https://github.com/RforMassSpectrometry/Spectra)) and specifically
 LC-MS data ([xcms](https://github.com/sneumann/xcms)) and walks through the
 preprocessing of a small data set emphasizing on selection of data-dependent
-settings for the individual pre-processing steps. The present workshop
-represents an updated version of the workshop given at the Metabolomics Society
-conference 2018 in Seattle (http://metabolomics2018.org).
+settings for the individual pre-processing steps.
 
 Covered topics are:
 - Data import and representation.
@@ -29,10 +27,11 @@ Covered topics are:
 - Correspondence (grouping of chromatographic peaks across samples).
 
 The full R code of all examples along with comprehensive descriptions is
-provided in the [xcms-preprocessing.Rmd](./xcms-preprocessing.Rmd) file. This
-file can be opened with e.g. RStudio which allows execution of the individual R
-commands (see section below for additionally required R packages). The R command
-`rmarkdown::render("xcms-preprocessing.Rmd")` would generate the html file
+provided in the [xcms-preprocessing.Rmd](./vignettes/xcms-preprocessing.Rmd)
+file. This file can be opened with e.g. RStudio which allows execution of the
+individual R commands (see section below for additionally required R
+packages). The R command `rmarkdown::render("xcms-preprocessing.Rmd")` would
+generate the html file
 [xcms-preprocessing.html](https://jorainer.github.io/xcmsTutorials/xcms-preprocessing.html).
 
 
