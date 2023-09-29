@@ -442,7 +442,7 @@ data is in profile mode.
 ```{r}
 #' Combine all spectra of one file into a single spectrum
 bps <- spectra(data) |>
-    combineSpectra(f = fromFile(data), intensityFun = max, ppm = 5)
+    combineSpectra(f = fromFile(data), ppm = 5, intensityFun = max)
 bps
 ```
 
@@ -681,8 +681,8 @@ visualize the result repeating the visualization from above.
 ```{r centroiding, fig.cap = "Centroided data for Serine."}
 #' Smooth and centroid the spectra data
 sps_cent <- spectra(data) |>
-smooth(method = "SavitzkyGolay", halfWindowSize = 6L) |>
-pickPeaks(halfWindowSize = 2L)
+    smooth(method = "SavitzkyGolay", halfWindowSize = 6L) |>
+    pickPeaks(halfWindowSize = 2L)
 
 #' replace spectra
 spectra(data) <- sps_cent
