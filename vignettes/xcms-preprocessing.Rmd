@@ -116,6 +116,15 @@ Naming conventions and terms used in this document are:
   samples/files.
 
 
+## Goals of this workshop
+
+- Learn how R/*xcms* and the packages from the RforMassSpectrometry initiative
+  can be used to inspect, evaluate and analyze LC-MS data.
+
+- Learn the basis to build reproducible analysis workflows, tailored and
+  customized for individual data sets.
+
+
 # Data import and exploration
 
 The example data set of this workflow consists of two files in mzML format with
@@ -829,6 +838,7 @@ approaches).
 ```{r centWave-adapted, fig.cap = "EIC for Serine with detected chromatographic peak", results = "hide"}
 cwp <- CentWaveParam(peakwidth = c(2, 10), integrate = 2)
 
+#' Run peak detection on the EIC
 serine_chr <- findChromPeaks(serine_chr, param = cwp)
 
 #' Plot the data and higlight identified peak area
@@ -848,6 +858,7 @@ function to extract the information on identified chromatographic peaks from our
 object.
 
 ```{r chromPeaks-chromatogram}
+#' Extract identified chromatographic peaks from the EIC
 chromPeaks(serine_chr)
 ```
 
@@ -917,6 +928,7 @@ We can also express these differences in ppm (parts per million) of the average
 *m/z* of the peaks.
 
 ```{r}
+#' Differences in m/z values expressed as ppm
 mz_diff * 1e6 / mean(unlist(mz(srn_1)))
 ```
 
@@ -928,7 +940,7 @@ tested ions. We can next perform the peak detection on the full data set using
 our settings for the `ppm` and `peakwidth` parameters.
 
 ```{r findPeaks-centWave}
-#' Perform peak detection
+#' Perform peak detection on the full data set
 cwp <- CentWaveParam(peakwidth = c(2, 10), ppm = 30, integrate = 2)
 data <- findChromPeaks(data, param = cwp)
 ```
@@ -992,21 +1004,18 @@ plotChromPeaks(data, 2)
 Again, similar pattern are expected to be present for the two data files.
 
 After chromatographic peak detection it is generally a good idea to visually
-inspect individual chromatographic peaks to evaluate the performance of the peak
-detection step. This could be done by plotting EICs of known compounds/ions in
-the data or of randomly selected chromatographic peaks. To illustrate this we
-define below a matrix with *m/z* and retention time ranges for a set of
-(pre)selected peaks. The same matrix could also be created either by randomly
-selecting peaks or by defining it manually. For our example we further expand
-the retention time and *m/z* ranges of the peaks, extract the EICs with the
-`chromatogram` function and finally plot these. Identified chromatographic peaks
-within the plotted regions will by default be highlighted in a semitransparent
-grey color.
+inspect individual chromatographic peaks and evaluate the performance of the
+peak detection step. This could be done by plotting EICs of known compounds/ions
+in the data or by randomly select chromatographic peaks. *m/z* - retention time
+regions for random peaks could be defined using the example code below.
 
 ```{r}
-#' Extract m/z-rt regions for selected peaks
-mz_rt <- chromPeaks(data)[c("CP172", "CP100", "CP325", "CP618"),
-                          c("rtmin", "rtmax", "mzmin", "mzmax")]
+#' Select 4 random peaks
+idx <- sample(seq_len(nrow(chromPeaks(data))), 4)
+
+#' Extract m/z-rt regions for 4 random peaks
+mz_rt <- chromPeaks(data)[idx, c("rtmin", "rtmax", "mzmin", "mzmax")]
+
 #' Expand the rt range by 10 seconds on both sides
 mz_rt[, "rtmin"] <- mz_rt[, "rtmin"] - 10
 mz_rt[, "rtmax"] <- mz_rt[, "rtmax"] + 10
@@ -1014,9 +1023,23 @@ mz_rt[, "rtmax"] <- mz_rt[, "rtmax"] + 10
 mz_rt[, "mzmin"] <- mz_rt[, "mzmin"] - 0.005
 mz_rt[, "mzmax"] <- mz_rt[, "mzmax"] + 0.005
 
+```
+
+For our example we however manually define *m/z* - retention time regions
+(similarly as it could be done for known compounds). Below we extract the EICs
+for these regions with the `chromatogram` function and subsequently plot
+them. Identified chromatographic peaks within the plotted regions will by
+default be highlighted in a semitransparent grey color.
+
+```{r}
+#' Define m/z - retention time regions for EICs
+mz_rt <- rbind(c(106.045, 106.055, 165, 195),
+               c(132.096, 132.107, 135, 160),
+               c(125.981, 125.991, 195, 215),
+               c(105.468, 105.478, 190, 215))
+
 #' Extract the EICs
-eics <- chromatogram(data, rt = mz_rt[, c("rtmin", "rtmax")],
-                     mz = mz_rt[, c("mzmin", "mzmax")])
+eics <- chromatogram(data, mz = mz_rt[, 1:2], rt = mz_rt[, 3:4], )
 #' Plot the EICs
 plot(eics)
 ```
@@ -1058,10 +1081,9 @@ the top right plot separate. We next apply this same peak refinement on the full
 data set.
 
 ```{r}
-#' Perform peak refinement
+#' Perform peak refinement on the full data set
 data <- refineChromPeaks(data, param = mpp)
 ```
-
 
 
 ## Alignment
@@ -1207,9 +1229,11 @@ chromatographic peaks in the returned chromatographic data.
 
 ```{r bpc-raw-adjusted, fig.cap = "BPC before (top) and after (bottom) alignment."}
 par(mfrow = c(2, 1))
+
 #' Plot the raw base peak chromatogram
 plot(bpc_raw)
 grid()
+
 #' Plot the BPC after alignment
 plot(chromatogram(data, aggregationFun = "max", chromPeaks = "none"))
 grid()
@@ -1222,6 +1246,8 @@ plot the EIC for the *[M+H]+* ion for serine before and after alignment.
 
 ```{r serine-xic-adjusted, fig.cap = "EIC for Serine before (left) and after (right) alignment"}
 par(mfrow = c(1, 2), mar = c(4, 4.5, 1, 0.5))
+
+#' EIC before alignment
 plot(serine_chr)
 grid()
 #' EIC after alignment
@@ -1373,7 +1399,7 @@ least 50% of samples per sample group.
 pdp <- PeakDensityParam(sampleGroups = sampleData(data)$group, bw = 1.8,
                         minFraction = 0.4, binSize = 0.02)
 
-#' Perform the correspondence analysis
+#' Perform the correspondence analysis on the full data
 data <- groupChromPeaks(data, param = pdp)
 data
 ```
@@ -1392,7 +1418,6 @@ chr_2 <- chromatogram(data, mz = 118.08625 + c(-0.01, 0.01),
                       aggregationFun = "max")
 #' Setting simulate = FALSE to show the actual correspondence results
 plotChromPeakDensity(chr_2, simulate = FALSE)
-
 ```
 
 We evaluate the results also on a different slice containing signal for ions
@@ -1473,19 +1498,20 @@ a truly missing value (because the ion/compound was not present in that sample)
 or a failure of the peak detection algorithm to identify a peak (either because
 the measured signal was too noisy, or too low, or a combination of both).
 
-To illustrate this we below extract the *m/z* - retention time region for
-selected features, extract their EICs and plot them (using a different color for
-each sample).
+To illustrate this we below define *m/z* - retention time regions containing
+signal of features with missing values, extract their EICs and plot them (using
+a different color for each sample). Note: these regions were identified by first
+visually inspecting EICs for all features with at least one missing value.
 
 ```{r features-missing-values, fig.cap = "Examples of features for which a peak was only identified in one sample."}
-#' Extract the m/z-rt region for selected peaks
-mz_rt <- featureArea(data, features = c("FT026", "FT028", "FT246", "FT306"))
-mz_rt[, "rtmin"] <- mz_rt[, "rtmin"] - 2
-mz_rt[, "rtmax"] <- mz_rt[, "rtmax"] + 2
+#' Define m/z - rt regions for selected examples with missing peaks
+mz_rt <- rbind(c(109.661, 109.664, 192, 200),
+               c(109.993, 109.998, 200, 215),
+               c(125.586, 125.591, 195, 215),
+               c(130.959, 130.961, 197, 201))
 
 #' Extract their EICs and plot them
-chrs <- chromatogram(data, mz = mz_rt[, c("mzmin", "mzmax")],
-                     rt = mz_rt[, c("rtmin", "rtmax")])
+chrs <- chromatogram(data, mz = mz_rt[, 1:2], rt = mz_rt[, 3:4])
 plot(chrs, col = c("red", "blue"), lwd = 2)
 ```
 
@@ -1493,16 +1519,16 @@ Indeed, for all these feature, chromatographic peak detection failed to identify
 a peak in one of the two samples. For the features in the upper panel, the
 signal was most likely too low, while for the bottom left feature the signal was
 likely too noisy, and for the bottom right too sparse (i.e. to few data points
-to properly detect a peak). In all cases, however, signal from (presumably)
-the same ion was measured in both samples. Thus, reporting a missing value would
-not be correct for these cases.
+to properly detect a peak). In all cases, however, signal from (presumably) the
+same ion was measured in both samples. Thus, reporting a missing value would not
+be correct for these.
 
 The aim of the *gap filling* is now to rescue signal for such features by
 integrating the intensities measured within the feature's *m/z* - retention time
 area in the sample(s) in which no chromatographic peak was detected. In *xcms*
 this can be done with the `fillChromPeaks` function and the `ChromPeakAreaParam`
-which allows to configure this algorithm. Below we perform this gap filling
-summing also the number of missing values before and after running
+which allows to configure this algorithm. Below we perform the gap filling
+showing also the number of missing values before and after running
 `fillChromPeaks`.
 
 ```{r fillChromPeaks}
@@ -1517,13 +1543,24 @@ sum(is.na(featureValues(data)))
 ```
 
 With `fillChromPeaks` we could thus *rescue* signal for all but 26
-features. Below we extract the EICs for these and visually inspect some of them.
+features. Also for the 4 example features from above a signal was
+filled-in. Below we visualize the gap-filled chromatographic peaks for these.
 
-```{r gap-filling-missing, fig.cap = "Features with missing values even after gap-filling."}
+```{r features-missing-values-filled, fig.cap = "Features with filled-in signal."}
+#' Extract their EICs and plot them
+chrs <- chromatogram(data, mz = mz_rt[, 1:2], rt = mz_rt[, 3:4])
+plot(chrs, col = c("red", "blue"), lwd = 2)
+```
+
+In contrast, we identify and plot the EICs for features for which no signal
+could be filled-in (i.e. which still have missing values in one of the two
+samples).
+
+```{r gap-filling-missing, fig.cap = "Features with missing values even after gap-filling.", fig.width = 12, fig.height = 10}
 #' Identify features with missing values
 fts <- rownames(featureValues(data))[is.na(rowSums(featureValues(data)))]
 
-#' Define m/z - rt regions for these features
+#' Extract the m/z - rt regions for these features
 mz_rt <- featureArea(data, features = fts)
 
 #' Expand the retention time by 1 second on both sides
@@ -1536,42 +1573,28 @@ chrs_na <- chromatogram(data, mz = mz_rt[, c("mzmin", "mzmax")],
 plot(chrs_na, col = c("red", "blue"), lwd = 2)
 ```
 
-For these features indeed no signal was measured in the second sample and the
-signal for most of them is also very low in the sample in which a
-chromatographic peak was detected.
+For these features indeed no signal was measured in the second sample.
 
-In contrast, for the 4 example features from above a signal was *rescued*. Below
-we visualize the gap-filled chromatographic peaks for these.
-
-```{r features-missing-values-filled, fig.cap = "Features with filled-in signal."}
-#' Extract the m/z-rt region for selected peaks
-mz_rt <- featureArea(data, features = c("FT026", "FT028", "FT246", "FT306"))
-mz_rt[, "rtmin"] <- mz_rt[, "rtmin"] - 2
-mz_rt[, "rtmax"] <- mz_rt[, "rtmax"] + 2
-
-#' Extract their EICs and plot them
-chrs <- chromatogram(data, mz = mz_rt[, c("mzmin", "mzmax")],
-                     rt = mz_rt[, c("rtmin", "rtmax")])
-plot(chrs, col = c("red", "blue"), lwd = 2)
-```
-
-A nice way to check that gap-filling was able to correctly rescue signals is to
-plot, for features with at least one missing value, the average detected against
-the average filled-in signal. Ideally, this should be done on QC samples or
-other repeatedly measured samples were no difference in feature abundance
-between samples is expected.
+An alternative way to confirm if gap-filling was able to correctly rescue
+signals is to plot, for features with at least one missing value, the average
+detected against the average filled-in signal. Ideally, this should be done on
+QC samples or other repeatedly measured samples were no difference in feature
+abundances between samples is expected.
 
 The code below extracts first only the detected feature values (by setting
 `filled = FALSE` in the `featureValues` call), then the detected **and**
-filled-in signal in which the detected signal is subsequently replaced with
-`NA`. Finally, after calculating the row averages for both matrices (excluding
-missing values), the values are plotted against each other.
+filled-in signal. For the latter, the detected signal is subsequently replaced
+with `NA` to create a data matrix with only filled-in values. Finally, after
+calculating the row averages for both matrices (excluding missing values), these
+values are plotted against each other.
 
 ```{r comparison-detected-filled, fig.cap = "Detected (x-axis) against filled (y-axis) signal. The black solid line represents the identity line."}
 #' Get only detected signal
 vals_detect <- featureValues(data, filled = FALSE)
+
 #' Get detected and filled-in signal
 vals_filled <- featureValues(data)
+
 #' Replace detected signal with NA
 vals_filled[!is.na(vals_detect)] <- NA
 
@@ -1593,12 +1616,27 @@ plot(log2(avg_detect), log2(avg_filled),
      pch = 21, bg = "#00000080")
 grid()
 abline(0, 1)
+
 ```
 
 As expected, detected signal is generally higher than filled-in signal. For the
 biggest part (in particular for higher intensities), filled-in and detected
 feature values are similar suggesting that the gap filling step indeed rescued
 signal.
+
+We could also calculate statistics on these values. Below we fit a linear
+regression line to the data and summarize its result.
+
+```{r}
+#' fit a linear regression line to the data
+l <- lm(log2(avg_filled) ~ log2(avg_detect))
+summary(l)
+```
+
+With a value of 1.005, the slope of the line is thus very close to the slope of
+the identity line and the two sets of values are also highly correlated (R
+squared of 0.81).
+
 
 
 ## Preprocessing result
@@ -1710,76 +1748,88 @@ workshops/tutorials at
 
 # Final words
 
-- don't use defaults of *xcms*.
-- use the infrastructure to inspect and summarize the data.
-- don't limit yourself to just *xcms*, use the vast number of additional
-  packages, methods, visualizations in R.
-- build custom workflows, data visualization approaches or your own analysis
-  method.
+- Don't use default settings for preprocessing algorithms.
+- Use the infrastructure provided by the RforMassSpectrometry package ecosystem
+  to inspect, explore and summarize the data.
+- Unleash the power of R!
+  - Create own visualization/summarization functions if needed.
+  - Combine functionalities from different packages.
+  - Create customized (and reproducible) analysis workflows.
 
 
 # Appendix
 
+
 ## Additional visualizations
 
-Visualization is key to understand the signal measured by the MS instrument and
-also to evaluate the performance (and quality) of a preprocessing. LC-MS data is
-particularly difficult to visualize because its 3-dimensional nature. Focusing
-on specific *m/z* retention time ranges (EICs) can help. In this section we
-provide some additional examples how such data can be visualized. In particular,
-we show an alternative way to evaluate and investigate identified
-chromatographic peaks in a data file.
+Visualization is key to understand the signal measured by an MS instrument and
+also to evaluate the performance (and quality) of the preprocessing. However,
+LC-MS data is particularly difficult to visualize because of its 3-dimensional
+nature. Focusing on specific *m/z* - retention time ranges (EICs) can help, but
+provides only information on small subsets of the whole data. In this section we
+present an alternative approach to visualize the whole chromatographic peak
+space from an LC-MS experiment.
 
 We below subset the data to the first sample and visualize the identified
-chromatographic peaks in the *m/z* - retention time plane.
+chromatographic peaks in the *m/z* - retention time plane using the
+`plotChromPeaks` data function already used before.
 
 ```{r, fig.cap = "Position of identified chromatographic peaks in the first sample."}
 #' Plot identified chromatographic peaks in the first sample
 data_1 <- data[1]
-plotChromPeaks(data)
+plotChromPeaks(data_1)
 
 ```
 
-While this plot provides some information on the region in which peaks were
+While this plot provides information on the region in which peaks were
 identified and on the retention time widths of the peaks, it does not allow to
-investigate peak shapes or intensities. Such information would be provided, for
-a single ion, by an extracted ion chromatogram. We thus below extract ion
+investigate peak shapes or intensities. Such information would be provided (for
+a single ion) by an extracted ion chromatogram. We thus below extract ion
 chromatograms for every identified chromatographic peak in the first
-sample. With parameter `expandRt = 4` we extract also signal measured 2 seconds
-before and after the peak.
+sample. With parameter `expandRt = 4` we increase for each chromatographic peak
+the region from which the data will be extracted by 4 seconds on either side.
 
 ```{r}
+#' Extract EICs for each identified chromatographic peak
 chrs_all <- chromPeakChromatograms(data_1, expandRt = 4)
 ```
 
-We could now plot each of the `r length(chrs_all)` EICs separately (using the
-`plot` function). As an alternative, we can use the `plotChromatogramsOverlay`
-function from the *xcms* package to plot multiple EICs into the same plot. By
-setting parameter `stacked` to a value different then `0` it is possible to
-*stack* the chromatograms along the y-axis hence providing a 3-dimensional
-impression of the data. For easier visualization we in addition increase the
-transparency of the colors for the individual lines (parameter `col`), and the
-identified chromatographic peaks (parameter `peakCol` and `peakBg` for the
-foreground and background color, respectively).
-
+While we could now simply proceed and plot each of the `r length(chrs_all)` EICs
+separately, we instead use below the `plotChromatogramsOverlay` function that
+allows to plot multiple EICs into the same plot hence providing an overview of
+the full set of identified chromatographic peaks. By setting parameter `stacked`
+to a value different then `0` it is possible to *stack* the chromatograms along
+the y-axis hence providing a simple 3-dimensional impression of the data. For
+easier visualization we in addition increase the transparency of the colors for
+the individual lines (parameter `col`), and the identified chromatographic peaks
+(parameter `peakCol` and `peakBg` for the foreground and background color,
+respectively).
 
 ```{r, fig.cap = "All identified chromatographic peaks in one sample shown as a pseudo 3-dimensional plot."}
+#' Create a stacked EIC plot
 plotChromatogramsOverlay(chrs_all, stacked = 1, bty = "n",
                          col = "#00000020", peakCol = "#00000020",
                          peakBg = "#00000020")
 ```
 
-Instead of the full data range we can also extract EICs from selected regions of
-the data. Below we define an area from a *m/z* value from 113 to 119 and a
-retention time from 125 to 145 seconds.
+This plot thus provides a general overview of the detected signal
+(chromatographic peaks) of a data file. we can immediately spot some very high
+intensity peaks, regions with higher number of ions and also signal from
+potential contaminants.
 
-```{r}
+Instead of the full data range we can also zoom into a region and extract EICs
+from that for a closer inspection of the data. Below we define an area from a
+*m/z* value from 113 to 119 and a retention time from 125 to 145 seconds.
+
+```{r, fig.cap = "Selected region from which EICs should be extracted and plotted."}
+#' Plot location of all peaks and highlight region of interest
 plotChromPeaks(data_1)
 rect(125, 113, 145, 119, lty = 3, border = "#ff000080", lwd = 2)
 ```
 
-We next extract chromatographic peaks from that region, define *m/z* and
-retention time ranges from that and extract ion chromatograms for these slices.
+With the *m/z* ranges from the chromatographic peaks in that region defined, we
+can next extract ion chromatograms for the data slices defined by these *m/z*
+ranges and the selected (fixed) retention time range.
 
 ```{r}
 #' Extract chrom peaks from that region
@@ -1793,10 +1843,11 @@ chrs_sub <- chromatogram(data_1, mz = pks[, c("mzmin", "mzmax")],
 
 ```
 
-We can now plot the EICs from that region with the
-`plotChromatogramsOverlay`. This function also silently returns the y-position
-of the individual EICs in the plot which we assign to a variable `y` and use
-that information to indicate the *m/z* for the EICs along the y-axis.
+We can now plot the EICs from that region again using the
+`plotChromatogramsOverlay` function. Next to plotting the data, this function
+also silently returns the y-positions of the individual EICs in the plot. We
+assign that below to a variable `y` and use this information to draw the *m/z*
+for the EICs along the y-axis.
 
 ```{r, fig.cap = "EICs from a selected *m/z* - retention time region."}
 #' Plot the EICs of the selected area
@@ -1814,51 +1865,21 @@ text(x = rep(126, length(mzs)), y = y[[1]],
 ```
 
 Some of the EICs seem to represent signals from isotopes (e.g. the EIC at 114.07
-and 115.07).  The infrastructure around *xcms* thus allows to create customized
-visualizations of the data. Note however, that the plots created above only
-showed **detected** chromatographic peaks in a sample but not the *full* MS data
-(i.e. signals outside of identified chromatographic peaks).
+and 115.07). In fact, we can use the `isotopologues` function from the `r
+Biocpkg("MetaboCoreUtils")` to check whether pairs of *m/z* and intensity values
+would match signal expected for isotopes.
 
 ```{r}
-#' What could the differences be?
+#' Order the extracted chromatographic peaks by m/z
 pks <- pks[order(pks[, "mz"]), ]
+
+#' Test which signals could come from isotopes
 library(MetaboCoreUtils)
 isotopologues(pks[, c("mz", "into")])
-
-tmp <- mass2mz(123, adductNames())
-
-diffs <- outer(tmp[1, ], tmp[1, ], "-")
-diffs[lower.tri(diffs, TRUE)] <- NA
-diffs <- abs(diffs)
-
-pk_diffs <- outer(pks[, "mz"], pks[, "mz"], "-")
-pk_diffs[lower.tri(pk_diffs, TRUE)] <- NA
-pk_diffs <- abs(pk_diffs)
-
-res <- outer(pk_diffs, diffs, "-")
-
-sort(unique(diffs))
 ```
 
-LLLLLLLL
-
-As an alternative, is it also possible to visualize the two EICs in a combined
-plot using the `plotChromatogramsOverlay` functions. This allows an immediate
-visual comparison of the peak shapes which, for isotope peaks, are expected to
-be highly similar. In the `plotChromatogramsOverlay` function below we set
-`stacked = 0.1` which causes the EICs to be drawn slightly shifted along the
-y-axis (hence the EICs are being stacked). This gives a little 3-dimensional
-impression of the data. The `plotChromatogramsOverlay` also returns the
-y-positions of each EIC which we can then use to draw a horizontal line and
-indicate the *m/z* for each of the EICs.
-
-```{r, eval = FALSE}
-y <- plotChromatogramsOverlay(chrs, stacked = 0.1, bty = "n")
-abline(h = y[[1]], col = "grey")
-mzs <- format(rowMeans(mz(chrs)), digits = 5)
-text(x = c(175, 175), y = y[[1]],
-     labels = paste0("m/z = ", mzs), pos = 1)
-```
+Pairs of chromatographic peaks have been identified as being potential
+isotopologues.
 
 
 ## Bonus material - peak detection fun
@@ -1930,33 +1951,6 @@ Dolomites, the [*Paternkofel*](https://en.wikipedia.org/wiki/Paternkofel) (left
 peak, colored red) and the famous [*Drei
 Zinnen*](https://en.wikipedia.org/wiki/Tre_Cime_di_Lavaredo) (right tri-forked
 peak colored green).
-
-
-# Additional things
-
-
-Below we extract the EICs for
-two of these peaks using the `chromPeakChromatograms` function. This is a
-convenience function for easier and faster extraction of EICs for selected peaks
-(in a specific sample). The sam data (but for all samples) could also be
-extracted with the `chromatogram` function specifying the *m/z* and retention
-time range of the chromatographic peak. In the call below we provide the IDs
-(row names) of the chromatographic peaks with parameter `peaks` and expand the
-retention time range from which to extract the data by 5 seconds (on either side
-of the peak) by setting `expandRt = 5`.
-
-```{r, eval = FALSE}
-#' Extract EIC for two identified chromatographic peaks
-chrs <- chromPeakChromatograms(data, peaks = c("CP499", "CP520"), expandRt = 5)
-```
-
-We next plot these chromatograms. The identified chromatographic peaks are
-automatically highlighted, if present, with a grey color.
-
-```{r, eval = FALSE}
-plot(chrs)
-```
-
 
 
 
