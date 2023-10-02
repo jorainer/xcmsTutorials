@@ -163,6 +163,7 @@ pd <- data.frame(file = basename(fls),
                  sample = c("POOL_1", "POOL_2"),
                  injection_index = c(1, 19),
                  group = "POOL")
+
 #' Import the data of the experiment
 data <- readMsExperiment(fls, sampleData = pd)
 data
@@ -191,7 +192,7 @@ data_2 <- data[2]
 data_2
 ```
 
-This thus subsetted the full data, including sample information and spectra data
+This did subset the full data, including sample information and spectra data
 to those of the second file. Phenotype information can be retrieved with the
 `sampleData` function from an `MsExperiment` object.
 
@@ -213,26 +214,47 @@ The new version of *xcms* uses thus the more modern and flexible infrastructure
 for MS data analysis provided by the `r Biocpkg("Spectra")` package. While it is
 still possible and supported to use *xcms* together with the `r
 Biocpkg("MSnbase")` package, users are advised to switch to this new
-infrastructure as it provides more flexibility and a higher performance.
-
-This `Spectra` object represents the full LC-MS data of the experiment. Each
-element in this object is a spectrum (in one sample/file) with all information
-provided by the respective original data (mzML) file. Note that, through
-additional packages such as the `r Biocpkg("MsBackendRawFileReader")`, it would
-also be possible to import MS data from other files than mzML, mzXML or CDF
-files.
+infrastructure as it provides more flexibility and a higher performance. Also,
+through additional packages such as the `r Biocpkg("MsBackendRawFileReader")`,
+the new infrastructure would allow to import MS data from other files than mzML,
+mzXML or CDF files.
 
 In the next few examples we briefly explain the `Spectra` object and illustrate
 the use of such objects using some simple examples. More information on
 `Spectra` objects can be found in the package's
 [documentation](https://RforMassSpectrometry.github.io/Spectra) or the
-[SpectraTutorials](https://jorainer.github.io/SpectraTutorials). Besides the
-peak data (*m/z* and intensity values) also additional spectra variables
-(metadata) are available in a `Spectra` object. These can be listed using the
-`spectraVariables` function that we call on our example MS data below. To avoid
-nested function calls and hence improve the readability of the code, we use the
-R pipe operator `|>` that allows to concatenate consecutive calls in a more
-readable fashion.
+[SpectraTutorials](https://jorainer.github.io/SpectraTutorials).
+
+The `Spectra` object contains the full MS data of the experiment. It's length is
+thus equal to the total number of spectra within the experiment. Below we
+determine this number for our example data set. To avoid nested function calls
+and hence improve the readability of the code, we use the R pipe operator `|>`
+that allows to concatenate consecutive calls in a more readable fashion.
+
+```{r}
+#' Get the total number of spectra
+spectra(data) |>
+    length()
+```
+
+The `Spectra` object itself is agnostic of any sample information, it simply
+contains all spectra from the experiment, first all spectra from the first file,
+followed by the spectra from the second. The mapping of spectra to samples is
+provided by the `MsExperiment` object. To access spectra from a specific sample
+we either subset the `MsExperiment` to that particular sample (as done in the
+example above) or we use the `fromFile` function that returns for each spectrum
+the index of the file within the `MsExperiment` to which it belongs. Below we
+use that function to determine the total number of spectra for each sample.
+
+```{r}
+#' Get the number of spectra per file.
+fromFile(data) |>
+    table()
+```
+
+Besides the peak data (*m/z* and intensity values) also additional spectra
+variables (metadata) are available in a `Spectra` object. These can be listed
+using the `spectraVariables` function that we call on our example MS data below.
 
 ```{r}
 #' List available spectra variables
@@ -256,39 +278,10 @@ spectra(data) |>
     table()
 ```
 
-The present data set contains thus 1,862 spectra, all from MS level 1. In
-`Spectra` objects, MS spectra are organized in a linear fashion, i.e. as a
-single long list of spectra. The `Spectra` thus contains spectra from both data
-files, first all spectra from the first file and then from the second, all in
-the order in which they are provided in the original data files (hence generally
-ordered by retention time). To access spectra from a specific sample we either
-subset the `MsExperiment` to that particular sample or we use the `fromFile`
-function that returns for each spectrum the index of the file within the
-`MsExperiment` to which it belongs. Below we subset our object to the first data
-file, extract the retention times of the spectra from that file and, by using
-the `head` function, display the first 6 of them.
-
-```{r}
-#' Display the first 6 retention times of spectra from the first sample
-data[1] |>
-    spectra() |>
-    rtime() |>
-    head()
-```
-
-Such basic data summaries can be helpful for a first initial quality assessment
-to potentially identify problematic data files with e.g. a unexpected low number
-of spectra or sparse spectra (i.e. spectra with very few mass peaks). As an
-example we list below the number of spectra per file in the present data set
-using `fromFile` that, as described above, returns for each spectrum in the data
-set the index of the sample/file to which it belongs to.
-
-```{r}
-#' Count the number of spectra per file
-data |>
-    fromFile() |>
-    table()
-```
+The present data set contains thus 1,862 spectra, all from MS level 1. Such
+basic data summaries can be helpful for a first initial quality assessment to
+potentially identify problematic data files with e.g. a unexpected low number of
+spectra.
 
 We could also check the number of peaks per spectrum in the different data
 files. The number of peaks per spectrum can be extracted with the `lengths`
@@ -325,17 +318,13 @@ respective values:
 ```{r}
 #' Extract m/z values
 mz(sp)
+
 #' Extract intensity values
 intensity(sp)
 ```
 
-Alternatively, the `peaksData` function could be used to extract the *m/z* and
-intensity values of a spectrum as a (two column) numeric matrix.
-
-```{r}
-#' Extract the full peaks data
-peaksData(sp)[[1]] |> head()
-```
+As an alternative, the `peaksData` function could be used to extract both the
+*m/z* and intensity (as numeric matrices) with a single function call.
 
 The total ion signal of a spectrum could be calculated by simply summing the
 intensities of all peaks in the spectrum. Below we perform that operation on the
@@ -369,16 +358,17 @@ spectra(data[2]) |>
     quantile()
 ```
 
-The total ion signals of the two data files is (as expected) similar.  Through
+The total ion signals of the two data files is (as expected) similar. Through
 the `Spectra` object we have thus the possibility to inspect and explore the
 (raw) MS data of an experiment and use its functionality to create own quality
 assessment functions. Alternatively, also the `r Biocpkg("MsQuality")` package
 could be to calculate core MS quality metrics on a full experiment
-(`MsExperiment`) or individual data files (`Spectra`). TODO: ADD REFERENCE TO
-MSQUALITY PAPER.
+(`MsExperiment`) or individual data files (`Spectra`).
 
 
 ## Data visualization
+
+### General data overview
 
 Visualization is crucial for quality assessment of MS data. For LC-MS data
 visualizing a base peak chromatogram (BPC) or total ion chromatogram (TIC) would
@@ -420,6 +410,7 @@ error/resolution of the instrument.
 Below we plot the spectra for 2 consecutive scans.
 
 ```{r, fig.cap = "Spectra from two consecutive scan of the first file"}
+#' Plot two consecutive spectra
 plotSpectra(spectra(data)[123:124], xlim = c(105, 130))
 ```
 
@@ -458,6 +449,9 @@ These BPS thus show the most common ions present in each of the two
 samples. Apparently there is quite some overlap in ion content between the two
 files.
 
+
+### Detailed data inspection
+
 Apart from such general data overview it is also possible (and also suggested)
 to explore the data in more detail. To this end we next focus on a specific
 subset of the data were we expect signal for a compound that should be present
@@ -469,6 +463,7 @@ the spectra data using the `filterRt` function extracting only spectra measured
 between 180 and 181 seconds.
 
 ```{r}
+#' Extract all spectra measured between 180 and 181 seconds
 sps <- spectra(data) |>
     filterRt(c(180, 181))
 sps
@@ -492,9 +487,9 @@ functions are at present available for `MsExperiment` objects while more are
 available for `Spectra` objects.
 
 ```{r}
-#' subset the whole MsExperiment
+#' Subset the whole MsExperiment
 data_sub <- filterRt(data, rt = c(180, 181))
-#' extract spectra from the subset for the first sample
+#' Extract spectra from the subset for the first sample
 spectra(data_sub[1])
 ```
 
@@ -502,17 +497,19 @@ For the present purpose it is however not important to keep the sample
 association intact and we thus proceed to plot the previously extracted spectra.
 
 ```{r, fig.cap = "MS1 spectra measured between 180 and 181 seconds"}
+#' Plot the spectra
 plotSpectra(sps)
 ```
 
 We can immediately spot several mass peaks in the spectrum, with the largest one
-at an *m/z* of about 130 seconds and the second largest at about 106, which
+at an *m/z* of about 130 and the second largest at about 106, which
 could represent signal for an ion of
 [Serine](https://en.wikipedia.org/wiki/Serine). Below we calculate the exact
 (monoisotopic) mass for serine from its chemical formula *C3H7NO3* using the
 `calculateMass` function from the `r Biocpkg("MetaboCoreUtils")` package.
 
 ```{r}
+#' Calculate the (monoisotopic) mass of serine
 library(MetaboCoreUtils)
 mass_serine <- calculateMass("C3H7NO3")
 mass_serine
@@ -532,6 +529,7 @@ positively charged and `adductNames("negative")` for all negatively charge
 ions).
 
 ```{r}
+#' Calculate the m/z for the [M+H]+ ion of serine
 serine_mz <- mass2mz(mass_serine, "[M+H]+")
 serine_mz
 ```
@@ -552,7 +550,7 @@ function. Note that it would also be possible to first filter the data set by
 *m/z* using the `filterMzRange` function and then extract the chromatogram.
 
 ```{r, fig.cap = "Ion trace for an ion of serine"}
-#' Extract an full RT chromatogram for ions with an m/z similar than serine
+#' Extract a full RT chromatogram for ions with an m/z similar than serine
 serine_chr <- chromatogram(data, mz = serine_mz + c(-0.05, 0.05))
 plot(serine_chr)
 ```
@@ -575,11 +573,11 @@ functions (similar to the `mz` and `intensity` functions for a `Spectra`
 object).
 
 ```{r chromatogram}
-#' get intensity valuesfor the chromatogram of the first sample
+#' Get intensity values for the chromatogram of the first sample
 intensity(serine_chr[1, 1]) |>
     head()
 
-#' get the respective retention times of the first sample
+#' Get the respective retention times of the first sample
 rtime(serine_chr[1, 1]) |>
     head()
 ```
@@ -600,9 +598,9 @@ extracted ion chromatogram (EIC, sometimes also referred to as XIC) for the
 ```{r, fig.cap = "Extracted ion chromatogram for serine."}
 #' Create an EIC for serine
 data |>
-filterRt(rt = c(175, 189)) |>
-filterMz(mz = serine_mz + c(-0.05, 0.05)) |>
-chromatogram() |>
+    filterRt(rt = c(175, 189)) |>
+    filterMz(mz = serine_mz + c(-0.05, 0.05)) |>
+    chromatogram() |>
 plot()
 ```
 
@@ -654,10 +652,11 @@ containing signal for serine and visualize the full MS data measured for that
 region in both data files.
 
 ```{r serine-profile-mode-data, fig.cap = "Profile data for Serine."}
+#' Visualize the full MS data for a small m/z - rt area
 data |>
-filterRt(rt = c(175, 189)) |>
-filterMz(mz = c(106.02, 106.07)) |>
-plot()
+    filterRt(rt = c(175, 189)) |>
+    filterMz(mz = c(106.02, 106.07)) |>
+    plot()
 ```
 
 The lower panel of the plot shows all mass peaks measured by the instrument:
@@ -684,7 +683,7 @@ sps_cent <- spectra(data) |>
     smooth(method = "SavitzkyGolay", halfWindowSize = 6L) |>
     pickPeaks(halfWindowSize = 2L)
 
-#' replace spectra
+#' Replace spectra
 spectra(data) <- sps_cent
 
 #' Plot the centroided data for Serine
@@ -880,10 +879,10 @@ consecutive scans are considered. To illustrate this, we plot again the full
 MS data for the data subset containing signal for serine.
 
 ```{r Serine-mz-scattering-plot}
-#' Restrict the data to signal from Serine
+#' Restrict to data containing signal from serine
 srn <- data |>
-filterRt(rt = c(179, 186)) |>
-filterMz(mz = c(106.04, 106.07))
+    filterRt(rt = c(179, 186)) |>
+    filterMz(mz = c(106.04, 106.07))
 
 #' Plot the data
 plot(srn)
@@ -1107,6 +1106,7 @@ run, slight drifts of the signal are visible. These were also already visible in
 the EIC for serine, that we plot again below.
 
 ```{r}
+#' Plot EIC of serine
 plot(serine_chr, xlim = c(175, 190))
 grid()
 ```
@@ -1474,7 +1474,6 @@ our example, neighboring and overlapping peaks per sample were merged to avoid
 an overestimation of the feature abundance. Below we extract the feature
 abundances and show the first 6 rows.
 
-
 ```{r}
 #' Get abundances for the first 6 features
 featureValues(data, method = "sum") |> head()
@@ -1702,6 +1701,13 @@ simply use the `assay` function.
 ```{r}
 #' Get feature values
 assay(res) |> head()
+```
+
+The `SummarizedExperiment` can be subset by rows and/or columns.
+
+```{r}
+#' Subset to the first 10 features
+res[1:10, ]
 ```
 
 
