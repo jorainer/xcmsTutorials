@@ -1,3 +1,9 @@
+# xcmsTutorials 1.0
+
+## Changes in 1.0.0
+
+- Restructure and clarify basic data access section.
+
 # xcmsTutorials 0.99
 
 ## Changes in xcmsTutorials 0.99.3
