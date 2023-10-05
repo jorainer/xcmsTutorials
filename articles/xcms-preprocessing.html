@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="xcmsTutorials">
-<title>Exploring and Analyzing LC-MS data with Spectra and xcms • xcmsTutorials</title>
+<title>Exploring and Analyzing LC-MS Data with Spectra and xcms • xcmsTutorials</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Exploring and Analyzing LC-MS data with Spectra and xcms">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Exploring and Analyzing LC-MS Data with Spectra and xcms">
 <meta property="og:description" content="xcmsTutorials">
 <meta property="og:image" content="https://jorainer.github.io/xcmsTutorials/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">xcmsTutorials</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +48,7 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/xcms-preprocessing.html">Exploring and Analyzing LC-MS data with Spectra and xcms</a>
+    <a class="dropdown-item" href="../articles/xcms-preprocessing.html">Exploring and Analyzing LC-MS Data with Spectra and xcms</a>
   </div>
 </li>
 <li class="nav-item">
@@ -78,7 +78,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Exploring and Analyzing LC-MS data with Spectra and xcms</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Exploring and Analyzing LC-MS Data with Spectra and xcms</h1>
                         <h4 data-toc-skip class="author">Philippine
 Louail, Johannes Rainer</h4>
             <address class="author_afil">
@@ -308,8 +308,8 @@ retrieved with the <code>sampleData</code> function from an
 <span><span class="co">## file(s):</span></span>
 <span><span class="co">## 20171016_POOL_POS_1_105-134.mzML</span></span>
 <span><span class="co">## 20171016_POOL_POS_3_105-134.mzML</span></span></code></pre>
-<p>The new version of <em>xcms</em> uses thus the more modern and
-flexible infrastructure for MS data analysis provided by the <em><a href="https://bioconductor.org/packages/3.18/Spectra" class="external-link">Spectra</a></em>
+<p>From version 4 on, <em>xcms</em> uses the more modern and flexible
+infrastructure for MS data analysis provided by the <em><a href="https://bioconductor.org/packages/3.18/Spectra" class="external-link">Spectra</a></em>
 package. While it is still possible and supported to use <em>xcms</em>
 together with the <code>r Biocpkg("MSnbase")</code> package, users are
 advised to switch to this new infrastructure as it provides more
@@ -352,6 +352,9 @@ each sample.</p>
 <pre><code><span><span class="co">## </span></span>
 <span><span class="co">##   1   2 </span></span>
 <span><span class="co">## 931 931</span></span></code></pre>
+<p>Such basic data summaries can be helpful for a first initial quality
+assessment to potentially identify problematic data files with e.g. a
+unexpected low number of spectra.</p>
 <p>Besides the peak data (<em>m/z</em> and intensity values) also
 additional spectra variables (metadata) are available in a
 <code>Spectra</code> object. These can be listed using the
@@ -397,9 +400,7 @@ number of spectra from different MS levels available in the object.</p>
 <span><span class="co">##    1 </span></span>
 <span><span class="co">## 1862</span></span></code></pre>
 <p>The present data set contains thus 1,862 spectra, all from MS level
-1. Such basic data summaries can be helpful for a first initial quality
-assessment to potentially identify problematic data files with e.g. a
-unexpected low number of spectra.</p>
+1.</p>
 <p>We could also check the number of peaks per spectrum in the different
 data files. The number of peaks per spectrum can be extracted with the
 <code>lengths</code> function. Below we extract these values, split them
@@ -574,9 +575,9 @@ value because the present data is in profile mode.</p>
 <span><span class="co">## 2         1     0.275         1</span></span>
 <span><span class="co">##  ... 33 more variables/columns.</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Mon Oct  2 15:15:04 2023]</span></span>
-<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Mon Oct  2 15:15:06 2023]</span></span>
-<span><span class="co">##  Merge 2 Spectra into one [Mon Oct  2 15:15:08 2023]</span></span></code></pre>
+<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Thu Oct  5 10:04:14 2023]</span></span>
+<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Thu Oct  5 10:04:16 2023]</span></span>
+<span><span class="co">##  Merge 2 Spectra into one [Thu Oct  5 10:04:17 2023]</span></span></code></pre>
 <p><code>bps</code> is thus a <code>Spectra</code> with two spectra
 representing the BPS of the two data files. Below we plot these.</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
@@ -624,7 +625,7 @@ measured between 180 and 181 seconds.</p>
 <span><span class="co">## 20171016_POOL_POS_1_105-134.mzML</span></span>
 <span><span class="co">## 20171016_POOL_POS_3_105-134.mzML</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Mon Oct  2 15:15:09 2023]</span></span></code></pre>
+<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Thu Oct  5 10:04:18 2023]</span></span></code></pre>
 <p>For the present data set there are 6 spectra measured within this one
 second in both samples. By extracting the data as a <code>Spectra</code>
 object we have however lost now the direct (inherent) association
@@ -659,7 +660,7 @@ available for <code>Spectra</code> objects.</p>
 <span><span class="co">## file(s):</span></span>
 <span><span class="co">## 20171016_POOL_POS_1_105-134.mzML</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Mon Oct  2 15:15:09 2023]</span></span></code></pre>
+<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Thu Oct  5 10:04:18 2023]</span></span></code></pre>
 <p>For the present purpose it is however not important to keep the
 sample association intact and we thus proceed to plot the previously
 extracted spectra.</p>
@@ -911,8 +912,9 @@ mzML files and proceed with the analysis.</p>
 <span></span>
 <span><span class="co">#' Read the centroided data.</span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MsExperiment/man/readMsExperiment.html" class="external-link">readMsExperiment</a></span><span class="op">(</span><span class="va">fls</span>, sampleData <span class="op">=</span> <span class="va">pd</span><span class="op">)</span></span></code></pre></div>
-<p>This, or similar, code would allow to create scripts to batch-perform
-an R-based centroiding.</p>
+<p>Thus, with few lines of R code we performed MS data centroiding in R
+which gives us possibly more, and better, control over the process and
+would also allow (parallel) batch processing.</p>
 </div>
 <div class="section level2">
 <h2 id="preprocessing-of-lc-ms-data">Preprocessing of LC-MS data<a class="anchor" aria-label="anchor" href="#preprocessing-of-lc-ms-data"></a>
@@ -920,11 +922,11 @@ an R-based centroiding.</p>
 <p>Preprocessing of (untargeted) LC-MS data aims at detecting and
 quantifying the signal from ions generated from all molecules present in
 a sample. It consists of the following 3 steps: chromatographic peak
-detection, alignment (also called retention time correction) and
-correspondence (also called peak grouping). The resulting matrix of
-feature abundances can then be used as an input in downstream analyses
-including data normalization, identification of features of interest and
-annotation of features to metabolites.</p>
+detection, retention time alignment and correspondence (also called peak
+grouping). The resulting matrix of feature abundances can then be used
+as an input in downstream analyses including data normalization,
+identification of features of interest and annotation of features to
+metabolites.</p>
 <div class="section level3">
 <h3 id="chromatographic-peak-detection">Chromatographic peak detection<a class="anchor" aria-label="anchor" href="#chromatographic-peak-detection"></a>
 </h3>
@@ -1093,9 +1095,10 @@ data subset containing signal for serine.</p>
 <em>m/z</em> of 105.05 in the lower panel of the above plot. This
 scattering also decreases with increasing signal intensity (as for many
 MS instruments the precision of the signal increases with the
-intensity). To investigate the observed differences in <em>m/z</em>
-values for the signal of serine we below first subset the data to the
-first file and then restrict the <em>m/z</em> range further to values
+intensity). To quantify the observed differences in <em>m/z</em> values
+for the signal of serine we restrict the data to a <em>bona fide</em>
+region with signal for the serine ion. Below we first subset the data to
+the first file and then restrict the <em>m/z</em> range to values
 between 106.045 and 106.055.</p>
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Reduce the data set to signal of the [M+H]+ ion of serine</span></span>
@@ -1291,16 +1294,17 @@ problems such as those observed above (see also the documentation of the
 <code>refineChromPeaks</code> function for all possible refinement
 options).</p>
 <p>To fuse the wrongly split peaks in the second row, we use the
-<code>MergeNeighboringPeaksParam</code> algorithm and configure it to
-merge all chromatographic peaks with a similar <em>m/z</em> that are
-less than 8 seconds apart from each other on the retention time axis
-(parameter <code>expandRt = 4</code>; the distance tail to head of the
-peaks evaluated for merging should thus be less than
-<code>2 * expandRt</code>) and for which the signal (intensity) between
-the two peaks is higher than 75% of the smaller apex intensity of the
-two peaks (parameter <code>minProp = 0.75</code>). We below apply these
-settings on the EICs and evaluate the result of this
-post-processing.</p>
+<code>MergeNeighboringPeaksParam</code> algorithm that merges
+chromatographic peaks that are overlapping on the <em>m/z</em> and
+retention time dimension for which the signal between them is lower than
+a certain value. We specify <code>expandRt = 4</code> to expand the
+retention time width of each peak by 4 seconds on each side and set
+<code>minProp = 0.75</code>. All chromatographic peaks with a distance
+tail to head in retention time dimension that is less
+<code>2 * expandRt</code> and for which the intensity between them is
+higher than 75% of the lower (apex) intensity of the two peaks are thus
+merged. We below apply these settings on the EICs and evaluate the
+result of this post-processing.</p>
 <div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Define the setting for the peak refinement</span></span>
 <span><span class="va">mpp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/refineChromPeaks.html" class="external-link">MergeNeighboringPeaksParam</a></span><span class="op">(</span>expandRt <span class="op">=</span> <span class="fl">4</span>, minProp <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span></span>
@@ -1320,7 +1324,7 @@ this same peak refinement on the full data set.</p>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/refineChromPeaks.html" class="external-link">refineChromPeaks</a></span><span class="op">(</span><span class="va">data</span>, param <span class="op">=</span> <span class="va">mpp</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="alignment">Alignment<a class="anchor" aria-label="anchor" href="#alignment"></a>
+<h3 id="retention-time-alignment">Retention time alignment<a class="anchor" aria-label="anchor" href="#retention-time-alignment"></a>
 </h3>
 <p>While chromatography helps to better discriminate between analytes it
 is also affected by variances that lead to shifts in retention times
@@ -1982,7 +1986,7 @@ function:</p>
 <pre><code><span><span class="co">## [[1]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak detection </span></span>
-<span><span class="co">##  date: Mon Oct  2 15:15:23 2023 </span></span>
+<span><span class="co">##  date: Thu Oct  5 10:04:32 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: CentWaveParam </span></span>
@@ -1991,7 +1995,7 @@ function:</p>
 <span><span class="co">## [[2]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak refinement </span></span>
-<span><span class="co">##  date: Mon Oct  2 15:15:27 2023 </span></span>
+<span><span class="co">##  date: Thu Oct  5 10:04:35 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: MergeNeighboringPeaksParam </span></span>
@@ -2000,7 +2004,7 @@ function:</p>
 <span><span class="co">## [[3]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak grouping </span></span>
-<span><span class="co">##  date: Mon Oct  2 15:15:29 2023 </span></span>
+<span><span class="co">##  date: Thu Oct  5 10:04:36 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakDensityParam </span></span>
@@ -2009,7 +2013,7 @@ function:</p>
 <span><span class="co">## [[4]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Retention time correction </span></span>
-<span><span class="co">##  date: Mon Oct  2 15:15:29 2023 </span></span>
+<span><span class="co">##  date: Thu Oct  5 10:04:37 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakGroupsParam </span></span>
@@ -2018,7 +2022,7 @@ function:</p>
 <span><span class="co">## [[5]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak grouping </span></span>
-<span><span class="co">##  date: Mon Oct  2 15:15:34 2023 </span></span>
+<span><span class="co">##  date: Thu Oct  5 10:04:41 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakDensityParam </span></span>
@@ -2027,7 +2031,7 @@ function:</p>
 <span><span class="co">## [[6]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Missing peak filling </span></span>
-<span><span class="co">##  date: Mon Oct  2 15:15:37 2023 </span></span>
+<span><span class="co">##  date: Thu Oct  5 10:04:45 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: ChromPeakAreaParam </span></span>
@@ -2429,9 +2433,9 @@ Zinnen</em></a> (right tri-forked peak colored green).</p>
 <span><span class="co">## other attached packages:</span></span>
 <span><span class="co">##  [1] RColorBrewer_1.1-3          png_0.1-8                  </span></span>
 <span><span class="co">##  [3] SummarizedExperiment_1.31.1 GenomicRanges_1.53.1       </span></span>
-<span><span class="co">##  [5] GenomeInfoDb_1.37.5         IRanges_2.35.2             </span></span>
+<span><span class="co">##  [5] GenomeInfoDb_1.37.6         IRanges_2.35.2             </span></span>
 <span><span class="co">##  [7] MatrixGenerics_1.13.1       matrixStats_1.0.0          </span></span>
-<span><span class="co">##  [9] MetaboCoreUtils_1.9.2       Spectra_1.11.11            </span></span>
+<span><span class="co">##  [9] MetaboCoreUtils_1.9.4       Spectra_1.11.11            </span></span>
 <span><span class="co">## [11] MsExperiment_1.3.0          xcms_3.99.4                </span></span>
 <span><span class="co">## [13] MSnbase_2.27.1              ProtGenerics_1.33.1        </span></span>
 <span><span class="co">## [15] S4Vectors_0.39.2            mzR_2.35.1                 </span></span>

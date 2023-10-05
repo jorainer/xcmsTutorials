@@ -43,7 +43,7 @@
     
     <a class="navbar-brand me-2" href="index.html">xcmsTutorials</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +58,7 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="articles/xcms-preprocessing.html">Exploring and Analyzing LC-MS data with Spectra and xcms</a>
+    <a class="dropdown-item" href="articles/xcms-preprocessing.html">Exploring and Analyzing LC-MS Data with Spectra and xcms</a>
   </div>
 </li>
 <li class="nav-item">
@@ -92,23 +92,33 @@
 <p><a href="https://creativecommons.org/licenses/by-nc/4.0/" class="external-link"><img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg" alt="License: CC BY-NC 4.0"></a></p>
 <p><img src="reference/figures/xcms.png" alt="xcms"><img src="reference/figures/MsExperiment.png" alt="MsExperiment"><img src="reference/figures/Spectra-rainbow.png" alt="Spectra"><img src="reference/figures/MetaboCoreUtils.png" alt="MetaboCoreUtils"><img src="reference/figures/MsCoreUtils.png" alt="MsCoreUtils"></p>
 <p>This workshop provides an overview of recent developments in Bioconductor to work with mass spectrometry (<a href="https://github.com/RforMassSpectrometry/MsExperiment" class="external-link">MsExperiment</a>, <a href="https://github.com/RforMassSpectrometry/Spectra" class="external-link">Spectra</a>) and specifically LC-MS data (<a href="https://github.com/sneumann/xcms" class="external-link">xcms</a>) and walks through the preprocessing of a small data set emphasizing on selection of data-dependent settings for the individual pre-processing steps.</p>
-<p>Covered topics are: - Data import and representation. - Accessing, subsetting and visualizing data. - Centroiding of profile mode MS data. - Chromatographic peak detection. - Empirically determine appropriate settings for the analyzed data set. - Evaluation of identified peaks. - Alignment (retention time correction). - Correspondence (grouping of chromatographic peaks across samples).</p>
+<p>Covered topics are:</p>
+<ul>
+<li><p>Data import and representation.</p></li>
+<li><p>Accessing, subsetting and visualizing data.</p></li>
+<li><p>Centroiding of profile mode MS data.</p></li>
+<li><p>Chromatographic peak detection.</p></li>
+<li><p>Empirically determine appropriate settings for the analyzed data set.</p></li>
+<li><p>Evaluation of identified peaks.</p></li>
+<li><p>Alignment (retention time correction).</p></li>
+<li><p>Correspondence (grouping of chromatographic peaks across samples).</p></li>
+</ul>
 <p>The full R code of all examples along with comprehensive descriptions is provided in the <a href="./vignettes/xcms-preprocessing.Rmd">xcms-preprocessing.Rmd</a> file. This file can be opened with e.g. RStudio which allows execution of the individual R commands (see section below for additionally required R packages). The R command <code>rmarkdown::render("xcms-preprocessing.Rmd")</code> would generate the html file <a href="https://jorainer.github.io/xcmsTutorials/xcms-preprocessing.html">xcms-preprocessing.html</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>For on-line code evaluation, the workshop can also be run using a self-contained docker image with all R packages and a server version of RStudio (Posit) pre-installed:</p>
 <ul>
-<li><p>Get the <a href="https://hub.docker.com/r/jorainer/xcms_tutorials" class="external-link">docker image</a> of this tutorial with <code>docker pull jorainer/xcms_tutorials:latest</code>.</p></li>
-<li>
-<p>Start docker using</p>
-<pre><code>docker run \
-    -e PASSWORD=bioc \
-    -p 8787:8787 \
-    jorainer/xcms_tutorials:latest</code></pre>
-</li>
-<li><p>Enter <code>http://localhost:8787</code> in a web browser and log in with username <code>rstudio</code> and password <code>bioc</code>.</p></li>
-<li><p>In the RStudio server version: open any of the R-markdown (<em>.Rmd</em>) files in the <em>vignettes</em> folder and evaluate the R code blocks.</p></li>
+<li>Get the <a href="https://hub.docker.com/r/jorainer/xcms_tutorials" class="external-link">docker image</a> of this tutorial with <code>docker pull jorainer/xcms_tutorials:latest</code>.</li>
+<li>Start docker using</li>
+</ul>
+<pre><code>  docker run \
+      -e PASSWORD=bioc \
+      -p 8787:8787 \
+      jorainer/xcms_tutorials:latest</code></pre>
+<ul>
+<li>Enter <code>http://localhost:8787</code> in a web browser and log in with username <code>rstudio</code> and password <code>bioc</code>.</li>
+<li>In the RStudio server version: open any of the R-markdown (<em>.Rmd</em>) files in the <em>vignettes</em> folder and evaluate the R code blocks.</li>
 </ul>
 <p>For manual installation, an R version &gt;= 4.3.0 is required as well as recent versions of the packages <code>MsExperiment</code>, <code>Spectra</code> and in particular the <code>xcms</code> (version &gt;= 3.99.0 is needed). These can be installed using the code below:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
