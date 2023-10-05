@@ -17,13 +17,21 @@ preprocessing of a small data set emphasizing on selection of data-dependent
 settings for the individual pre-processing steps.
 
 Covered topics are:
+
 - Data import and representation.
+
 - Accessing, subsetting and visualizing data.
+
 - Centroiding of profile mode MS data.
+
 - Chromatographic peak detection.
+
 - Empirically determine appropriate settings for the analyzed data set.
+
 - Evaluation of identified peaks.
+
 - Alignment (retention time correction).
+
 - Correspondence (grouping of chromatographic peaks across samples).
 
 The full R code of all examples along with comprehensive descriptions is
@@ -44,12 +52,13 @@ pre-installed:
 - Get the [docker image](https://hub.docker.com/r/jorainer/xcms_tutorials) of
   this tutorial with `docker pull jorainer/xcms_tutorials:latest`.
 - Start docker using
-  ```
+```
   docker run \
       -e PASSWORD=bioc \
       -p 8787:8787 \
       jorainer/xcms_tutorials:latest
   ```
+
 - Enter `http://localhost:8787` in a web browser and log in with username
   `rstudio` and password `bioc`.
 - In the RStudio server version: open any of the R-markdown (*.Rmd*) files in

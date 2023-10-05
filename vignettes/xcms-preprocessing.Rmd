@@ -1,5 +1,5 @@
 ---
-title: "Exploring and Analyzing LC-MS data with Spectra and xcms"
+title: "Exploring and Analyzing LC-MS Data with Spectra and xcms"
 author:
 - name: "Philippine Louail, Johannes Rainer"
   affiliation: "Eurac Research, Bolzano, Italy; johannes.rainer@eurac.edu github: jorainer"
@@ -210,8 +210,8 @@ spectra(data)
 
 ```
 
-The new version of *xcms* uses thus the more modern and flexible infrastructure
-for MS data analysis provided by the `r Biocpkg("Spectra")` package. While it is
+From version 4 on, *xcms* uses the more modern and flexible infrastructure for
+MS data analysis provided by the `r Biocpkg("Spectra")` package. While it is
 still possible and supported to use *xcms* together with the `r
 Biocpkg("MSnbase")` package, users are advised to switch to this new
 infrastructure as it provides more flexibility and a higher performance. Also,
@@ -252,6 +252,10 @@ fromFile(data) |>
     table()
 ```
 
+Such basic data summaries can be helpful for a first initial quality assessment
+to potentially identify problematic data files with e.g. a unexpected low number
+of spectra.
+
 Besides the peak data (*m/z* and intensity values) also additional spectra
 variables (metadata) are available in a `Spectra` object. These can be listed
 using the `spectraVariables` function that we call on our example MS data below.
@@ -278,10 +282,7 @@ spectra(data) |>
     table()
 ```
 
-The present data set contains thus 1,862 spectra, all from MS level 1. Such
-basic data summaries can be helpful for a first initial quality assessment to
-potentially identify problematic data files with e.g. a unexpected low number of
-spectra.
+The present data set contains thus 1,862 spectra, all from MS level 1.
 
 We could also check the number of peaks per spectrum in the different data
 files. The number of peaks per spectrum can be extracted with the `lengths`
@@ -736,8 +737,9 @@ fls <- basename(fls)
 data <- readMsExperiment(fls, sampleData = pd)
 ```
 
-This, or similar, code would allow to create scripts to batch-perform an R-based
-centroiding.
+Thus, with few lines of R code we performed MS data centroiding in R which gives
+us possibly more, and better, control over the process and would also allow
+(parallel) batch processing.
 
 
 
@@ -745,11 +747,11 @@ centroiding.
 
 Preprocessing of (untargeted) LC-MS data aims at detecting and quantifying the
 signal from ions generated from all molecules present in a sample. It consists
-of the following 3 steps: chromatographic peak detection, alignment (also
-called retention time correction) and correspondence (also called peak
-grouping). The resulting matrix of feature abundances can then be used as an
-input in downstream analyses including data normalization, identification of
-features of interest and annotation of features to metabolites.
+of the following 3 steps: chromatographic peak detection, retention time
+alignment and correspondence (also called peak grouping). The resulting matrix
+of feature abundances can then be used as an input in downstream analyses
+including data normalization, identification of features of interest and
+annotation of features to metabolites.
 
 
 ## Chromatographic peak detection
@@ -891,10 +893,11 @@ plot(srn)
 We can observe some scattering of the data points around an *m/z* of 105.05 in
 the lower panel of the above plot. This scattering also decreases with
 increasing signal intensity (as for many MS instruments the precision of the
-signal increases with the intensity). To investigate the observed differences in
-*m/z* values for the signal of serine we below first subset the data to the
-first file and then restrict the *m/z* range further to values between 106.045
-and 106.055.
+signal increases with the intensity). To quantify the observed differences in
+*m/z* values for the signal of serine we restrict the data to a *bona fide*
+region with signal for the serine ion. Below we first subset the data to the
+first file and then restrict the *m/z* range to values between 106.045 and
+106.055.
 
 ```{r}
 #' Reduce the data set to signal of the [M+H]+ ion of serine
@@ -1054,14 +1057,15 @@ observed above (see also the documentation of the `refineChromPeaks` function
 for all possible refinement options).
 
 To fuse the wrongly split peaks in the second row, we use the
-`MergeNeighboringPeaksParam` algorithm and configure it to merge all
-chromatographic peaks with a similar *m/z* that are less than 8 seconds apart
-from each other on the retention time axis (parameter `expandRt = 4`; the
-distance tail to head of the peaks evaluated for merging should thus be less
-than `2 * expandRt`) and for which the signal (intensity) between the two peaks
-is higher than 75% of the smaller apex intensity of the two peaks (parameter
-`minProp = 0.75`). We below apply these settings on the EICs and evaluate the
-result of this post-processing.
+`MergeNeighboringPeaksParam` algorithm that merges chromatographic peaks that
+are overlapping on the *m/z* and retention time dimension for which the signal
+between them is lower than a certain value. We specify `expandRt = 4` to expand
+the retention time width of each peak by 4 seconds on each side and set `minProp
+= 0.75`. All chromatographic peaks with a distance tail to head in retention
+time dimension that is less `2 * expandRt` and for which the intensity between
+them is higher than 75% of the lower (apex) intensity of the two peaks are thus
+merged. We below apply these settings on the EICs and evaluate the result of
+this post-processing.
 
 ```{r}
 #' Define the setting for the peak refinement
@@ -1085,7 +1089,7 @@ data <- refineChromPeaks(data, param = mpp)
 ```
 
 
-## Alignment
+## Retention time alignment
 
 While chromatography helps to better discriminate between analytes it is also
 affected by variances that lead to shifts in retention times between measurement
