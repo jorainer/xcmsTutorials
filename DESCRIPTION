@@ -1,6 +1,6 @@
 Package: xcmsTutorials
 Title: Exploring and Analyzing LC-MS data with Spectra and xcms
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: c(
 	     person(given = "Johannes", family = "Rainer",
 		    email = "Johannes.Rainer@eurac.edu",

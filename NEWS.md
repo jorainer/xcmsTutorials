@@ -1,5 +1,10 @@
 # xcmsTutorials 1.0
 
+## Changes in 1.0.1
+
+- Small fixes with bullet points in the README and corrections/reformulations in
+  the workshop Rmd.
+
 ## Changes in 1.0.0
 
 - Restructure and clarify basic data access section.
