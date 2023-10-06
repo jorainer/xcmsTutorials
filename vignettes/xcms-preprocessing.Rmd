@@ -689,9 +689,9 @@ spectra(data) <- sps_cent
 
 #' Plot the centroided data for Serine
 data |>
-filterRt(rt = c(175, 189)) |>
-filterMz(mz = c(106.02, 106.07)) |>
-plot()
+    filterRt(rt = c(175, 189)) |>
+    filterMz(mz = c(106.02, 106.07)) |>
+    plot()
 ```
 
 The impact of the centroiding is clearly visible: each signal for an ion in a
@@ -1059,7 +1059,7 @@ for all possible refinement options).
 To fuse the wrongly split peaks in the second row, we use the
 `MergeNeighboringPeaksParam` algorithm that merges chromatographic peaks that
 are overlapping on the *m/z* and retention time dimension for which the signal
-between them is lower than a certain value. We specify `expandRt = 4` to expand
+between them is higher than a certain value. We specify `expandRt = 4` to expand
 the retention time width of each peak by 4 seconds on each side and set `minProp
 = 0.75`. All chromatographic peaks with a distance tail to head in retention
 time dimension that is less `2 * expandRt` and for which the intensity between
@@ -1105,8 +1105,8 @@ bpc_raw <- chromatogram(data, aggregationFun = "max", chromPeaks = "none")
 plot(bpc_raw, peakType = "none")
 ```
 
-While both samples were measured with the same setup in the same measurement
-run, slight drifts of the signal are visible. These were also already visible in
+Both samples were measured with the same setup in the same measurement run, but
+still small drifts of the signal are visible. These were also already visible in
 the EIC for serine, that we plot again below.
 
 ```{r}
@@ -1177,7 +1177,7 @@ data <- groupChromPeaks(data, pdp)
 
 This step now grouped chromatographic peaks across samples and defined so called
 LC-MS features (or simply features). We can thus now run the alignment using the
-*peakGroups* algorithm. The main parameter to define the hook peaks is (again)
+*peakGroups* algorithm. The main parameter to define the hook peaks is
 `minFraction`. Similar to the definition above, `minFraction` refers to the
 proportion of samples in which a chromatographic peak needs to be present. By
 setting `minFraction = 1` we base the alignment on features with peaks
