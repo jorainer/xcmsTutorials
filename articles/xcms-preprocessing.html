@@ -575,9 +575,9 @@ value because the present data is in profile mode.</p>
 <span><span class="co">## 2         1     0.275         1</span></span>
 <span><span class="co">##  ... 33 more variables/columns.</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Thu Oct  5 10:04:14 2023]</span></span>
-<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Thu Oct  5 10:04:16 2023]</span></span>
-<span><span class="co">##  Merge 2 Spectra into one [Thu Oct  5 10:04:17 2023]</span></span></code></pre>
+<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Fri Oct  6 15:25:51 2023]</span></span>
+<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Fri Oct  6 15:25:53 2023]</span></span>
+<span><span class="co">##  Merge 2 Spectra into one [Fri Oct  6 15:25:55 2023]</span></span></code></pre>
 <p><code>bps</code> is thus a <code>Spectra</code> with two spectra
 representing the BPS of the two data files. Below we plot these.</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
@@ -625,7 +625,7 @@ measured between 180 and 181 seconds.</p>
 <span><span class="co">## 20171016_POOL_POS_1_105-134.mzML</span></span>
 <span><span class="co">## 20171016_POOL_POS_3_105-134.mzML</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Thu Oct  5 10:04:18 2023]</span></span></code></pre>
+<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Fri Oct  6 15:25:55 2023]</span></span></code></pre>
 <p>For the present data set there are 6 spectra measured within this one
 second in both samples. By extracting the data as a <code>Spectra</code>
 object we have however lost now the direct (inherent) association
@@ -660,7 +660,7 @@ available for <code>Spectra</code> objects.</p>
 <span><span class="co">## file(s):</span></span>
 <span><span class="co">## 20171016_POOL_POS_1_105-134.mzML</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Thu Oct  5 10:04:18 2023]</span></span></code></pre>
+<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Fri Oct  6 15:25:56 2023]</span></span></code></pre>
 <p>For the present purpose it is however not important to keep the
 sample association intact and we thus proceed to plot the previously
 extracted spectra.</p>
@@ -875,9 +875,9 @@ visualize the result repeating the visualization from above.</p>
 <span></span>
 <span><span class="co">#' Plot the centroided data for Serine</span></span>
 <span><span class="va">data</span> <span class="op">|&gt;</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">filterRt</a></span><span class="op">(</span>rt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">175</span>, <span class="fl">189</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">filterMz</a></span><span class="op">(</span>mz <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">106.02</span>, <span class="fl">106.07</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">filterRt</a></span><span class="op">(</span>rt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">175</span>, <span class="fl">189</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">filterMz</a></span><span class="op">(</span>mz <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">106.02</span>, <span class="fl">106.07</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="xcms-preprocessing_files/figure-html/centroiding-1.png" alt="Centroided data for Serine." width="960"><p class="caption">
 Centroided data for Serine.
@@ -1296,8 +1296,8 @@ options).</p>
 <p>To fuse the wrongly split peaks in the second row, we use the
 <code>MergeNeighboringPeaksParam</code> algorithm that merges
 chromatographic peaks that are overlapping on the <em>m/z</em> and
-retention time dimension for which the signal between them is lower than
-a certain value. We specify <code>expandRt = 4</code> to expand the
+retention time dimension for which the signal between them is higher
+than a certain value. We specify <code>expandRt = 4</code> to expand the
 retention time width of each peak by 4 seconds on each side and set
 <code>minProp = 0.75</code>. All chromatographic peaks with a distance
 tail to head in retention time dimension that is less
@@ -1343,9 +1343,9 @@ all identified chromatographic peaks.</p>
 BPC of all files.
 </p>
 </div>
-<p>While both samples were measured with the same setup in the same
-measurement run, slight drifts of the signal are visible. These were
-also already visible in the EIC for serine, that we plot again
+<p>Both samples were measured with the same setup in the same
+measurement run, but still small drifts of the signal are visible. These
+were also already visible in the EIC for serine, that we plot again
 below.</p>
 <div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Plot EIC of serine</span></span>
@@ -1416,8 +1416,8 @@ optimized.</p>
 <p>This step now grouped chromatographic peaks across samples and
 defined so called LC-MS features (or simply features). We can thus now
 run the alignment using the <em>peakGroups</em> algorithm. The main
-parameter to define the hook peaks is (again) <code>minFraction</code>.
-Similar to the definition above, <code>minFraction</code> refers to the
+parameter to define the hook peaks is <code>minFraction</code>. Similar
+to the definition above, <code>minFraction</code> refers to the
 proportion of samples in which a chromatographic peak needs to be
 present. By setting <code>minFraction = 1</code> we base the alignment
 on features with peaks identified in 100% of the samples in the data
@@ -1986,7 +1986,7 @@ function:</p>
 <pre><code><span><span class="co">## [[1]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak detection </span></span>
-<span><span class="co">##  date: Thu Oct  5 10:04:32 2023 </span></span>
+<span><span class="co">##  date: Fri Oct  6 15:26:10 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: CentWaveParam </span></span>
@@ -1995,7 +1995,7 @@ function:</p>
 <span><span class="co">## [[2]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak refinement </span></span>
-<span><span class="co">##  date: Thu Oct  5 10:04:35 2023 </span></span>
+<span><span class="co">##  date: Fri Oct  6 15:26:13 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: MergeNeighboringPeaksParam </span></span>
@@ -2004,7 +2004,7 @@ function:</p>
 <span><span class="co">## [[3]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak grouping </span></span>
-<span><span class="co">##  date: Thu Oct  5 10:04:36 2023 </span></span>
+<span><span class="co">##  date: Fri Oct  6 15:26:15 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakDensityParam </span></span>
@@ -2013,7 +2013,7 @@ function:</p>
 <span><span class="co">## [[4]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Retention time correction </span></span>
-<span><span class="co">##  date: Thu Oct  5 10:04:37 2023 </span></span>
+<span><span class="co">##  date: Fri Oct  6 15:26:15 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakGroupsParam </span></span>
@@ -2022,7 +2022,7 @@ function:</p>
 <span><span class="co">## [[5]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak grouping </span></span>
-<span><span class="co">##  date: Thu Oct  5 10:04:41 2023 </span></span>
+<span><span class="co">##  date: Fri Oct  6 15:26:20 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakDensityParam </span></span>
@@ -2031,7 +2031,7 @@ function:</p>
 <span><span class="co">## [[6]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Missing peak filling </span></span>
-<span><span class="co">##  date: Thu Oct  5 10:04:45 2023 </span></span>
+<span><span class="co">##  date: Fri Oct  6 15:26:23 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: ChromPeakAreaParam </span></span>
@@ -2436,7 +2436,7 @@ Zinnen</em></a> (right tri-forked peak colored green).</p>
 <span><span class="co">##  [5] GenomeInfoDb_1.37.6         IRanges_2.35.2             </span></span>
 <span><span class="co">##  [7] MatrixGenerics_1.13.1       matrixStats_1.0.0          </span></span>
 <span><span class="co">##  [9] MetaboCoreUtils_1.9.4       Spectra_1.11.11            </span></span>
-<span><span class="co">## [11] MsExperiment_1.3.0          xcms_3.99.4                </span></span>
+<span><span class="co">## [11] MsExperiment_1.3.0          xcms_3.99.5                </span></span>
 <span><span class="co">## [13] MSnbase_2.27.1              ProtGenerics_1.33.1        </span></span>
 <span><span class="co">## [15] S4Vectors_0.39.2            mzR_2.35.1                 </span></span>
 <span><span class="co">## [17] Rcpp_1.0.11                 Biobase_2.61.0             </span></span>
