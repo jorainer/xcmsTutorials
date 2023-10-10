@@ -49,6 +49,8 @@ For on-line code evaluation, the workshop can also be run using a self-contained
 docker image with all R packages and a server version of RStudio (Posit)
 pre-installed:
 
+- If you don't already have, install [docker](https://www.docker.com/). Find
+  installation information [here](https://docs.docker.com/desktop/).
 - Get the [docker image](https://hub.docker.com/r/jorainer/xcms_tutorials) of
   this tutorial with `docker pull jorainer/xcms_tutorials:latest`.
 - Start docker using
