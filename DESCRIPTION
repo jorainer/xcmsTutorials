@@ -24,12 +24,12 @@ Depends:
     R (>= 4.3),
     xcms (>= 3.99.4),
     Spectra (>= 1.11.10),
-    MsExperiment
+    MsExperiment,
+    msdata
 Suggests:
     MetaboCoreUtils,
     MsCoreUtils,
     png,
-    msdata,
     BiocStyle,
     knitr,
     rmarkdown,
