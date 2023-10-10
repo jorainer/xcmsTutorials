@@ -1,5 +1,9 @@
 # xcmsTutorials 1.0
 
+## Changes in 1.0.2
+
+- Add the `msdata` to *depends* to ensure it's going to be installed.
+
 ## Changes in 1.0.1
 
 - Small fixes with bullet points in the README and corrections/reformulations in
