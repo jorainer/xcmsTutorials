@@ -657,7 +657,7 @@ region in both data files.
 data |>
     filterRt(rt = c(175, 189)) |>
     filterMz(mz = c(106.02, 106.07)) |>
-    plot(cex = 2)
+    plot()
 ```
 
 The lower panel of the plot shows all mass peaks measured by the instrument:
@@ -691,7 +691,7 @@ spectra(data) <- sps_cent
 data |>
     filterRt(rt = c(175, 189)) |>
     filterMz(mz = c(106.02, 106.07)) |>
-    plot(cex = 2)
+    plot()
 ```
 
 The impact of the centroiding is clearly visible: each signal for an ion in a
