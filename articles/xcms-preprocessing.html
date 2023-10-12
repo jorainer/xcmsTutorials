@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">xcmsTutorials</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -465,7 +465,7 @@ that operation on the spectrum extracted above.</p>
 <p>The same operation can also be applied to the full data set. As an
 example we calculate below the total ion signal for each spectrum in the
 first file and determine the distribution of these using the
-<code>quantiles</code> function.</p>
+<code>quantile</code> function.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Calculate the distribution of total ion signal of the first file</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">spectra</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -488,8 +488,9 @@ Through the <code>Spectra</code> object we have thus the possibility to
 inspect and explore the (raw) MS data of an experiment and use its
 functionality to create own quality assessment functions. Alternatively,
 also the <em><a href="https://bioconductor.org/packages/3.18/MsQuality" class="external-link">MsQuality</a></em>
-package could be to calculate core MS quality metrics on a full
-experiment (<code>MsExperiment</code>) or individual data files
+package <span class="citation">(Naake, Rainer, and Huber 2023)</span>
+could be to calculate core MS quality metrics on a full experiment
+(<code>MsExperiment</code>) or individual data files
 (<code>Spectra</code>).</p>
 </div>
 <div class="section level3">
@@ -575,9 +576,9 @@ value because the present data is in profile mode.</p>
 <span><span class="co">## 2         1     0.275         1</span></span>
 <span><span class="co">##  ... 33 more variables/columns.</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Tue Oct 10 13:44:20 2023]</span></span>
-<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Tue Oct 10 13:44:22 2023]</span></span>
-<span><span class="co">##  Merge 2 Spectra into one [Tue Oct 10 13:44:23 2023]</span></span></code></pre>
+<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Thu Oct 12 06:12:34 2023]</span></span>
+<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Thu Oct 12 06:12:36 2023]</span></span>
+<span><span class="co">##  Merge 2 Spectra into one [Thu Oct 12 06:12:37 2023]</span></span></code></pre>
 <p><code>bps</code> is thus a <code>Spectra</code> with two spectra
 representing the BPS of the two data files. Below we plot these.</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
@@ -625,7 +626,7 @@ measured between 180 and 181 seconds.</p>
 <span><span class="co">## 20171016_POOL_POS_1_105-134.mzML</span></span>
 <span><span class="co">## 20171016_POOL_POS_3_105-134.mzML</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Tue Oct 10 13:44:24 2023]</span></span></code></pre>
+<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Thu Oct 12 06:12:38 2023]</span></span></code></pre>
 <p>For the present data set there are 6 spectra measured within this one
 second in both samples. By extracting the data as a <code>Spectra</code>
 object we have however lost now the direct (inherent) association
@@ -660,7 +661,7 @@ available for <code>Spectra</code> objects.</p>
 <span><span class="co">## file(s):</span></span>
 <span><span class="co">## 20171016_POOL_POS_1_105-134.mzML</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Tue Oct 10 13:44:24 2023]</span></span></code></pre>
+<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Thu Oct 12 06:12:38 2023]</span></span></code></pre>
 <p>For the present purpose it is however not important to keep the
 sample association intact and we thus proceed to plot the previously
 extracted spectra.</p>
@@ -778,7 +779,7 @@ serine.</p>
 <span>    <span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">filterRt</a></span><span class="op">(</span>rt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">175</span>, <span class="fl">189</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">filterMz</a></span><span class="op">(</span>mz <span class="op">=</span> <span class="va">serine_mz</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.05</span>, <span class="fl">0.05</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">chromatogram</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="xcms-preprocessing_files/figure-html/unnamed-chunk-25-1.png" alt="Extracted ion chromatogram for serine." width="960"><p class="caption">
 Extracted ion chromatogram for serine.
@@ -816,7 +817,7 @@ above and focus on the mass peak for serine.</p>
 <code class="sourceCode R"><span><span class="co">#' Visualize the profile-mode mass peak for [M+H]+ of serine</span></span>
 <span><span class="va">sps</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/pkg/Spectra/man/hidden_aliases.html" class="external-link">filterMzRange</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">106.02</span>, <span class="fl">106.07</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/Spectra/man/spectra-plotting.html" class="external-link">plotSpectra</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/Spectra/man/spectra-plotting.html" class="external-link">plotSpectra</a></span><span class="op">(</span>lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">serine_mz</span>, col <span class="op">=</span> <span class="st">"#ff000080"</span>, lty <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="xcms-preprocessing_files/figure-html/unnamed-chunk-26-1.png" alt="Profile-mode mass peak for the [M+H]+ ion of serine. The theoretical *m/z* of that ion is indicated with a dotted red line." width="960"><p class="caption">
@@ -1738,7 +1739,8 @@ with the feature abundances (in all samples). Below we extract the
 definition of the features and display the first 6 rows</p>
 <div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Definition of the features</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-class.html" class="external-link">featureDefinitions</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-class.html" class="external-link">featureDefinitions</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##          mzmed    mzmin    mzmax     rtmed     rtmin     rtmax npeaks POOL</span></span>
 <span><span class="co">## FT001 105.0418 105.0417 105.0418 167.68597 167.48455 167.88740      2    2</span></span>
 <span><span class="co">## FT002 105.0415 105.0415 105.0415 157.71871 157.71871 157.71871      1    1</span></span>
@@ -1777,7 +1779,8 @@ sample were merged to avoid an overestimation of the feature abundance.
 Below we extract the feature abundances and show the first 6 rows.</p>
 <div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Get abundances for the first 6 features</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-peak-grouping-results.html" class="external-link">featureValues</a></span><span class="op">(</span><span class="va">data</span>, method <span class="op">=</span> <span class="st">"sum"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-peak-grouping-results.html" class="external-link">featureValues</a></span><span class="op">(</span><span class="va">data</span>, method <span class="op">=</span> <span class="st">"sum"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##       20171016_POOL_POS_1_105-134.mzML 20171016_POOL_POS_3_105-134.mzML</span></span>
 <span><span class="co">## FT001                        3202.7445                        2285.2830</span></span>
 <span><span class="co">## FT002                        3605.3915                               NA</span></span>
@@ -1986,7 +1989,7 @@ function:</p>
 <pre><code><span><span class="co">## [[1]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak detection </span></span>
-<span><span class="co">##  date: Tue Oct 10 13:44:37 2023 </span></span>
+<span><span class="co">##  date: Thu Oct 12 06:12:51 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: CentWaveParam </span></span>
@@ -1995,7 +1998,7 @@ function:</p>
 <span><span class="co">## [[2]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak refinement </span></span>
-<span><span class="co">##  date: Tue Oct 10 13:44:41 2023 </span></span>
+<span><span class="co">##  date: Thu Oct 12 06:12:55 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: MergeNeighboringPeaksParam </span></span>
@@ -2004,7 +2007,7 @@ function:</p>
 <span><span class="co">## [[3]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak grouping </span></span>
-<span><span class="co">##  date: Tue Oct 10 13:44:42 2023 </span></span>
+<span><span class="co">##  date: Thu Oct 12 06:12:56 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakDensityParam </span></span>
@@ -2013,7 +2016,7 @@ function:</p>
 <span><span class="co">## [[4]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Retention time correction </span></span>
-<span><span class="co">##  date: Tue Oct 10 13:44:43 2023 </span></span>
+<span><span class="co">##  date: Thu Oct 12 06:12:57 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakGroupsParam </span></span>
@@ -2022,7 +2025,7 @@ function:</p>
 <span><span class="co">## [[5]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak grouping </span></span>
-<span><span class="co">##  date: Tue Oct 10 13:44:47 2023 </span></span>
+<span><span class="co">##  date: Thu Oct 12 06:13:01 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakDensityParam </span></span>
@@ -2031,7 +2034,7 @@ function:</p>
 <span><span class="co">## [[6]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Missing peak filling </span></span>
-<span><span class="co">##  date: Tue Oct 10 13:44:51 2023 </span></span>
+<span><span class="co">##  date: Thu Oct 12 06:13:05 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: ChromPeakAreaParam </span></span>
@@ -2129,7 +2132,8 @@ to extract the feature value matrix.</p>
 To access that we simply use the <code>assay</code> function.</p>
 <div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Get feature values</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##       20171016_POOL_POS_1_105-134.mzML 20171016_POOL_POS_3_105-134.mzML</span></span>
 <span><span class="co">## FT001                        3202.7445                        2285.2830</span></span>
 <span><span class="co">## FT002                        3605.3915                        3183.9546</span></span>
@@ -2515,6 +2519,13 @@ isotope trace feature detection.</span>”</span> <em>Bioinformatics</em>
 Katajamaa, Mikko, Jarkko Miettinen, and Matej Oresic. 2006. <span>“<span class="nocase">MZmine: toolbox for processing and visualization of mass
 spectrometry based molecular profile data.</span>”</span>
 <em>Bioinformatics</em> 22 (5): 634–36.
+</div>
+<div id="ref-naake_msquality_2023" class="csl-entry">
+Naake, Thomas, Johannes Rainer, and Wolfgang Huber. 2023.
+<span>“<span>MsQuality</span> - an Interoperable Open-Source Package for
+the Calculation of Standardized Quality Metrics of Mass Spectrometry
+Data.”</span> <em>Bioinformatics (Oxford, England)</em>, October,
+btad618. <a href="https://doi.org/10.1093/bioinformatics/btad618" class="external-link">https://doi.org/10.1093/bioinformatics/btad618</a>.
 </div>
 <div id="ref-Prince:2006jj" class="csl-entry">
 Prince, John T, and Edward M Marcotte. 2006. <span>“<span class="nocase">Chromatographic alignment of ESI-LC-MS proteomics data
