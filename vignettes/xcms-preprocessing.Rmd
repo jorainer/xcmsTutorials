@@ -339,7 +339,7 @@ intensity(sp) |>
 
 The same operation can also be applied to the full data set. As an example we
 calculate below the total ion signal for each spectrum in the first file and
-determine the distribution of these using the `quantiles` function.
+determine the distribution of these using the `quantile` function.
 
 ```{r}
 #' Calculate the distribution of total ion signal of the first file
@@ -363,8 +363,8 @@ The total ion signals of the two data files is (as expected) similar. Through
 the `Spectra` object we have thus the possibility to inspect and explore the
 (raw) MS data of an experiment and use its functionality to create own quality
 assessment functions. Alternatively, also the `r Biocpkg("MsQuality")` package
-could be to calculate core MS quality metrics on a full experiment
-(`MsExperiment`) or individual data files (`Spectra`).
+[@naake_msquality_2023] could be to calculate core MS quality metrics on a full
+experiment (`MsExperiment`) or individual data files (`Spectra`).
 
 
 ## Data visualization
@@ -602,7 +602,7 @@ data |>
     filterRt(rt = c(175, 189)) |>
     filterMz(mz = serine_mz + c(-0.05, 0.05)) |>
     chromatogram() |>
-plot()
+    plot()
 ```
 
 The area of such a chromatographic peak is supposed to be proportional to the
@@ -636,7 +636,7 @@ focus on the mass peak for serine.
 #' Visualize the profile-mode mass peak for [M+H]+ of serine
 sps[1] |>
     filterMzRange(c(106.02, 106.07)) |>
-    plotSpectra()
+    plotSpectra(lwd = 2)
 abline(v = serine_mz, col = "#ff000080", lty = 3)
 ```
 
@@ -1455,7 +1455,8 @@ the definition of the features and display the first 6 rows
 
 ```{r correspondence-featureDefinitions}
 #' Definition of the features
-featureDefinitions(data) |> head()
+featureDefinitions(data) |>
+    head()
 ```
 
 Each row defines one feature and provides information on it's *m/z* (column
@@ -1480,7 +1481,8 @@ abundances and show the first 6 rows.
 
 ```{r}
 #' Get abundances for the first 6 features
-featureValues(data, method = "sum") |> head()
+featureValues(data, method = "sum") |>
+    head()
 ```
 
 We could now use this feature matrix for any downstream analysis. Such feature
@@ -1704,7 +1706,8 @@ simply use the `assay` function.
 
 ```{r}
 #' Get feature values
-assay(res) |> head()
+assay(res) |>
+    head()
 ```
 
 The `SummarizedExperiment` can be subset by rows and/or columns.

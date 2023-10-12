@@ -1,5 +1,9 @@
 # xcmsTutorials 1.0
 
+## Changes in 1.0.3
+
+- Add reference to the `MsQuality` paper.
+
 ## Changes in 1.0.2
 
 - Add the `msdata` to *depends* to ensure it's going to be installed.
