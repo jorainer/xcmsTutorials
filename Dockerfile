@@ -1,4 +1,4 @@
-FROM bioconductor/bioconductor_docker:devel
+FROM bioconductor/bioconductor_docker:RELEASE_3_18
 
 LABEL name="jorainer/xcms_tutorials" \
       url="https://github.com/jorainer/xcmsTutorials" \

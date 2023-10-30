@@ -1,5 +1,9 @@
 # xcmsTutorials 1.0
 
+## Changes in 1.0.4
+
+- Use the Bioconductor 3.18 release docker image.
+
 ## Changes in 1.0.3
 
 - Add reference to the `MsQuality` paper.
