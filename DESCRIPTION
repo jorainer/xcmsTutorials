@@ -35,8 +35,6 @@ Suggests:
     rmarkdown,
     RColorBrewer,
     SummarizedExperiment
-Remotes:
-    sneumann/xcms@jomain
 URL: https://jorainer.github.io/xcmsTutorials/
 BugReports: https://github.com/jorainer/xcmsTutorials/issues/new
 VignetteBuilder: knitr
