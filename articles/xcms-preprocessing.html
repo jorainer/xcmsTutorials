@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Exploring and Analyzing LC-MS Data with Spectra and xcms">
 <meta property="og:description" content="xcmsTutorials">
@@ -576,9 +576,9 @@ value because the present data is in profile mode.</p>
 <span><span class="co">## 2         1     0.275         1</span></span>
 <span><span class="co">##  ... 33 more variables/columns.</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Mon Oct 30 09:53:02 2023]</span></span>
-<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Mon Oct 30 09:53:04 2023]</span></span>
-<span><span class="co">##  Merge 2 Spectra into one [Mon Oct 30 09:53:06 2023]</span></span></code></pre>
+<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Tue Dec  5 09:12:18 2023]</span></span>
+<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Tue Dec  5 09:12:19 2023]</span></span>
+<span><span class="co">##  Merge 2 Spectra into one [Tue Dec  5 09:12:20 2023]</span></span></code></pre>
 <p><code>bps</code> is thus a <code>Spectra</code> with two spectra
 representing the BPS of the two data files. Below we plot these.</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
@@ -626,7 +626,7 @@ measured between 180 and 181 seconds.</p>
 <span><span class="co">## 20171016_POOL_POS_1_105-134.mzML</span></span>
 <span><span class="co">## 20171016_POOL_POS_3_105-134.mzML</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Mon Oct 30 09:53:06 2023]</span></span></code></pre>
+<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Tue Dec  5 09:12:21 2023]</span></span></code></pre>
 <p>For the present data set there are 6 spectra measured within this one
 second in both samples. By extracting the data as a <code>Spectra</code>
 object we have however lost now the direct (inherent) association
@@ -661,7 +661,7 @@ available for <code>Spectra</code> objects.</p>
 <span><span class="co">## file(s):</span></span>
 <span><span class="co">## 20171016_POOL_POS_1_105-134.mzML</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Mon Oct 30 09:53:07 2023]</span></span></code></pre>
+<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Tue Dec  5 09:12:21 2023]</span></span></code></pre>
 <p>For the present purpose it is however not important to keep the
 sample association intact and we thus proceed to plot the previously
 extracted spectra.</p>
@@ -1062,7 +1062,7 @@ information on identified chromatographic peaks from our object.</p>
 <code class="sourceCode R"><span><span class="co">#' Extract identified chromatographic peaks from the EIC</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-class.html" class="external-link">chromPeaks</a></span><span class="op">(</span><span class="va">serine_chr</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##           rt   rtmin   rtmax     into     intb     maxo  sn row column</span></span>
-<span><span class="co">## [1,] 181.356 178.566 189.447 74443.95 71734.01 37664.94 110   1      1</span></span>
+<span><span class="co">## [1,] 181.356 178.566 189.447 74443.95 71731.60 37664.94 110   1      1</span></span>
 <span><span class="co">## [2,] 181.072 178.561 187.210 70352.22 69008.98 38517.76 224   1      2</span></span></code></pre>
 <p>The result is returned as a <code>matrix</code> with each row
 representing one identified chromatographic peak. The retention time
@@ -1172,7 +1172,7 @@ preprocessing results.</p>
 <span><span class="co">##  Sample data links:</span></span>
 <span><span class="co">##   - spectra: 2 sample(s) to 1862 element(s).</span></span>
 <span><span class="co">##  xcms results:</span></span>
-<span><span class="co">##   - chromatographic peaks: 653 in MS level(s): 1</span></span></code></pre>
+<span><span class="co">##   - chromatographic peaks: 644 in MS level(s): 1</span></span></code></pre>
 <p>We can extract the results from the peak detection step (as above)
 with the <code>chromPeaks</code> function. The optional parameters
 <code>rt</code> and <code>mz</code> would allow to extract peak
@@ -1184,23 +1184,23 @@ In our example we extract all chromatographic peaks between an
 <code class="sourceCode R"><span><span class="co">#' Access the peak detection results from a specific m/z - rt area</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-class.html" class="external-link">chromPeaks</a></span><span class="op">(</span><span class="va">data</span>, mz <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">106</span>, <span class="fl">108</span><span class="op">)</span>, rt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">150</span>, <span class="fl">190</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##             mz    mzmin    mzmax      rt   rtmin   rtmax       into       intb</span></span>
-<span><span class="co">## CP133 106.0625 106.0606 106.0636 173.264 171.869 174.380   516.3588   510.5323</span></span>
-<span><span class="co">## CP146 107.0653 107.0652 107.0653 173.543 171.032 179.682 11318.2801 11308.5538</span></span>
-<span><span class="co">## CP156 107.0532 107.0522 107.0537 181.356 179.682 183.309  2905.1158  2899.2205</span></span>
-<span><span class="co">## CP167 106.0506 106.0505 106.0506 181.356 178.845 187.773 74181.7823 73916.8683</span></span>
-<span><span class="co">## CP475 106.0633 106.0609 106.0652 172.701 170.748 174.654   559.5491   553.2785</span></span>
-<span><span class="co">## CP482 107.0656 107.0655 107.0657 172.980 169.632 178.003 11372.6845 11166.3372</span></span>
-<span><span class="co">## CP497 107.0538 107.0510 107.0540 181.072 178.840 183.304  3155.0100  3149.2053</span></span>
-<span><span class="co">## CP516 106.0496 106.0494 106.0508 181.072 178.282 187.210 70373.6099 70106.7152</span></span>
-<span><span class="co">##             maxo  sn sample</span></span>
-<span><span class="co">## CP133   426.6084  38      1</span></span>
-<span><span class="co">## CP146  4936.6783 833      1</span></span>
-<span><span class="co">## CP156  1628.9510 129      1</span></span>
-<span><span class="co">## CP167 37664.9371 688      1</span></span>
-<span><span class="co">## CP475   381.6084  53      2</span></span>
-<span><span class="co">## CP482  4569.1399  79      2</span></span>
-<span><span class="co">## CP497  2297.7972 230      2</span></span>
-<span><span class="co">## CP516 38517.7622 826      2</span></span></code></pre>
+<span><span class="co">## CP133 106.0625 106.0606 106.0636 173.264 171.869 174.380   516.3588   509.4463</span></span>
+<span><span class="co">## CP146 107.0653 107.0652 107.0653 173.543 171.032 179.682 11318.2801 11309.9091</span></span>
+<span><span class="co">## CP157 107.0532 107.0522 107.0537 181.356 179.682 183.309  2905.1158  2901.7678</span></span>
+<span><span class="co">## CP167 106.0506 106.0505 106.0506 181.356 178.845 187.773 74181.7823 73905.2115</span></span>
+<span><span class="co">## CP469 106.0633 106.0609 106.0652 172.701 170.748 174.654   559.5491   553.7921</span></span>
+<span><span class="co">## CP477 107.0656 107.0655 107.0657 172.980 169.632 178.003 11372.6845 11166.3372</span></span>
+<span><span class="co">## CP492 107.0538 107.0510 107.0540 181.072 178.840 183.304  3155.0100  3149.2053</span></span>
+<span><span class="co">## CP512 106.0496 106.0494 106.0508 181.072 178.282 187.210 70373.6099 70109.3562</span></span>
+<span><span class="co">##             maxo   sn sample</span></span>
+<span><span class="co">## CP133   426.6084   35      1</span></span>
+<span><span class="co">## CP146  4936.6783 4936      1</span></span>
+<span><span class="co">## CP157  1628.9510  186      1</span></span>
+<span><span class="co">## CP167 37664.9371  685      1</span></span>
+<span><span class="co">## CP469   381.6084   54      2</span></span>
+<span><span class="co">## CP477  4569.1399   79      2</span></span>
+<span><span class="co">## CP492  2297.7972  230      2</span></span>
+<span><span class="co">## CP512 38517.7622  830      2</span></span></code></pre>
 <p>Again, each row in this matrix contains one identified
 chromatographic peak with columns <code>"mz"</code>,
 <code>"mzmin"</code>, <code>"mzmax"</code>, <code>"rt"</code>,
@@ -1225,7 +1225,7 @@ sample.</p>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
 <span><span class="co">##   1   2 </span></span>
-<span><span class="co">## 326 327</span></span></code></pre>
+<span><span class="co">## 323 321</span></span></code></pre>
 <p>About the same number of peaks was identified, which is to be
 expected since both files contain measurements from the same sample (the
 QC pool).</p>
@@ -1679,9 +1679,9 @@ of samples per sample group.</p>
 <span><span class="co">##  Sample data links:</span></span>
 <span><span class="co">##   - spectra: 2 sample(s) to 1862 element(s).</span></span>
 <span><span class="co">##  xcms results:</span></span>
-<span><span class="co">##   - chromatographic peaks: 595 in MS level(s): 1 </span></span>
-<span><span class="co">##   - adjusted retention times: mean absolute difference 0.301 seconds</span></span>
-<span><span class="co">##   - correspondence results: 361 features in MS level(s): 1</span></span></code></pre>
+<span><span class="co">##   - chromatographic peaks: 589 in MS level(s): 1 </span></span>
+<span><span class="co">##   - adjusted retention times: mean absolute difference 0.328 seconds</span></span>
+<span><span class="co">##   - correspondence results: 357 features in MS level(s): 1</span></span></code></pre>
 <p>Over 300 features were identified in our example data set. Again, it
 is suggested to evaluate the results on selected compounds/ions. We
 therefore extract below the chromatogram for the <em>m/z</em> range
@@ -1742,19 +1742,19 @@ definition of the features and display the first 6 rows</p>
 <span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-class.html" class="external-link">featureDefinitions</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##          mzmed    mzmin    mzmax     rtmed     rtmin     rtmax npeaks POOL</span></span>
-<span><span class="co">## FT001 105.0418 105.0417 105.0418 167.68597 167.48455 167.88740      2    2</span></span>
-<span><span class="co">## FT002 105.0415 105.0415 105.0415 157.71871 157.71871 157.71871      1    1</span></span>
-<span><span class="co">## FT003 105.0697 105.0691 105.0703  31.80794  31.68918  31.92670      2    2</span></span>
-<span><span class="co">## FT004 105.1103 105.1100 105.1105  63.75047  63.35239  64.14855      2    2</span></span>
-<span><span class="co">## FT005 105.4734 105.4732 105.4736 201.57593 201.36133 201.79053      2    2</span></span>
-<span><span class="co">## FT006 105.7166 105.7160 105.7172 181.21578 181.08901 181.34256      2    2</span></span>
+<span><span class="co">## FT001 105.0418 105.0417 105.0418 167.68279 167.48793 167.87765      2    2</span></span>
+<span><span class="co">## FT002 105.0415 105.0415 105.0415 157.71770 157.71770 157.71770      1    1</span></span>
+<span><span class="co">## FT003 105.0697 105.0691 105.0703  31.80814  31.67350  31.94279      2    2</span></span>
+<span><span class="co">## FT004 105.1103 105.1100 105.1105  63.71309  63.37961  64.04656      2    2</span></span>
+<span><span class="co">## FT005 105.4734 105.4732 105.4736 201.57632 201.37059 201.78204      2    2</span></span>
+<span><span class="co">## FT006 105.7166 105.7160 105.7172 181.21585 181.08578 181.34592      2    2</span></span>
 <span><span class="co">##        peakidx ms_level</span></span>
-<span><span class="co">## FT001 112, 396        1</span></span>
-<span><span class="co">## FT002      111        1</span></span>
-<span><span class="co">## FT003  19, 317        1</span></span>
-<span><span class="co">## FT004  48, 348        1</span></span>
-<span><span class="co">## FT005 260, 580        1</span></span>
-<span><span class="co">## FT006 135, 444        1</span></span></code></pre>
+<span><span class="co">## FT001 115, 393        1</span></span>
+<span><span class="co">## FT002      114        1</span></span>
+<span><span class="co">## FT003  21, 317        1</span></span>
+<span><span class="co">## FT004  49, 348        1</span></span>
+<span><span class="co">## FT005 261, 573        1</span></span>
+<span><span class="co">## FT006 138, 440        1</span></span></code></pre>
 <p>Each row defines one feature and provides information on it’s
 <em>m/z</em> (column <code>"mzmed"</code>) and retention time (column
 <code>"rtmed"</code>). Additional columns list the number of
@@ -1847,14 +1847,14 @@ missing values before and after running <code>fillChromPeaks</code>.</p>
 <div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Number of missing values</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-peak-grouping-results.html" class="external-link">featureValues</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 135</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 133</span></span></code></pre>
 <div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Perform gap filling</span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/fillChromPeaks.html" class="external-link">fillChromPeaks</a></span><span class="op">(</span><span class="va">data</span>, param <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/fillChromPeaks.html" class="external-link">ChromPeakAreaParam</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#' Number of missing values after gap filling</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-peak-grouping-results.html" class="external-link">featureValues</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 28</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 25</span></span></code></pre>
 <p>With <code>fillChromPeaks</code> we could thus <em>rescue</em> signal
 for all but 26 features. Also for the 4 example features from above a
 signal was filled-in. Below we visualize the gap-filled chromatographic
@@ -1955,19 +1955,19 @@ linear regression line to the data and summarize its result.</p>
 <span><span class="co">## </span></span>
 <span><span class="co">## Residuals:</span></span>
 <span><span class="co">##     Min      1Q  Median      3Q     Max </span></span>
-<span><span class="co">## -3.5165 -0.4060  0.1467  0.7274  2.2150 </span></span>
+<span><span class="co">## -4.4604 -0.4466  0.2519  0.7224  1.6424 </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Coefficients:</span></span>
 <span><span class="co">##                  Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">## (Intercept)      -1.51927    0.47004  -3.232  0.00164 ** </span></span>
-<span><span class="co">## log2(avg_detect)  1.03552    0.04575  22.636  &lt; 2e-16 ***</span></span>
+<span><span class="co">## (Intercept)       -1.3200     0.4837  -2.729  0.00744 ** </span></span>
+<span><span class="co">## log2(avg_detect)   1.0100     0.0477  21.176  &lt; 2e-16 ***</span></span>
 <span><span class="co">## ---</span></span>
 <span><span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## Residual standard error: 1.093 on 105 degrees of freedom</span></span>
-<span><span class="co">##   (28 observations deleted due to missingness)</span></span>
-<span><span class="co">## Multiple R-squared:  0.8299, Adjusted R-squared:  0.8283 </span></span>
-<span><span class="co">## F-statistic: 512.4 on 1 and 105 DF,  p-value: &lt; 2.2e-16</span></span></code></pre>
+<span><span class="co">## Residual standard error: 1.118 on 106 degrees of freedom</span></span>
+<span><span class="co">##   (25 observations deleted due to missingness)</span></span>
+<span><span class="co">## Multiple R-squared:  0.8088, Adjusted R-squared:  0.807 </span></span>
+<span><span class="co">## F-statistic: 448.4 on 1 and 106 DF,  p-value: &lt; 2.2e-16</span></span></code></pre>
 <p>With a value of 1.005, the slope of the line is thus very close to
 the slope of the identity line and the two sets of values are also
 highly correlated (R squared of 0.81).</p>
@@ -1989,7 +1989,7 @@ function:</p>
 <pre><code><span><span class="co">## [[1]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak detection </span></span>
-<span><span class="co">##  date: Mon Oct 30 09:53:20 2023 </span></span>
+<span><span class="co">##  date: Tue Dec  5 09:12:32 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: CentWaveParam </span></span>
@@ -1998,7 +1998,7 @@ function:</p>
 <span><span class="co">## [[2]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak refinement </span></span>
-<span><span class="co">##  date: Mon Oct 30 09:53:24 2023 </span></span>
+<span><span class="co">##  date: Tue Dec  5 09:12:34 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: MergeNeighboringPeaksParam </span></span>
@@ -2007,7 +2007,7 @@ function:</p>
 <span><span class="co">## [[3]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak grouping </span></span>
-<span><span class="co">##  date: Mon Oct 30 09:53:26 2023 </span></span>
+<span><span class="co">##  date: Tue Dec  5 09:12:36 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakDensityParam </span></span>
@@ -2016,7 +2016,7 @@ function:</p>
 <span><span class="co">## [[4]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Retention time correction </span></span>
-<span><span class="co">##  date: Mon Oct 30 09:53:26 2023 </span></span>
+<span><span class="co">##  date: Tue Dec  5 09:12:36 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakGroupsParam </span></span>
@@ -2025,7 +2025,7 @@ function:</p>
 <span><span class="co">## [[5]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak grouping </span></span>
-<span><span class="co">##  date: Mon Oct 30 09:53:30 2023 </span></span>
+<span><span class="co">##  date: Tue Dec  5 09:12:40 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakDensityParam </span></span>
@@ -2034,7 +2034,7 @@ function:</p>
 <span><span class="co">## [[6]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Missing peak filling </span></span>
-<span><span class="co">##  date: Mon Oct 30 09:53:34 2023 </span></span>
+<span><span class="co">##  date: Tue Dec  5 09:12:42 2023 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: ChromPeakAreaParam </span></span>
@@ -2101,20 +2101,20 @@ to extract the feature value matrix.</p>
 <div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Get feature annotations</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">rowData</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## DataFrame with 361 rows and 9 columns</span></span>
+<pre><code><span><span class="co">## DataFrame with 357 rows and 9 columns</span></span>
 <span><span class="co">##           mzmed     mzmin     mzmax     rtmed     rtmin     rtmax    npeaks</span></span>
 <span><span class="co">##       &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;</span></span>
-<span><span class="co">## FT001   105.042   105.042   105.042  167.6860  167.4845  167.8874         2</span></span>
-<span><span class="co">## FT002   105.042   105.042   105.042  157.7187  157.7187  157.7187         1</span></span>
-<span><span class="co">## FT003   105.070   105.069   105.070   31.8079   31.6892   31.9267         2</span></span>
-<span><span class="co">## FT004   105.110   105.110   105.111   63.7505   63.3524   64.1486         2</span></span>
-<span><span class="co">## FT005   105.473   105.473   105.474  201.5759  201.3613  201.7905         2</span></span>
+<span><span class="co">## FT001   105.042   105.042   105.042  167.6828  167.4879  167.8776         2</span></span>
+<span><span class="co">## FT002   105.042   105.042   105.042  157.7177  157.7177  157.7177         1</span></span>
+<span><span class="co">## FT003   105.070   105.069   105.070   31.8081   31.6735   31.9428         2</span></span>
+<span><span class="co">## FT004   105.110   105.110   105.111   63.7131   63.3796   64.0466         2</span></span>
+<span><span class="co">## FT005   105.473   105.473   105.474  201.5763  201.3706  201.7820         2</span></span>
 <span><span class="co">## ...         ...       ...       ...       ...       ...       ...       ...</span></span>
-<span><span class="co">## FT357   133.928   133.928   133.928  198.5823  198.5823  198.5823         1</span></span>
-<span><span class="co">## FT358   133.960   133.960   133.961   30.8309   30.8063   30.8554         2</span></span>
-<span><span class="co">## FT359   133.956   133.956   133.956  199.0661  198.9950  199.1372         2</span></span>
-<span><span class="co">## FT360   133.973   133.973   133.973  206.8712  206.3899  207.3524         2</span></span>
-<span><span class="co">## FT361   133.973   133.973   133.973  200.2484  200.2484  200.2484         1</span></span>
+<span><span class="co">## FT353   133.928   133.928   133.928   198.587  198.5874  198.5874         1</span></span>
+<span><span class="co">## FT354   133.960   133.960   133.961    30.831   30.8218   30.8402         2</span></span>
+<span><span class="co">## FT355   133.956   133.956   133.956   199.067  198.9900  199.1432         2</span></span>
+<span><span class="co">## FT356   133.973   133.973   133.973   206.872  206.4049  207.3387         2</span></span>
+<span><span class="co">## FT357   133.973   133.973   133.973   200.256  200.2561  200.2561         1</span></span>
 <span><span class="co">##            POOL  ms_level</span></span>
 <span><span class="co">##       &lt;numeric&gt; &lt;integer&gt;</span></span>
 <span><span class="co">## FT001         2         1</span></span>
@@ -2123,11 +2123,11 @@ to extract the feature value matrix.</p>
 <span><span class="co">## FT004         2         1</span></span>
 <span><span class="co">## FT005         2         1</span></span>
 <span><span class="co">## ...         ...       ...</span></span>
-<span><span class="co">## FT357         1         1</span></span>
-<span><span class="co">## FT358         2         1</span></span>
-<span><span class="co">## FT359         2         1</span></span>
-<span><span class="co">## FT360         2         1</span></span>
-<span><span class="co">## FT361         1         1</span></span></code></pre>
+<span><span class="co">## FT353         1         1</span></span>
+<span><span class="co">## FT354         2         1</span></span>
+<span><span class="co">## FT355         2         1</span></span>
+<span><span class="co">## FT356         2         1</span></span>
+<span><span class="co">## FT357         1         1</span></span></code></pre>
 <p>The feature values are stored as an <em>assay</em> within the object.
 To access that we simply use the <code>assay</code> function.</p>
 <div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
@@ -2136,7 +2136,7 @@ To access that we simply use the <code>assay</code> function.</p>
 <span>    <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##       20171016_POOL_POS_1_105-134.mzML 20171016_POOL_POS_3_105-134.mzML</span></span>
 <span><span class="co">## FT001                        3202.7445                        2285.2830</span></span>
-<span><span class="co">## FT002                        3605.3915                        3183.9546</span></span>
+<span><span class="co">## FT002                        3605.3915                        3186.1339</span></span>
 <span><span class="co">## FT003                         744.8752                        1057.4312</span></span>
 <span><span class="co">## FT004                       18126.4603                       19369.4039</span></span>
 <span><span class="co">## FT005                       23243.6129                       31960.3709</span></span>
@@ -2248,7 +2248,7 @@ side.</p>
 <div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Extract EICs for each identified chromatographic peak</span></span>
 <span><span class="va">chrs_all</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/chromPeakChromatograms.html" class="external-link">chromPeakChromatograms</a></span><span class="op">(</span><span class="va">data_1</span>, expandRt <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
-<p>While we could now simply proceed and plot each of the 357 EICs
+<p>While we could now simply proceed and plot each of the 356 EICs
 separately, we instead use below the
 <code>plotChromatogramsOverlay</code> function that allows to plot
 multiple EICs into the same plot hence providing an overview of the full
@@ -2339,11 +2339,11 @@ isotopes.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RforMassSpectrometry/MetaboCoreUtils" class="external-link">MetaboCoreUtils</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/MetaboCoreUtils/man/isotopologues.html" class="external-link">isotopologues</a></span><span class="op">(</span><span class="va">pks</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mz"</span>, <span class="st">"into"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [[1]]</span></span>
-<span><span class="co">##       CP051 </span></span>
+<span><span class="co">##       CP053 </span></span>
 <span><span class="co">##     2     3 </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## [[2]]</span></span>
-<span><span class="co">##       CP052 </span></span>
+<span><span class="co">##       CP054 </span></span>
 <span><span class="co">##     4     5</span></span></code></pre>
 <p>Pairs of chromatographic peaks have been identified as being
 potential isotopologues.</p>
@@ -2411,7 +2411,7 @@ Zinnen</em></a> (right tri-forked peak colored green).</p>
 </h2>
 <div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## R version 4.3.1 (2023-06-16)</span></span>
+<pre><code><span><span class="co">## R version 4.3.2 (2023-10-31)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
 <span><span class="co">## Running under: Ubuntu 22.04.3 LTS</span></span>
 <span><span class="co">## </span></span>
@@ -2436,67 +2436,67 @@ Zinnen</em></a> (right tri-forked peak colored green).</p>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
 <span><span class="co">##  [1] RColorBrewer_1.1-3          png_0.1-8                  </span></span>
-<span><span class="co">##  [3] SummarizedExperiment_1.32.0 GenomicRanges_1.54.0       </span></span>
-<span><span class="co">##  [5] GenomeInfoDb_1.38.0         IRanges_2.36.0             </span></span>
-<span><span class="co">##  [7] MatrixGenerics_1.14.0       matrixStats_1.0.0          </span></span>
+<span><span class="co">##  [3] SummarizedExperiment_1.32.0 GenomicRanges_1.54.1       </span></span>
+<span><span class="co">##  [5] GenomeInfoDb_1.38.1         IRanges_2.36.0             </span></span>
+<span><span class="co">##  [7] MatrixGenerics_1.14.0       matrixStats_1.1.0          </span></span>
 <span><span class="co">##  [9] MetaboCoreUtils_1.10.0      Spectra_1.12.0             </span></span>
-<span><span class="co">## [11] MsExperiment_1.4.0          xcms_3.99.6                </span></span>
-<span><span class="co">## [13] MSnbase_2.28.0              ProtGenerics_1.34.0        </span></span>
-<span><span class="co">## [15] S4Vectors_0.40.1            mzR_2.36.0                 </span></span>
+<span><span class="co">## [11] MsExperiment_1.4.0          xcms_4.0.0                 </span></span>
+<span><span class="co">## [13] MSnbase_2.28.1              ProtGenerics_1.34.0        </span></span>
+<span><span class="co">## [15] S4Vectors_0.40.2            mzR_2.36.0                 </span></span>
 <span><span class="co">## [17] Rcpp_1.0.11                 Biobase_2.62.0             </span></span>
-<span><span class="co">## [19] BiocGenerics_0.48.0         BiocParallel_1.36.0        </span></span>
+<span><span class="co">## [19] BiocGenerics_0.48.1         BiocParallel_1.36.0        </span></span>
 <span><span class="co">## [21] rmarkdown_2.25              knitr_1.45                 </span></span>
 <span><span class="co">## [23] BiocStyle_2.30.0           </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##  [1] bitops_1.0-7                rlang_1.1.1                </span></span>
+<span><span class="co">##  [1] bitops_1.0-7                rlang_1.1.2                </span></span>
 <span><span class="co">##  [3] magrittr_2.0.3              clue_0.3-65                </span></span>
-<span><span class="co">##  [5] MassSpecWavelet_1.68.0      compiler_4.3.1             </span></span>
-<span><span class="co">##  [7] systemfonts_1.0.5           vctrs_0.6.4                </span></span>
-<span><span class="co">##  [9] stringr_1.5.0               pkgconfig_2.0.3            </span></span>
+<span><span class="co">##  [5] MassSpecWavelet_1.68.0      compiler_4.3.2             </span></span>
+<span><span class="co">##  [7] systemfonts_1.0.5           vctrs_0.6.5                </span></span>
+<span><span class="co">##  [9] stringr_1.5.1               pkgconfig_2.0.3            </span></span>
 <span><span class="co">## [11] crayon_1.5.2                fastmap_1.1.1              </span></span>
 <span><span class="co">## [13] XVector_0.42.0              utf8_1.2.4                 </span></span>
 <span><span class="co">## [15] preprocessCore_1.64.0       ragg_1.2.6                 </span></span>
 <span><span class="co">## [17] purrr_1.0.2                 MultiAssayExperiment_1.28.0</span></span>
-<span><span class="co">## [19] xfun_0.40                   zlibbioc_1.48.0            </span></span>
-<span><span class="co">## [21] cachem_1.0.8                jsonlite_1.8.7             </span></span>
+<span><span class="co">## [19] xfun_0.41                   zlibbioc_1.48.0            </span></span>
+<span><span class="co">## [21] cachem_1.0.8                jsonlite_1.8.8             </span></span>
 <span><span class="co">## [23] progress_1.2.2              highr_0.10                 </span></span>
 <span><span class="co">## [25] DelayedArray_0.28.0         prettyunits_1.2.0          </span></span>
-<span><span class="co">## [27] parallel_4.3.1              cluster_2.1.4              </span></span>
-<span><span class="co">## [29] R6_2.5.1                    bslib_0.5.1                </span></span>
-<span><span class="co">## [31] stringi_1.7.12              limma_3.58.0               </span></span>
-<span><span class="co">## [33] jquerylib_0.1.4             bookdown_0.36              </span></span>
+<span><span class="co">## [27] parallel_4.3.2              cluster_2.1.6              </span></span>
+<span><span class="co">## [29] R6_2.5.1                    bslib_0.6.1                </span></span>
+<span><span class="co">## [31] stringi_1.8.2               limma_3.58.1               </span></span>
+<span><span class="co">## [33] jquerylib_0.1.4             bookdown_0.37              </span></span>
 <span><span class="co">## [35] iterators_1.0.14            igraph_1.5.1               </span></span>
-<span><span class="co">## [37] splines_4.3.1               Matrix_1.6-1.1             </span></span>
+<span><span class="co">## [37] splines_4.3.2               Matrix_1.6-4               </span></span>
 <span><span class="co">## [39] tidyselect_1.2.0            abind_1.4-5                </span></span>
 <span><span class="co">## [41] yaml_2.3.7                  doParallel_1.0.17          </span></span>
 <span><span class="co">## [43] codetools_0.2-19            affy_1.80.0                </span></span>
 <span><span class="co">## [45] lattice_0.22-5              tibble_3.2.1               </span></span>
-<span><span class="co">## [47] plyr_1.8.9                  evaluate_0.22              </span></span>
+<span><span class="co">## [47] plyr_1.8.9                  evaluate_0.23              </span></span>
 <span><span class="co">## [49] survival_3.5-7              desc_1.4.2                 </span></span>
 <span><span class="co">## [51] pillar_1.9.0                affyio_1.72.0              </span></span>
 <span><span class="co">## [53] BiocManager_1.30.22         foreach_1.5.2              </span></span>
-<span><span class="co">## [55] MALDIquant_1.22.1           ncdf4_1.21                 </span></span>
-<span><span class="co">## [57] generics_0.1.3              rprojroot_2.0.3            </span></span>
-<span><span class="co">## [59] RCurl_1.98-1.12             hms_1.1.3                  </span></span>
+<span><span class="co">## [55] MALDIquant_1.22.1           ncdf4_1.22                 </span></span>
+<span><span class="co">## [57] generics_0.1.3              rprojroot_2.0.4            </span></span>
+<span><span class="co">## [59] RCurl_1.98-1.13             hms_1.1.3                  </span></span>
 <span><span class="co">## [61] ggplot2_3.4.4               munsell_0.5.0              </span></span>
-<span><span class="co">## [63] scales_1.2.1                glue_1.6.2                 </span></span>
+<span><span class="co">## [63] scales_1.3.0                glue_1.6.2                 </span></span>
 <span><span class="co">## [65] lazyeval_0.2.2              MsFeatures_1.10.0          </span></span>
-<span><span class="co">## [67] tools_4.3.1                 mzID_1.40.0                </span></span>
-<span><span class="co">## [69] robustbase_0.99-0           QFeatures_1.12.0           </span></span>
+<span><span class="co">## [67] tools_4.3.2                 mzID_1.40.0                </span></span>
+<span><span class="co">## [69] robustbase_0.99-1           QFeatures_1.12.0           </span></span>
 <span><span class="co">## [71] vsn_3.70.0                  RANN_2.6.1                 </span></span>
-<span><span class="co">## [73] fs_1.6.3                    XML_3.99-0.14              </span></span>
-<span><span class="co">## [75] grid_4.3.1                  impute_1.76.0              </span></span>
-<span><span class="co">## [77] MsCoreUtils_1.14.0          colorspace_2.1-0           </span></span>
+<span><span class="co">## [73] fs_1.6.3                    XML_3.99-0.16              </span></span>
+<span><span class="co">## [75] grid_4.3.2                  impute_1.76.0              </span></span>
+<span><span class="co">## [77] MsCoreUtils_1.14.1          colorspace_2.1-0           </span></span>
 <span><span class="co">## [79] GenomeInfoDbData_1.2.11     cli_3.6.1                  </span></span>
 <span><span class="co">## [81] textshaping_0.3.7           fansi_1.0.5                </span></span>
-<span><span class="co">## [83] S4Arrays_1.2.0              dplyr_1.1.3                </span></span>
+<span><span class="co">## [83] S4Arrays_1.2.0              dplyr_1.1.4                </span></span>
 <span><span class="co">## [85] AnnotationFilter_1.26.0     pcaMethods_1.94.0          </span></span>
 <span><span class="co">## [87] gtable_0.3.4                DEoptimR_1.1-3             </span></span>
 <span><span class="co">## [89] sass_0.4.7                  digest_0.6.33              </span></span>
-<span><span class="co">## [91] SparseArray_1.2.0           multtest_2.58.0            </span></span>
-<span><span class="co">## [93] memoise_2.0.1               htmltools_0.5.6.1          </span></span>
-<span><span class="co">## [95] pkgdown_2.0.7               lifecycle_1.0.3            </span></span>
+<span><span class="co">## [91] SparseArray_1.2.2           multtest_2.58.0            </span></span>
+<span><span class="co">## [93] memoise_2.0.1               htmltools_0.5.7            </span></span>
+<span><span class="co">## [95] pkgdown_2.0.7               lifecycle_1.0.4            </span></span>
 <span><span class="co">## [97] statmod_1.5.0               MASS_7.3-60</span></span></code></pre>
 </div>
 <div class="section level2">
