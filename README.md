@@ -9,12 +9,12 @@
 ![MsCoreUtils](man/figures/MsCoreUtils.png)
 
 This workshop provides an overview of recent developments in Bioconductor to
-work with mass spectrometry
+work with mass spectrometry data
 ([MsExperiment](https://github.com/RforMassSpectrometry/MsExperiment),
 [Spectra](https://github.com/RforMassSpectrometry/Spectra)) and specifically
 LC-MS data ([xcms](https://github.com/sneumann/xcms)) and walks through the
 preprocessing of a small data set emphasizing on selection of data-dependent
-settings for the individual pre-processing steps.
+settings for the individual preprocessing steps.
 
 Covered topics are:
 
@@ -45,9 +45,12 @@ generate the html file
 
 ## Installation
 
-For on-line code evaluation, the workshop can also be run using a self-contained
-docker image with all R packages and a server version of RStudio (Posit)
-pre-installed:
+The workshop files along with an R runtime environment including all required
+packages and the RStudio (Posit) editor are all bundled in a *docker*
+container. After installation, this docker container can be run on the computer
+and the code and examples from the workshop can be evaluated within this
+environment (without the need to install any additional packages or files). The
+required steps for installation are:
 
 - If you don't already have, install [docker](https://www.docker.com/). Find
   installation information [here](https://docs.docker.com/desktop/).
@@ -59,12 +62,12 @@ pre-installed:
       -e PASSWORD=bioc \
       -p 8787:8787 \
       jorainer/xcms_tutorials:latest
-  ```
+```
 
 - Enter `http://localhost:8787` in a web browser and log in with username
   `rstudio` and password `bioc`.
 - In the RStudio server version: open any of the R-markdown (*.Rmd*) files in
-  the *vignettes* folder and evaluate the R code blocks.
+  the *vignettes* folder and evaluate the R code blocks in that document.
 
 
 For manual installation, an R version >= 4.3.0 is required as well as recent
@@ -103,3 +106,8 @@ Conduct](https://rformassspectrometry.github.io/RforMassSpectrometry/articles/Rf
   https://rformassspectrometry.github.io/MetaboAnnotation/
 - Repository of the `CompoundDb` package:
   https://rformassspectrometry.github.io/CompoundDb/
+
+# Acknowledgments
+
+Thank you to [Philippine Louail](https://github.com/philouail) for fixing typos
+and suggesting improvements.

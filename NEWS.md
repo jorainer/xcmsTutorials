@@ -1,5 +1,14 @@
 # xcmsTutorials 1.0
 
+## Changes in 1.1.0
+
+- Use Bioconductor 3.19 devel release.
+- Add examples for simple quality assessment of BPC or BPS data.
+- Introduce parameter `ppm` for `PeakDensityParam` correspondence analysis
+  method.
+- Add an additional section for extraction of chromatographic or spectra data
+  for identified chromatographic peaks and perform isotopologue search in these.
+
 ## Changes in 1.0.4
 
 - Use the Bioconductor 3.18 release docker image.

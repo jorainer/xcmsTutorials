@@ -1,6 +1,6 @@
 Package: xcmsTutorials
 Title: Exploring and Analyzing LC-MS data with Spectra and xcms
-Version: 1.0.4
+Version: 1.1.0
 Authors@R: c(
 	     person(given = "Johannes", family = "Rainer",
 		    email = "Johannes.Rainer@eurac.edu",
@@ -34,7 +34,8 @@ Suggests:
     knitr,
     rmarkdown,
     RColorBrewer,
-    SummarizedExperiment
+    SummarizedExperiment,
+    pheatmap
 URL: https://jorainer.github.io/xcmsTutorials/
 BugReports: https://github.com/jorainer/xcmsTutorials/issues/new
 VignetteBuilder: knitr
