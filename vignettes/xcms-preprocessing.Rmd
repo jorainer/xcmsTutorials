@@ -893,7 +893,7 @@ EIC for serine and run a *centWave*-based peak detection on that data using
 ```{r centWave-default}
 #' Get the EIC for serine in all files
 serine_chr <- chromatogram(mse, rt = c(164, 200),
-                           mz = serine_mz + c(-0.01, 0.01),
+                           mz = serine_mz + c(-0.005, 0.005),
                            aggregationFun = "max")
 
 #' Get default centWave parameters
@@ -906,7 +906,7 @@ chromPeaks(res)
 
 The peak matrix returned by `chromPeaks` is empty, thus, with the default
 settings *centWave* failed to identify any chromatographic peak in the EIC for
-serine. These default values are shown below:
+serine. The default values for the parameters are shown below:
 
 ```{r centWave-default-parameters}
 #' Default centWave parameters
@@ -920,6 +920,7 @@ however see that these values are way too large for our UHPLC-based data set
 (see below).
 
 ```{r, fig.cap = "Extracted ion chromatogram for serine."}
+#' Plot the EIC
 plot(serine_chr)
 ```
 
@@ -1273,21 +1274,21 @@ repeatedly measured QC samples (e.g. sample pools) and adjust the full
 experiment based on these. See the alignment section in the *xcms*
 [vignette](https://bioconductor.org/packages/release/bioc/vignettes/xcms/inst/doc/xcms.html)
 for more information on this subset-based alignment. Note that such a
-subset-based alignment requires the samples to be loaded in the order in which
-they were measured. Also, recently, functionality was added to *xcms* to perform
-the alignment on pre-selected signals (e.g. retention times of internal
+subset-based alignment requires the samples to be organized in the order in
+which they were measured. Also, recently, functionality was added to *xcms* to
+perform the alignment on pre-selected signals (e.g. retention times of internal
 standards) or to align a data set against an external reference.
 
 For our example we use the *peakGroups* method that, as mentioned above, aligns
 samples based on the retention times of *anchor peaks*. To define these, we need
-to first run an initial correspondence analysis to group chromatographic peaks
+to first run an initial correspondence analysis and group chromatographic peaks
 across samples. Below we use the *peakDensity* method for correspondence
 (details about this method and explanations on the choices of its parameters are
 provided in the next section). In brief, parameter `sampleGroups` defines to
 which sample group of the experiment individual samples belong to, and parameter
 `minFraction` specifies the proportion of samples (of one of the sample groups
 defined in `sampleGroups`) in which a chromatographic peak needs to be detected
-to group them into an LC-MS feature. Chromatographic peaks will be grouped into
+to group them into an LC-MS feature. Chromatographic peaks will be grouped to
 features if their difference in *m/z* and retention times is below the defined
 thresholds and if in at least `minFraction * 100` percent of samples of at least
 one sample group a chromatographic peak was detected. For our example we use the
@@ -1303,7 +1304,7 @@ the samples, its settings does not need to be fully optimized.
 #' Define the settings for the initial peak grouping - details for
 #' choices in the next section.
 pdp <- PeakDensityParam(sampleGroups = sampleData(mse)$group, bw = 1.8,
-                        minFraction = 1, binSize = 0.02, ppm = 10)
+                        minFraction = 1, binSize = 0.01, ppm = 10)
 mse <- groupChromPeaks(mse, pdp)
 ```
 
@@ -1330,9 +1331,9 @@ pgm <- adjustRtimePeakGroups(mse, PeakGroupsParam(minFraction = 1))
 head(pgm)
 ```
 
-Ideally, if possible, the anchor peaks should span a large range of the
-retention time range to allow alignment of the full LC runs. Below evaluate the
-distribution of retention times of the anchor peaks in the first sample.
+Ideally, if possible, the anchor peaks should span most of the retention time
+range to allow alignment of the full LC runs. Below evaluate the distribution of
+retention times of the anchor peaks in the first sample.
 
 ```{r}
 #' Evaluate distribution of anchor peaks' rt in the first sample
@@ -1346,9 +1347,9 @@ on the `minFraction` parameter) the algorithm minimizes the observed
 between-sample retention time differences for these. Parameter `span` defines
 the degree of smoothing of the loess function that is used to allow different
 regions along the retention time axis to be adjusted by a different factor. A
-value of 0 will most likely cause overfitting, while 1 would cause all retention
-times of a sample to be shifted by a constant value. Values between 0.4 and 0.6
-seem to be reasonable for most experiments.
+value close to 0 will most likely cause overfitting, while a value of 1 would
+cause all retention times of a sample to be shifted by a constant value. Values
+between 0.4 and 0.6 seem to be reasonable for most experiments.
 
 ```{r alignment-correspondence}
 #' Define settings for the alignment
@@ -1474,10 +1475,10 @@ assignment defined in `sampleData`.
 
 ```{r}
 #' Extract a chromatogram for a m/z range containing serine
-chr_1 <- chromatogram(data, mz = serine_mz + c(-0.005, 0.005))
+chr_1 <- chromatogram(mse, mz = serine_mz + c(-0.005, 0.005))
 
 #' Default parameters for peak density; bw = 30
-pdp <- PeakDensityParam(sampleGroups = sampleData(data)$group, bw = 30)
+pdp <- PeakDensityParam(sampleGroups = sampleData(mse)$group, bw = 30)
 
 #' Test these settings on the extracted slice
 plotChromPeakDensity(chr_1, param = pdp)
@@ -1497,22 +1498,22 @@ of this curve (which is created with the base R `density` function) is
 configured with the parameter `bw`. The *peakDensity* algorithm assigns all
 chromatographic peaks within the same *peak* of this density estimation curve to
 the same feature. Chromatographic peaks assigned to the same feature are
-indicated with a grey rectangle in the plot. In the present example, because
-retention times of the two chromatographic peaks are very similar, this
-rectangle is very narrow and looks thus more like a vertical line. Based on this
-result, the default settings (`bw = 30`) seemed to correctly define features. It
-is however advisable to evaluate settings on multiple slices, ideally with
-signal from more than one compound being present. Such slices could be
-identified in e.g. a plot created with the `plotChromPeaks` function (see
-example in the chromatographic peak detection section).
+indicated with a grey rectangle in the lower panel of the plot. In the present
+example, because retention times of the two chromatographic peaks are very
+similar, this rectangle is very narrow and looks thus more like a vertical
+line. Based on this result, the default settings (`bw = 30`) seemed to correctly
+define features. It is however advisable to evaluate settings on multiple
+slices, ideally with signal from more than one compound being present. Such
+slices could be identified in e.g. a plot created with the `plotChromPeaks`
+function (see example in the chromatographic peak detection section).
 
 In our example we extract a chromatogram for an *m/z* slice containing signal
 for known isomers betaine and valine ([M+H]+ *m/z* 118.08625).
 
 ```{r correspondence-bw, fig.cap = "Correspondence analysis with default settings on an *m/z* slice containing signal from multiple ions."}
 #' Plot the chromatogram for an m/z slice containing betaine and valine
-mzr <- 118.08625 + c(-0.01, 0.01)
-chr_2 <- chromatogram(data, mz = mzr, aggregationFun = "max")
+mzr <- 118.08625 + c(-0.005, 0.005)
+chr_2 <- chromatogram(mse, mz = mzr, aggregationFun = "max")
 
 #' Correspondence in that slice using default settings
 plotChromPeakDensity(chr_2, param = pdp)
@@ -1527,14 +1528,14 @@ reduced value for parameter `bw`.
 
 ```{r correspondence-bw-fix, fig.cap = "Correspondence analysis with reduced bw setting on a *m/z* slice containing signal from multiple ions."}
 #' Reducing the bandwidth
-pdp <- PeakDensityParam(sampleGroups = sampleData(data)$group, bw = 1.8)
+pdp <- PeakDensityParam(sampleGroups = sampleData(mse)$group, bw = 1.8)
 plotChromPeakDensity(chr_2, param = pdp)
 ```
 
 Setting `bw = 1.8` strongly reduced the smoothness of the density curve
 resulting in a higher number of density *peaks* and hence a nice grouping of
 (aligned) chromatographic peaks into separate features. Note that the height of
-the peaks of the density curve are not considered for the grouping.
+the peaks of the density curve are not relevant for the grouping.
 
 By having defined a `bw` appropriate for our data set, we proceed and perform
 the correspondence analysis on the full data set. Other parameters of
@@ -1557,9 +1558,9 @@ allows to generate *m/z*-dependent bin sizes: the width of the *m/z* slices
 increases by `ppm` of the bin's *m/z* along the *m/z* axis.
 
 For our correspondence analysis we set the maximal acceptable difference of
-chrom peaks' *m/z* values with `binSize = 0.02` and `ppm = 10`, hence grouping
+chrom peaks' *m/z* values with `binSize = 0.01` and `ppm = 10`, hence grouping
 chromatographic peaks with similar retention time and with a difference of their
-*m/z* values that is smaller than 0.02 + 10 ppm of their *m/z* values. By
+*m/z* values that is smaller than 0.01 + 10 ppm of their *m/z* values. By
 setting `minFraction = 0.4` we in addition require for a feature that a
 chromatographic peak was detected in `>=` 40% of samples of at least one sample
 group.
@@ -1567,7 +1568,7 @@ group.
 ```{r correspondence-analysis}
 #' Set in addition parameter ppm to a value of 10
 pdp <- PeakDensityParam(sampleGroups = sampleData(mse)$group, bw = 1.8,
-                        minFraction = 0.4, binSize = 0.02, ppm = 10)
+                        minFraction = 0.4, binSize = 0.01, ppm = 10)
 
 #' Perform the correspondence analysis on the full data
 mse <- groupChromPeaks(mse, param = pdp)
@@ -1821,9 +1822,9 @@ l <- lm(log2(avg_filled) ~ log2(avg_detect))
 summary(l)
 ```
 
-With a value of 0.994, the slope of the line is thus very close to the slope of
+With a value of 1.007, the slope of the line is thus very close to the slope of
 the identity line and the two sets of values are also highly correlated (R
-squared of 0.79).
+squared of 0.81).
 
 
 
@@ -1977,8 +1978,8 @@ available in the infrastructure provided through the *xcms*, *Spectra*,
 *MsCoreUtils*, *MetaboCoreUtils* and other related Bioconductor packages. It
 would for example be easily possible to extract specific information for
 selected chromatographic peaks or LC-MS features from an *xcms* result object
-and perform some additional visualizations or analyses on them. Below we first
-identify chromatographic peaks that would match the *m/z* of serine.
+and perform some additional visualizations or analyses on them. AS an example we
+below first identify chromatographic peaks that would match the *m/z* of serine.
 
 ```{r}
 #' Extract chromatographic peaks matching the m/z of the [M+H]+ of serine
@@ -2004,10 +2005,10 @@ serine_ms1_2 <- chromPeakSpectra(mse, msLevel = 1, method = "closest_rt",
                                  peaks = rownames(serine_pks)[2])
 ```
 
-For LC-MS/MS data, this function would allow to select all MS2 spectra from the
-data set with their precursor m/z (and retention time) within the
-chromatographic peak's *m/z* and retention time width using parameters `msLevel
-= 2` and `method = "all"`.
+For LC-MS/MS data, this function would also allow to extract all MS2 spectra
+from the data set with their precursor m/z (and retention time) within the
+chromatographic peak's *m/z* and retention time width by using parameters
+`msLevel = 2` and `method = "all"`.
 
 Below we plot the EIC and the MS1 scan for the selected chromatographic peak.
 
@@ -2033,9 +2034,9 @@ and retention time ranges of the chromatographic peak in that sample,
 `featureChrommatograms` will instead integrate the signal from the *m/z* and
 retention time area of the **feature**, i.e. will use a single area and
 integrate the signal from that same area in each sample. This *m/z* - retention
-time area might eventually be larger than the respective ranges for a single
+time area might however be larger than the respective ranges for a single
 chromatographic peak in one sample. This *m/z* - retention time area for
-features can be extracted using the `featureArea` function:
+features can also be extracted (and evaluated) using the `featureArea` function:
 
 ```{r}
 #' Extract the m/z - retention time area for features
@@ -2075,10 +2076,10 @@ cols[iso_idx[[1]]] <- "#ff0000ff"
 plotSpectra(serine_ms1_2, col = cols, lwd = 2)
 ```
 
-While in the example above were specifically looking for potential isotopes of a
-single, selected, mass peak (by setting `seedMz` to the *m/z* value of that
-peak), we could also use `isotopologues` to identify all potential isotope
-groups in a spectrum.
+While in the example above we were specifically looking for potential isotopes
+of a single, selected, mass peak (by setting `seedMz` to the *m/z* value of that
+peak), we could also use `isotopologues` without specifying `seedMz` to identify
+all potential isotope groups in a spectrum.
 
 ```{r}
 #' Identify all potential isotope peaks in the MS1 spectrum
@@ -2151,7 +2152,7 @@ space from an LC-MS experiment.
 
 We below subset the data to the first sample and visualize the identified
 chromatographic peaks in the *m/z* - retention time plane using the
-`plotChromPeaks` function already used before.
+`plotChromPeaks` function that we used already before.
 
 ```{r, fig.cap = "Position of identified chromatographic peaks in the first sample."}
 #' Plot identified chromatographic peaks in the first sample
@@ -2267,10 +2268,10 @@ particular how to adapt peak detection setting on a rather noisy
 *chromatographic* data. Below we load the example data from a text file.
 
 ```{r peaks-load}
-data <- read.table(
+cdata <- read.table(
     system.file("txt", "chromatogram.txt", package = "xcmsTutorials"),
     sep = "\t", header = TRUE)
-head(data)
+head(cdata)
 ```
 
 Our data has two columns, one with *retention times* and one with
@@ -2278,7 +2279,7 @@ Our data has two columns, one with *retention times* and one with
 data.
 
 ```{r peaks-plot, fig.width = 12, fig.height = 2.15}
-chr <- Chromatogram(rtime = data$rt, intensity = data$intensity)
+chr <- Chromatogram(rtime = cdata$rt, intensity = cdata$intensity)
 par(mar = c(2, 2, 0, 0))
 plot(chr)
 ```
