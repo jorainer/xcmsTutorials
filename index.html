@@ -43,7 +43,7 @@
     
     <a class="navbar-brand me-2" href="index.html">xcmsTutorials</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +91,7 @@
 </div>
 <p><a href="https://creativecommons.org/licenses/by-nc/4.0/" class="external-link"><img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg" alt="License: CC BY-NC 4.0"></a></p>
 <p><img src="reference/figures/xcms.png" alt="xcms"><img src="reference/figures/MsExperiment.png" alt="MsExperiment"><img src="reference/figures/Spectra-rainbow.png" alt="Spectra"><img src="reference/figures/MetaboCoreUtils.png" alt="MetaboCoreUtils"><img src="reference/figures/MsCoreUtils.png" alt="MsCoreUtils"></p>
-<p>This workshop provides an overview of recent developments in Bioconductor to work with mass spectrometry (<a href="https://github.com/RforMassSpectrometry/MsExperiment" class="external-link">MsExperiment</a>, <a href="https://github.com/RforMassSpectrometry/Spectra" class="external-link">Spectra</a>) and specifically LC-MS data (<a href="https://github.com/sneumann/xcms" class="external-link">xcms</a>) and walks through the preprocessing of a small data set emphasizing on selection of data-dependent settings for the individual pre-processing steps.</p>
+<p>This workshop provides an overview of recent developments in Bioconductor to work with mass spectrometry data (<a href="https://github.com/RforMassSpectrometry/MsExperiment" class="external-link">MsExperiment</a>, <a href="https://github.com/RforMassSpectrometry/Spectra" class="external-link">Spectra</a>) and specifically LC-MS data (<a href="https://github.com/sneumann/xcms" class="external-link">xcms</a>) and walks through the preprocessing of a small data set emphasizing on selection of data-dependent settings for the individual preprocessing steps.</p>
 <p>Covered topics are:</p>
 <ul>
 <li><p>Data import and representation.</p></li>
@@ -107,7 +107,7 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>For on-line code evaluation, the workshop can also be run using a self-contained docker image with all R packages and a server version of RStudio (Posit) pre-installed:</p>
+<p>The workshop files along with an R runtime environment including all required packages and the RStudio (Posit) editor are all bundled in a <em>docker</em> container. After installation, this docker container can be run on the computer and the code and examples from the workshop can be evaluated within this environment (without the need to install any additional packages or files). The required steps for installation are:</p>
 <ul>
 <li>If you don’t already have, install <a href="https://www.docker.com/" class="external-link">docker</a>. Find installation information <a href="https://docs.docker.com/desktop/" class="external-link">here</a>.</li>
 <li>Get the <a href="https://hub.docker.com/r/jorainer/xcms_tutorials" class="external-link">docker image</a> of this tutorial with <code>docker pull jorainer/xcms_tutorials:latest</code>.</li>
@@ -119,7 +119,7 @@
       jorainer/xcms_tutorials:latest</code></pre>
 <ul>
 <li>Enter <code>http://localhost:8787</code> in a web browser and log in with username <code>rstudio</code> and password <code>bioc</code>.</li>
-<li>In the RStudio server version: open any of the R-markdown (<em>.Rmd</em>) files in the <em>vignettes</em> folder and evaluate the R code blocks.</li>
+<li>In the RStudio server version: open any of the R-markdown (<em>.Rmd</em>) files in the <em>vignettes</em> folder and evaluate the R code blocks in that document.</li>
 </ul>
 <p>For manual installation, an R version &gt;= 4.3.0 is required as well as recent versions of the packages <code>MsExperiment</code>, <code>Spectra</code> and in particular the <code>xcms</code> (version &gt;= 3.99.0 is needed). These can be installed using the code below:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -156,6 +156,12 @@
 </ul>
 </div>
 </div>
+<div class="section level1">
+<h1 id="acknowledgments">Acknowledgments<a class="anchor" aria-label="anchor" href="#acknowledgments"></a>
+</h1>
+<p>Thank you to <a href="https://github.com/philouail" class="external-link">Philippine Louail</a> for fixing typos and suggesting improvements.</p>
+</div>
+
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
