@@ -34,8 +34,8 @@ opts_chunk$set(message = FALSE, error = FALSE, warning = FALSE,
 # Abstract
 
 In this document we discuss liquid chromatography (LC) mass spectrometry (MS)
-data handling and exploration using the `r Biocpkg("MsExperiment")` and `r
-Biocpkg("Spectra")` Bioconductor packages and perform the preprocessing of a
+data handling and exploration using the `r Biocpkg("MsExperiment")` and
+`r Biocpkg("Spectra")` Bioconductor packages and perform the preprocessing of a
 small LC-MS data set using the `r Biocpkg("xcms")` package. Functionality from
 the `r Biocpkg("MetaboCoreUtils")` and `r Biocpkg("MsCoreUtils")` packages are
 used for general tasks frequently performed during metabolomics data
@@ -79,7 +79,7 @@ ratio *m/z*. The measured signal is represented as a spectrum: intensities along
 
 Many ions will result, when measured with MS alone, in a very similar
 *m/z*. Thus, making it difficult or impossible to discriminate them. MS is
-therefore frequently coupled with a second technology to separate them prior
+therefore frequently coupled with a second technology to separate ions prior
 quantification based on properties other than their mass (e.g. based on their
 polarity). Common choices are gas chromatography (GC) or liquid chromatography
 (LC). In a typical LC-MS setup a sample gets injected into the system, the
@@ -98,6 +98,16 @@ supposed to represent the signal from ions of a certain type of molecule) are
 quantified.
 
 
+## Goals of this workshop
+
+- Learn how R/*xcms* and the packages from the [RforMassSpectrometry
+  initiative](https://rformassspectrometry.org) can be used to inspect, evaluate
+  and analyze LC-MS data.
+
+- Learn the basis to build reproducible analysis workflows, tailored and
+  customized for individual data sets.
+
+
 ## Definitions and common naming convention
 
 Naming conventions and terms used in this document are:
@@ -108,22 +118,13 @@ Naming conventions and terms used in this document are:
 - *chromatographic peak detection*: process in which chromatographic peaks are
   identified within a sample (file).
 - *alignment*: process that adjusts for retention time differences
-  (i.e. possible signal drifts from the LC) between measurements/files.
+  (i.e. possible signal drifts from the LC) between measurements/samples.
 - *correspondence*: grouping of chromatographic peaks (presumably from the same
-  ion) across samples/files.
+  ion) across samples/files into *LC-MS features*.
 - *feature* (or *LC-MS features*): entity representing signal from the same type
   of ion/molecule, characterized by its specific retention time and *m/z*. In
   *xcms*, features represent identified chromatographic peaks grouped across
   samples/files.
-
-
-## Goals of this workshop
-
-- Learn how R/*xcms* and the packages from the RforMassSpectrometry initiative
-  can be used to inspect, evaluate and analyze LC-MS data.
-
-- Learn the basis to build reproducible analysis workflows, tailored and
-  customized for individual data sets.
 
 
 # Data import and exploration
@@ -181,6 +182,7 @@ The `length` of an `MsExperiment` is defined by the number of samples (files)
 within the object.
 
 ```{r general-access}
+#' Number of samples
 length(mse)
 
 ```
@@ -212,14 +214,13 @@ spectra(mse)
 
 ```
 
-From version 4 on, *xcms* uses the more modern and flexible infrastructure for
-MS data analysis provided by the `r Biocpkg("Spectra")` package. While it is
-still possible and supported to use *xcms* together with the
-`r Biocpkg("MSnbase")` package, users are advised to switch to this new
-infrastructure as it provides more flexibility and a higher performance. Also,
-through additional packages such as the `r Biocpkg("MsBackendRawFileReader")`,
-the new infrastructure would allow to import MS data also from other files
-than mzML, mzXML or CDF files.
+From version 4 on, *xcms* supports the more modern and flexible infrastructure
+for MS data analysis provided by the `r Biocpkg("Spectra")` package. While it is
+still possible to use *xcms* together with the `r Biocpkg("MSnbase")` package,
+users are advised to switch to the newer infrastructure as it provides more
+flexibility and a higher performance. Also, through additional packages such as
+the `r Biocpkg("MsBackendRawFileReader")`, the new infrastructure would allow to
+import MS data also from other files than mzML, mzXML or CDF files.
 
 In the next few examples we briefly explain the `Spectra` object and illustrate
 the use of such objects using some simple examples. More information on
@@ -242,11 +243,11 @@ spectra(mse) |>
 The `Spectra` object itself is agnostic of any sample information, it simply
 contains all spectra from the experiment, first all spectra from the first file,
 followed by the spectra from the second. The mapping of spectra to samples is
-provided by the `MsExperiment` object. To access spectra from a specific sample
+defined in the `MsExperiment` object. To access spectra from a specific sample
 we either subset the `MsExperiment` to that particular sample (as done in the
 example above) or we use the `fromFile` function that returns for each spectrum
 the index of the file within the `MsExperiment` to which it belongs. Below we
-use that function to determine the total number of spectra for each sample.
+use `fromFile` to determine the total number of spectra per sample.
 
 ```{r}
 #' Get the number of spectra per file.
@@ -255,7 +256,7 @@ fromFile(mse) |>
 ```
 
 Such basic data summaries can be helpful for a first initial quality assessment
-to potentially identify problematic data files with e.g. a unexpected low number
+to identify potentially problematic data files with e.g. a unexpected low number
 of spectra.
 
 Besides the peak data (*m/z* and intensity values) also additional spectra
@@ -271,8 +272,8 @@ spectra(mse) |>
 Thus, for all spectra we have general information such as the MS level
 (`"msLevel"`) or the retention time (`"rtime"`) available. For most of these
 spectra variables dedicated accessor functions are available (such as `msLevel`,
-`rtime`) and in addition it is possible to access any variable using `$` and the
-name of the variable (like accessing the columns of a `data.frame`). As an
+`rtime`). In addition it is possible to access any variable using `$` and the
+name of the variable (similar to accessing the columns of a `data.frame`). As an
 example we extract below the `msLevel` spectra variable and use the `table`
 function on the result to get an overview of the number of spectra from
 different MS levels available in the object.
@@ -327,7 +328,8 @@ intensity(sp)
 ```
 
 As an alternative, the `peaksData` function could be used to extract both the
-*m/z* and intensity (as numeric matrices) with a single function call.
+*m/z* and intensity values (as two-column numeric matrix) with a single function
+call.
 
 The total ion signal of a spectrum could be calculated by simply summing the
 intensities of all peaks in the spectrum. Below we perform that operation on the
@@ -345,7 +347,8 @@ determine the distribution of these using the `quantile` function.
 
 ```{r}
 #' Calculate the distribution of total ion signal of the first file
-spectra(mse[1]) |>
+mse[1] |>
+    spectra() |>
     intensity() |>
     sum() |>
     quantile()
@@ -355,7 +358,8 @@ We repeat the operation for the second file.
 
 ```{r}
 #' Repeat for the second file
-spectra(mse[2]) |>
+mse[2] |>
+    spectra() |>
     intensity() |>
     sum() |>
     quantile()
@@ -385,7 +389,7 @@ similarly to the total ion intensity in the previous section, we use below the
 data (e.g. from an `MsExperiment` object). With parameter `aggregationFun =
 "max"` we define to report the maximum signal per spectrum (setting
 `aggregationFun = "sum"` would in contrast sum up all intensities of a spectrum
-and hence create a TIC).
+and hence return a TIC).
 
 ```{r}
 #' Extract and plot a BPC
@@ -401,13 +405,13 @@ eluted. Also, the BPC of the two data files look similar, which is expected
 since both represent the same sample.
 
 In addition to a visual inspection it is, especially for larger data sets,
-important to also *quantitatively* compare the data and hence derive quality
-metrics of a data set. For our base peak signals, however, retention times will
-be slightly different between the samples preventing thus a direct comparison
-and evaluation of the data. An easy solution to this is to *bin* the data into
-equal sized bins along the retention time axis and aggregate the measured
-intensities within each bin (per sample). Below we bin the data with a bin size
-of 1 second returning for each bin the maximal signal.
+important to also *quantitatively* compare the data and derive quality metrics
+of a data set. For our base peak signals, however, retention times will be
+slightly different between the samples preventing thus a direct comparison and
+evaluation of this data. An easy solution to this is to *bin* the data along the
+retention time axis into equal sized bins and aggregate the measured intensities
+within each bin (per sample). Below we bin the data with a bin size of 1 second
+reporting the maximal signal per bin.
 
 ```{r}
 #' Bin the BPC
@@ -415,8 +419,8 @@ bpc_bin <- bin(bpc, binSize = 1)
 ```
 
 After binning, the two chromatograms have the same retention times (and number
-of intensities) and we can e.g. combine the intensity vectors into a matrix of
-intensities.
+of intensities) and we can thus *bind* their intensity vectors as columns of a
+new numeric matrix using `cbind`:
 
 ```{r}
 #' Create an intensity matrix
@@ -433,28 +437,31 @@ LC-MS runs.
 cor(bpc_mat[, 1], bpc_mat[, 2])
 ```
 
-For more than two samples a correlation matrix could be calculated:
+We could also create a correlation matrix with the pairwise correlation
+coefficients of all samples against all samples. This would be particularly
+helpful for data sets with more than two samples.
 
 ```{r}
 #' Create a pairwise correlation matrix
 cor(bpc_mat)
 ```
 
-And such a correlation matrix could also be easily visualized as a *heatmap* -
+Such a correlation matrix could also be easily visualized as a *heatmap* -
 with the additional possibility to cluster samples with similar BPC. While for
 the present, two-sample data set, this is not very informative, for larger data
 sets it can help to evaluate differences between batches or to spot outlier
-samples (or rather LC-MS measurement runs).
+samples (or rather outlier LC-MS measurement runs).
 
 ```{r, fig.cap = "Heatmap for similarity of the BPC of the two data files"}
 #' Create a heatmap of the correlation matrix
+library(pheatmap)
 cor(bpc_mat) |>
     pheatmap()
 ```
 
 This also exemplifies the power of an R-based analysis workflow that allows us
-to combine LC-MS specific analysis methods provided by the *xcms* package with
-build-in R functions or (statistical) data analysis methods provided by any
+to combine LC-MS specific analysis methods provided by e.g. the *xcms* package
+with build-in R functions or (statistical) data analysis methods provided by any
 other R package.
 
 The BPC collapsed the 3-dimensional LC-MS data (*m/z* by retention time by
@@ -488,9 +495,8 @@ spectra from one file (by using `f = fromFile(mse)`) into a single spectrum
 containing mass peaks present in any of the spectra of that file. Mass peaks
 with a difference in their *m/z* that is smaller than `ppm` (parts-per-million
 of the *m/z* value) are combined into one peak for which the maximal intensity
-of the grouped peaks is reported. Note that we set `ppm` to a rather small value
-because the present data is in profile mode. In general, it is suggested to use
-a rather small value for `ppm` for `combineSpectra` on MS1 data.
+of the grouped peaks is reported. Note that it is suggested to use a small value
+for `ppm` to combine MS1 spectra with `combineSpectra`.
 
 ```{r}
 #' Combine all spectra of one file into a single spectrum
@@ -521,19 +527,19 @@ do.call(cbind, intensity(bps_bin)) |>
     cor()
 ```
 
-Alternatively, we can also calculate the similarity between the base peak
-spectra using the `compareSpectra` function and one of the available peak
-similarity measures. Below we use the normalized dot product to calculate
-the similarity between the two spectra matching peaks using an *m/z* tolerance
-of 20 ppm.
+Alternatively, we can also directly calculate the similarity between the base
+peak spectra using the `compareSpectra` function and one of the available peak
+similarity measures. Below we use the normalized dot product to calculate the
+similarity between the two spectra matching peaks using an *m/z* tolerance of 10
+ppm.
 
 ```{r}
 #' Calculate normalized dot product similarity between the spectra
-compareSpectra(bps, ppm = 20, FUN = MsCoreUtils::ndotproduct)
+compareSpectra(bps, ppm = 10, FUN = MsCoreUtils::ndotproduct)
 ```
 
 These measures thus allow us to get some general information on a data set and
-evaluate similarities between the samples.
+evaluate similarities between the samples of an experiment.
 
 
 ### Detailed data inspection
@@ -563,6 +569,7 @@ from which the data was imported (see example below) and use that to determine
 the originating sample, but that would involve additional R code.
 
 ```{r}
+#' List the original data file for each spectrum
 basename(dataOrigin(sps))
 ```
 
@@ -572,8 +579,8 @@ function. This filters the `Spectra` object *within* the `MsExperiment`
 retaining all associations (links) between samples and subset spectra. While
 some of the most commonly used filter functions, such as `filterRt` or
 `filterMsLevel`, are also implemented for `MsExperiment`, the `filterSpectra`
-function allows to apply any of the filter functions available for `Spectra`
-objects to the data.
+function allows to apply any of the many filter functions available for
+`Spectra` objects to the data.
 
 ```{r}
 #' Subset the whole MsExperiment
@@ -640,7 +647,7 @@ function. Note that alternatively we could also first filter the data set by
 
 ```{r, fig.cap = "Ion trace for an ion of serine"}
 #' Extract a full RT chromatogram for ions with an m/z similar than serine
-serine_chr <- chromatogram(mse, mz = serine_mz + c(-0.01, 0.01))
+serine_chr <- chromatogram(mse, mz = serine_mz + c(-0.005, 0.005))
 plot(serine_chr)
 ```
 
@@ -689,7 +696,7 @@ extracted ion chromatogram (EIC, sometimes also referred to as XIC) for the
 #' Create an EIC for serine
 mse |>
     filterRt(rt = c(175, 189)) |>
-    filterMzRange(mz = serine_mz + c(-0.01, 0.01)) |>
+    filterMzRange(mz = serine_mz + c(-0.005, 0.005)) |>
     chromatogram() |>
     plot()
 ```
@@ -716,7 +723,7 @@ peak (the centroid) is called centroiding. This process results in much smaller
 file sizes, with only little information loss. *xcms*, specifically the
 *centWave* chromatographic peak detection algorithm, was designed for centroided
 data, thus, prior to data analysis, profile data, such as the example data used
-here, should be centroided.
+here, has to be centroided.
 
 Below we inspect the profile data for one of the spectra extracted above and
 focus on the mass peak for serine.
@@ -754,7 +761,7 @@ each point represents one mass peak with its intensity being color coded (blue
 representing low, yellow high intensity). Each column of data points represents
 data from the same spectrum. The upper panel of the plot shows a chromatographic
 visualization of the data from the lower panel, i.e., for each retention time
-(spectrum) the sum of intensities is shown.
+(spectrum) the sum of intensities within the *m/z* range is shown.
 
 Note that, while it would be possible to create such a plot for the full MS data
 of an experiment, this type of visualization works best for small *m/z* -
@@ -1278,17 +1285,19 @@ across samples. Below we use the *peakDensity* method for correspondence
 (details about this method and explanations on the choices of its parameters are
 provided in the next section). In brief, parameter `sampleGroups` defines to
 which sample group of the experiment individual samples belong to, and parameter
-`minFraction` specifies the proportion of samples (of one sample group) in which
-a chromatographic peak needs to be identified (for a particular *m/z* -
-retention time region) to group them into an LC-MS feature. For our example we
-use the sample group definition in the `sampleData` of our `mse` variable and
-set `minFraction = 1` requiring thus a chromatographic peak to be identified in
-all (100%) of available samples to define a feature. Generally, if
-correspondence is performed on more heterogeneous samples, `minFraction` values
-between 0.6 and 0.8 could be used instead. Since the aim of this initial
-correspondence is to define some (presumably well separated) groups of
-chromatographic peaks across the samples, its settings does not need to be fully
-optimized.
+`minFraction` specifies the proportion of samples (of one of the sample groups
+defined in `sampleGroups`) in which a chromatographic peak needs to be detected
+to group them into an LC-MS feature. Chromatographic peaks will be grouped into
+features if their difference in *m/z* and retention times is below the defined
+thresholds and if in at least `minFraction * 100` percent of samples of at least
+one sample group a chromatographic peak was detected. For our example we use the
+sample group definition in the `sampleData` of our `mse` variable and set
+`minFraction = 1` requiring thus a chromatographic peak to be identified in all
+(100%) of available samples to define a feature. Generally, if correspondence is
+performed on more heterogeneous samples, `minFraction` values between 0.6 and
+0.8 could be used instead. Since the aim of this initial correspondence is to
+define some (presumably well separated) groups of chromatographic peaks across
+the samples, its settings does not need to be fully optimized.
 
 ```{r}
 #' Define the settings for the initial peak grouping - details for
@@ -1300,18 +1309,20 @@ mse <- groupChromPeaks(mse, pdp)
 
 This step now grouped chromatographic peaks across samples and defined so called
 LC-MS features (or simply features). We can thus now run the alignment using the
-*peakGroups* algorithm. The main parameter to define the anchor peaks is
-`minFraction`. Similar to the definition above, `minFraction` refers to the
-proportion of samples in which a chromatographic peak needs to be present. By
+*peakGroups* algorithm that aligns the data by minimizing differences in
+retention times of *anchor peaks* (i.e. selected features with chromatographic
+peaks detected in most samples). The main parameter to define these anchor peaks
+is `minFraction`. Similar to the definition above, `minFraction` refers to the
+proportion of samples in which a chromatographic peak needs to be present, only,
+here we don't consider the different sample groups, but the whole data set. By
 setting `minFraction = 1` we base the alignment on features with peaks
-identified in 100% of the samples in the data set. For alignments that are
-based on repeatedly measured samples (e.g. also for subset-based alignment on
-sample pools) values `>= 0.9` can be used. Otherwise, values between 0.7 and 0.9
-might be more advisable to ensure that a reasonable set of features are
-selected.
+identified in 100% of the samples in the data set. For alignments that are based
+on repeatedly measured samples (e.g. also for subset-based alignment on sample
+pools) values `>= 0.9` can be used. Otherwise, values between 0.7 and 0.9 might
+be more advisable to ensure that a reasonable set of features are selected.
 
-To evaluate anchor peaks that would be selected based the defined settings, we
-can use the `adjustRtimePeakGroups` method:
+To evaluate anchor peaks that would be selected based on the defined settings,
+we can also use the `adjustRtimePeakGroups` method:
 
 ```{r}
 #' Get the anchor peaks that would be selected
@@ -1374,7 +1385,6 @@ after alignment. In a similar way as before, we set `chromPeaks = "none"` in the
 `chromatogram` call to tell the function to **not** include any identified
 chromatographic peaks in the returned chromatographic data.
 
-
 ```{r bpc-raw-adjusted, fig.cap = "BPC before (top) and after (bottom) alignment."}
 par(mfrow = c(2, 1))
 
@@ -1417,7 +1427,6 @@ chromatographic peaks, as well as retention times of possibly present MS2
 spectra. The adjusted retention times are stored as a new spectra variable
 `"rtime_adjusted"` in the result object's `Spectra`. The `rtime` function on the
 result object will by default return these (adjusted) values.
-
 
 
 ## Correspondence
@@ -1567,8 +1576,14 @@ mse
 
 The present data set is restricted to a quite narrow *m/z* range, thus, the
 parameter `ppm` does not have a strong impact. For *real* data sets, this
-parameter results in an *m/z*-dependent *m/z* width of detected features. See
-also the [*xcms vignette*](LLLLL) for an example.
+parameter results in an *m/z*-dependent *m/z* width of detected features. For
+`binSize = 0.01` and `ppm = 10` and a data set with an *m/z* range from 0 to
+1000, the width of the *m/z* bins would linearly increase, along the *m/z* axis,
+from an initial size of 0.01 up to a value of 0.02 (the static size of 0.01 plus
+10 ppm of the maximal *m/z* of 1000 which results in the maximal bin size of
+0.02). See also [*this github
+issue*](https://github.com/sneumann/xcms/issues/711#issuecomment-1893389759) for
+an example and discussion.
 
 Over 300 features were identified in our example data set. Again, it is
 suggested to evaluate the results on selected compounds/ions. We therefore
@@ -1580,7 +1595,7 @@ correspondence analysis (based also on the settings that were used) by setting
 
 ```{r correspondence-evaluate, fig.cap = "Result of correspondence on an *m/z* slice containing the isomers valine and betaine."}
 #' Extract chromatogram including signal for betaine and valine
-chr_2 <- chromatogram(mse, mz = 118.08625 + c(-0.01, 0.01),
+chr_2 <- chromatogram(mse, mz = 118.08625 + c(-0.005, 0.005),
                       aggregationFun = "max")
 #' Setting simulate = FALSE to show the actual correspondence results
 plotChromPeakDensity(chr_2, simulate = FALSE)
@@ -1591,7 +1606,7 @@ from isomers leucine and isoleucine ([M+H]+ *m/z* 132.10191).
 
 ```{r correspondence-evaluate-2, fig.cap = "Result of correspondence on an *m/z* slice containing the isomers leucine and isoleucine."}
 #' Extract chromatogram with signal for isomers leucine and isoleucine
-chr_3 <- chromatogram(mse, mz = 132.10191 + c(-0.01, 0.01),
+chr_3 <- chromatogram(mse, mz = 132.10191 + c(-0.005, 0.005),
                       aggregationFun = "max")
 plotChromPeakDensity(chr_3, simulate = FALSE)
 ```
@@ -1851,7 +1866,7 @@ results from an `XcmsExperiment` result object and return it as a
 `SummarizedExperiment`. This function takes the same parameters than the
 `featureValues`, which is internally used to extract the feature value matrix.
 
-```{r}
+```{r, warning = FALSE, message = FALSE}
 #' Extract results as a SummarizedExperiment
 library(SummarizedExperiment)
 res <- quantify(mse, method = "sum")
@@ -1942,6 +1957,7 @@ workshops/tutorials at
 
 # Final words
 
+- `xcms` is not a single, monolithic software, but part of a package ecosystem.
 - Use the infrastructure provided by the RforMassSpectrometry package ecosystem
   to inspect, explore and summarize the data.
 - Unleash the power of R!
@@ -2030,7 +2046,7 @@ featureArea(mse) |>
 Additional analyses could now be performed on the full scan MS1 spectrum
 containing a mass peak for the [M+H]+ ion of serine. One possibility would be to
 identify potential isotope peaks of the monoisotopic mass peak of serine. The
-`isotopologies` function from the `r Biocpkg("MetaboCoreUtils")` allows for
+`isotopologues` function from the `r Biocpkg("MetaboCoreUtils")` allows for
 example to identify and group potential isotope peaks in MS1 spectrum data
 without any assumptions on the chemical formula of the compound of interest.
 
