@@ -641,9 +641,9 @@ combine MS1 spectra with <code>combineSpectra</code>.</p>
 <span><span class="co">## 2         1     0.275         1</span></span>
 <span><span class="co">##  ... 33 more variables/columns.</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Fri Feb 16 14:29:25 2024]</span></span>
-<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Fri Feb 16 14:29:26 2024]</span></span>
-<span><span class="co">##  Merge 2 Spectra into one [Fri Feb 16 14:29:28 2024]</span></span></code></pre>
+<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Mon Feb 19 07:25:05 2024]</span></span>
+<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Mon Feb 19 07:25:06 2024]</span></span>
+<span><span class="co">##  Merge 2 Spectra into one [Mon Feb 19 07:25:07 2024]</span></span></code></pre>
 <p><code>bps</code> is thus a <code>Spectra</code> with two spectra
 representing the BPS of the two data files. Below we plot these.</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
@@ -716,7 +716,7 @@ measured between 180 and 181 seconds.</p>
 <span><span class="co">## 20171016_POOL_POS_1_105-134.mzML</span></span>
 <span><span class="co">## 20171016_POOL_POS_3_105-134.mzML</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Fri Feb 16 14:29:28 2024]</span></span></code></pre>
+<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Mon Feb 19 07:25:08 2024]</span></span></code></pre>
 <p>For the present data set there are 6 spectra measured within this one
 second in both samples. By extracting the data as a <code>Spectra</code>
 object we have however lost now the direct (inherent) association
@@ -757,7 +757,7 @@ data.</p>
 <span><span class="co">## file(s):</span></span>
 <span><span class="co">## 20171016_POOL_POS_1_105-134.mzML</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Fri Feb 16 14:29:29 2024]</span></span></code></pre>
+<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Mon Feb 19 07:25:08 2024]</span></span></code></pre>
 <p>For the present purpose it is however not important to keep the
 sample association intact and we thus proceed to plot the previously
 extracted spectra.</p>
@@ -2204,7 +2204,7 @@ function:</p>
 <pre><code><span><span class="co">## [[1]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak detection </span></span>
-<span><span class="co">##  date: Fri Feb 16 14:29:40 2024 </span></span>
+<span><span class="co">##  date: Mon Feb 19 07:25:19 2024 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: CentWaveParam </span></span>
@@ -2213,7 +2213,7 @@ function:</p>
 <span><span class="co">## [[2]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak refinement </span></span>
-<span><span class="co">##  date: Fri Feb 16 14:29:42 2024 </span></span>
+<span><span class="co">##  date: Mon Feb 19 07:25:22 2024 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: MergeNeighboringPeaksParam </span></span>
@@ -2222,7 +2222,7 @@ function:</p>
 <span><span class="co">## [[3]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak grouping </span></span>
-<span><span class="co">##  date: Fri Feb 16 14:29:44 2024 </span></span>
+<span><span class="co">##  date: Mon Feb 19 07:25:24 2024 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakDensityParam </span></span>
@@ -2231,7 +2231,7 @@ function:</p>
 <span><span class="co">## [[4]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Retention time correction </span></span>
-<span><span class="co">##  date: Fri Feb 16 14:29:45 2024 </span></span>
+<span><span class="co">##  date: Mon Feb 19 07:25:24 2024 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakGroupsParam </span></span>
@@ -2240,7 +2240,7 @@ function:</p>
 <span><span class="co">## [[5]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak grouping </span></span>
-<span><span class="co">##  date: Fri Feb 16 14:29:48 2024 </span></span>
+<span><span class="co">##  date: Mon Feb 19 07:25:28 2024 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakDensityParam </span></span>
@@ -2249,7 +2249,7 @@ function:</p>
 <span><span class="co">## [[6]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Missing peak filling </span></span>
-<span><span class="co">##  date: Fri Feb 16 14:29:51 2024 </span></span>
+<span><span class="co">##  date: Mon Feb 19 07:25:31 2024 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: ChromPeakAreaParam </span></span>
@@ -2601,7 +2601,10 @@ spectrum.</p>
 <span><span class="co">## [1] 78 85 88</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## [[7]]</span></span>
-<span><span class="co">## [1] 100 104</span></span></code></pre>
+<span><span class="co">## [1] 100 104</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## [[8]]</span></span>
+<span><span class="co">## [1] 109 121</span></span></code></pre>
 <p>We can also highlight these in the spectrum plot.</p>
 <div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Define a color for all mass peaks and set it to transparent black</span></span>
@@ -2884,7 +2887,7 @@ Zinnen</em></a> (right tri-forked peak colored green).</p>
 </h2>
 <div class="sourceCode" id="cb186"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## R Under development (unstable) (2024-02-07 r85873)</span></span>
+<pre><code><span><span class="co">## R Under development (unstable) (2024-02-14 r85901)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
 <span><span class="co">## Running under: Ubuntu 22.04.3 LTS</span></span>
 <span><span class="co">## </span></span>
@@ -2934,14 +2937,14 @@ Zinnen</em></a> (right tri-forked peak colored green).</p>
 <span><span class="co">## [19] xfun_0.42                   MultiAssayExperiment_1.29.1</span></span>
 <span><span class="co">## [21] zlibbioc_1.49.0             cachem_1.0.8               </span></span>
 <span><span class="co">## [23] jsonlite_1.8.8              progress_1.2.3             </span></span>
-<span><span class="co">## [25] highr_0.10                  DelayedArray_0.29.1        </span></span>
+<span><span class="co">## [25] highr_0.10                  DelayedArray_0.29.3        </span></span>
 <span><span class="co">## [27] prettyunits_1.2.0           parallel_4.4.0             </span></span>
 <span><span class="co">## [29] cluster_2.1.6               R6_2.5.1                   </span></span>
 <span><span class="co">## [31] bslib_0.6.1                 stringi_1.8.3              </span></span>
 <span><span class="co">## [33] limma_3.59.3                jquerylib_0.1.4            </span></span>
 <span><span class="co">## [35] bookdown_0.37               iterators_1.0.14           </span></span>
 <span><span class="co">## [37] splines_4.4.0               Matrix_1.6-5               </span></span>
-<span><span class="co">## [39] igraph_2.0.1.1              tidyselect_1.2.0           </span></span>
+<span><span class="co">## [39] igraph_2.0.2                tidyselect_1.2.0           </span></span>
 <span><span class="co">## [41] abind_1.4-5                 yaml_2.3.8                 </span></span>
 <span><span class="co">## [43] doParallel_1.0.17           codetools_0.2-19           </span></span>
 <span><span class="co">## [45] affy_1.81.0                 lattice_0.22-5             </span></span>
