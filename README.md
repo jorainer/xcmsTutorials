@@ -55,8 +55,10 @@ required steps for installation are:
 - If you don't already have, install [docker](https://www.docker.com/). Find
   installation information [here](https://docs.docker.com/desktop/).
 - Get the [docker image](https://hub.docker.com/r/jorainer/xcms_tutorials) of
-  this tutorial with `docker pull jorainer/xcms_tutorials:latest`.
-- Start docker using
+  this tutorial e.g. from the command line with `docker pull
+  jorainer/xcms_tutorials:latest`.
+- Start the docker container, either through the Docker Desktop, or on the
+  command line with
 ```
   docker run \
       -e PASSWORD=bioc \
@@ -72,7 +74,7 @@ required steps for installation are:
 
 For manual installation, an R version >= 4.3.0 is required as well as recent
 versions of the packages `MsExperiment`, `Spectra` and in particular the `xcms`
-(version >= 3.99.0 is needed). These can be installed using the code below:
+(version >= 4.1.0 is needed). These can be installed using the code below:
 
 ```r
 install.packages("BiocManager")
