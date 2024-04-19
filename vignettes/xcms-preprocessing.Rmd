@@ -2279,6 +2279,7 @@ Our data has two columns, one with *retention times* and one with
 data.
 
 ```{r peaks-plot, fig.width = 12, fig.height = 2.15}
+library(MSnbase)
 chr <- Chromatogram(rtime = cdata$rt, intensity = cdata$intensity)
 par(mar = c(2, 2, 0, 0))
 plot(chr)
