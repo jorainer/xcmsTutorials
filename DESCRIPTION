@@ -29,6 +29,7 @@ Depends:
 Suggests:
     MetaboCoreUtils,
     MsCoreUtils,
+    MSnbase,
     png,
     BiocStyle,
     knitr,

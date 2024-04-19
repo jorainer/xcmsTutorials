@@ -15,7 +15,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding[utf8]{inputenc}
   %\VignettePackage{xcmsTutorials}
-  %\VignetteDepends{xcms,Spectra,BiocStyle,MetaboCoreUtils,knitr,png,MsCoreUtils,msdata,MsExperiment,pheatmap}
+  %\VignetteDepends{xcms,Spectra,BiocStyle,MetaboCoreUtils,knitr,png,MsCoreUtils,msdata,MsExperiment,pheatmap,MSnbase}
 bibliography: references.bib
 ---
 
