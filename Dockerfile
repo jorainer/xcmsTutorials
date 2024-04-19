@@ -11,6 +11,6 @@ WORKDIR /home/rstudio
 COPY --chown=rstudio:rstudio . /home/rstudio/
 
 ## Install the xcmsTutorials package and additional required packages
-RUN Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); BiocManager::install(ask = FALSE); BiocManager::install('xcms', ask = FALSE, type = 'source')"
+RUN Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); BiocManager::install(ask = FALSE, type = 'source'); BiocManager::install(c('RCurl', 'xcms'), ask = FALSE, dependencies = TRUE, type = 'source'); BiocManager::install('sneumann/xcms')"
 
 RUN Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); devtools::install('.', dependencies = TRUE, type = 'source', build_vignettes = TRUE, repos = BiocManager::repositories())"
