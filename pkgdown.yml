@@ -1,9 +1,9 @@
-pandoc: 3.1.1
-pkgdown: 2.0.7
+pandoc: 3.1.13
+pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
   xcms-preprocessing: xcms-preprocessing.html
-last_built: 2024-02-19T07:24Z
+last_built: 2024-05-13T10:56Z
 urls:
   reference: https://jorainer.github.io/xcmsTutorials/reference
   article: https://jorainer.github.io/xcmsTutorials/articles
