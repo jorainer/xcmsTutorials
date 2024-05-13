@@ -2,7 +2,7 @@
 
 ## Changes in 1.1.0
 
-- Use Bioconductor 3.19 devel release.
+- Use Bioconductor 3.19 release docker image and packages.
 - Add examples for simple quality assessment of BPC or BPS data.
 - Introduce parameter `ppm` for `PeakDensityParam` correspondence analysis
   method.

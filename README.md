@@ -49,21 +49,24 @@ The workshop files along with an R runtime environment including all required
 packages and the RStudio (Posit) editor are all bundled in a *docker*
 container. After installation, this docker container can be run on the computer
 and the code and examples from the workshop can be evaluated within this
-environment (without the need to install any additional packages or files). The
-required steps for installation are:
+environment (without the need to install any additional packages or files).
+
+This version of the workshop uses packages from **Bioconductor release 3.19**
+(May 2024) and hence bases on Bioconductor's docker container for that release
+(*RELEASE_3_19*). The required steps for installation are:
 
 - If you don't already have, install [docker](https://www.docker.com/). Find
   installation information [here](https://docs.docker.com/desktop/).
 - Get the [docker image](https://hub.docker.com/r/jorainer/xcms_tutorials) of
   this tutorial e.g. from the command line with `docker pull
-  jorainer/xcms_tutorials:latest`.
+  jorainer/xcms_tutorials:RELEASE_3_19`.
 - Start the docker container, either through the Docker Desktop, or on the
   command line with
 ```
   docker run \
       -e PASSWORD=bioc \
       -p 8787:8787 \
-      jorainer/xcms_tutorials:latest
+      jorainer/xcms_tutorials:RELEASE_3_19
 ```
 
 - Enter `http://localhost:8787` in a web browser and log in with username
@@ -72,9 +75,9 @@ required steps for installation are:
   the *vignettes* folder and evaluate the R code blocks in that document.
 
 
-For manual installation, an R version >= 4.3.0 is required as well as recent
-versions of the packages `MsExperiment`, `Spectra` and in particular the `xcms`
-(version >= 4.1.0 is needed). These can be installed using the code below:
+For manual installation, an R version >= 4.4.0 is required as well as recent
+versions of the packages `MsExperiment`, `Spectra` and in particular the
+`xcms`. These can be installed using the code below:
 
 ```r
 install.packages("BiocManager")
