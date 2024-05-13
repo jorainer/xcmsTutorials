@@ -42,6 +42,9 @@ packages). The R command `rmarkdown::render("xcms-preprocessing.Rmd")` would
 generate the html file
 [xcms-preprocessing.html](https://jorainer.github.io/xcmsTutorials/xcms-preprocessing.html).
 
+## To cite
+
+- Version 1.1.0 (for Bioconductor release 3.19, May 2024): [![DOI](https://zenodo.org/badge/645255717.svg)](https://zenodo.org/doi/10.5281/zenodo.11185520)
 
 ## Installation
 
