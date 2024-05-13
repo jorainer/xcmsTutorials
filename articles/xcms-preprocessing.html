@@ -641,9 +641,9 @@ combine MS1 spectra with <code>combineSpectra</code>.</p>
 <span><span class="co">## 2         1     0.275         1</span></span>
 <span><span class="co">##  ... 33 more variables/columns.</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Mon May 13 10:56:45 2024]</span></span>
-<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Mon May 13 10:56:47 2024]</span></span>
-<span><span class="co">##  Merge 2 Spectra into one [Mon May 13 10:56:48 2024]</span></span></code></pre>
+<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Mon May 13 13:04:50 2024]</span></span>
+<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Mon May 13 13:04:52 2024]</span></span>
+<span><span class="co">##  Merge 2 Spectra into one [Mon May 13 13:04:52 2024]</span></span></code></pre>
 <p><code>bps</code> is thus a <code>Spectra</code> with two spectra
 representing the BPS of the two data files. Below we plot these.</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
@@ -716,7 +716,7 @@ measured between 180 and 181 seconds.</p>
 <span><span class="co">## 20171016_POOL_POS_1_105-134.mzML</span></span>
 <span><span class="co">## 20171016_POOL_POS_3_105-134.mzML</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Mon May 13 10:56:49 2024]</span></span></code></pre>
+<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Mon May 13 13:04:53 2024]</span></span></code></pre>
 <p>For the present data set there are 6 spectra measured within this one
 second in both samples. By extracting the data as a <code>Spectra</code>
 object we have however lost now the direct (inherent) association
@@ -757,7 +757,7 @@ data.</p>
 <span><span class="co">## file(s):</span></span>
 <span><span class="co">## 20171016_POOL_POS_1_105-134.mzML</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Mon May 13 10:56:49 2024]</span></span></code></pre>
+<span><span class="co">##  Filter: select retention time [180..181] on MS level(s) 1 [Mon May 13 13:04:53 2024]</span></span></code></pre>
 <p>For the present purpose it is however not important to keep the
 sample association intact and we thus proceed to plot the previously
 extracted spectra.</p>
@@ -2204,7 +2204,7 @@ function:</p>
 <pre><code><span><span class="co">## [[1]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak detection </span></span>
-<span><span class="co">##  date: Mon May 13 10:57:00 2024 </span></span>
+<span><span class="co">##  date: Mon May 13 13:05:04 2024 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: CentWaveParam </span></span>
@@ -2213,7 +2213,7 @@ function:</p>
 <span><span class="co">## [[2]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak refinement </span></span>
-<span><span class="co">##  date: Mon May 13 10:57:02 2024 </span></span>
+<span><span class="co">##  date: Mon May 13 13:05:07 2024 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: MergeNeighboringPeaksParam </span></span>
@@ -2222,7 +2222,7 @@ function:</p>
 <span><span class="co">## [[3]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak grouping </span></span>
-<span><span class="co">##  date: Mon May 13 10:57:04 2024 </span></span>
+<span><span class="co">##  date: Mon May 13 13:05:08 2024 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakDensityParam </span></span>
@@ -2231,7 +2231,7 @@ function:</p>
 <span><span class="co">## [[4]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Retention time correction </span></span>
-<span><span class="co">##  date: Mon May 13 10:57:05 2024 </span></span>
+<span><span class="co">##  date: Mon May 13 13:05:09 2024 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakGroupsParam </span></span>
@@ -2240,7 +2240,7 @@ function:</p>
 <span><span class="co">## [[5]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak grouping </span></span>
-<span><span class="co">##  date: Mon May 13 10:57:08 2024 </span></span>
+<span><span class="co">##  date: Mon May 13 13:05:12 2024 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakDensityParam </span></span>
@@ -2249,7 +2249,7 @@ function:</p>
 <span><span class="co">## [[6]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Missing peak filling </span></span>
-<span><span class="co">##  date: Mon May 13 10:57:11 2024 </span></span>
+<span><span class="co">##  date: Mon May 13 13:05:15 2024 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: ChromPeakAreaParam </span></span>
@@ -2601,7 +2601,10 @@ spectrum.</p>
 <span><span class="co">## [1] 78 85 88</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## [[7]]</span></span>
-<span><span class="co">## [1] 100 104</span></span></code></pre>
+<span><span class="co">## [1] 100 104</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## [[8]]</span></span>
+<span><span class="co">## [1] 109 121</span></span></code></pre>
 <p>We can also highlight these in the spectrum plot.</p>
 <div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Define a color for all mass peaks and set it to transparent black</span></span>
