@@ -1,6 +1,9 @@
 # Exploring and analyzing LC-MS data with *Spectra* and *xcms*
 
 [![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
+![docker pulls](https://img.shields.io/docker/pulls/jorainer/xcms_tutorials)
+[![Docker Image Version (latest by date)](https://img.shields.io/docker/v/jorainer/xcms_tutorials?label=docker%20image)](https://hub.docker.com/repository/docker/jorainer/xcms_tutorials)
+[![DOI](https://zenodo.org/badge/645255717.svg)](https://zenodo.org/doi/10.5281/zenodo.11185520)
 
 ![xcms](man/figures/xcms.png)
 ![MsExperiment](man/figures/MsExperiment.png)
@@ -42,9 +45,6 @@ packages). The R command `rmarkdown::render("xcms-preprocessing.Rmd")` would
 generate the html file
 [xcms-preprocessing.html](https://jorainer.github.io/xcmsTutorials/xcms-preprocessing.html).
 
-## To cite
-
-- Version 1.1.0 (for Bioconductor release 3.19, May 2024): [![DOI](https://zenodo.org/badge/645255717.svg)](https://zenodo.org/doi/10.5281/zenodo.11185520)
 
 ## Installation
 
