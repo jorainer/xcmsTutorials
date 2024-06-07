@@ -1,5 +1,12 @@
 # xcmsTutorials 1.0
 
+## Changes in 1.1.1
+
+- Use `spectraSampleIndex()` instead of the old `fromFile()` function to get
+  sample assignments of individual spectra.
+- Add `()` to all functions in the descriptive text to discriminate functions
+  from classes or parameter names.
+
 ## Changes in 1.1.0
 
 - Release the tutorial to Zenodo.
