@@ -1,4 +1,8 @@
-# xcmsTutorials 1.0
+# xcmsTutorials 1.1
+
+## Changes in 1.1.2
+
+- Add citation information to the README and the package.
 
 ## Changes in 1.1.1
 
@@ -9,13 +13,15 @@
 
 ## Changes in 1.1.0
 
-- Release the tutorial to Zenodo.
+- Release the tutorial to Zenodo: https://doi.org/10.5281/zenodo.11185521
 - Use Bioconductor 3.19 release docker image and packages.
 - Add examples for simple quality assessment of BPC or BPS data.
 - Introduce parameter `ppm` for `PeakDensityParam` correspondence analysis
   method.
 - Add an additional section for extraction of chromatographic or spectra data
   for identified chromatographic peaks and perform isotopologue search in these.
+
+# xcmsTutorials 1.0
 
 ## Changes in 1.0.4
 
@@ -51,7 +57,6 @@
 ## Changes in xcmsTutorials 0.99.1
 
 - Add requirements for `xcms` and `Spectra` packages as well as R version.
-
 
 # xcmsTutorials 0.2
 

@@ -46,6 +46,16 @@ generate the html file
 [xcms-preprocessing.html](https://jorainer.github.io/xcmsTutorials/xcms-preprocessing.html).
 
 
+## Citation
+
+This workflow (and future versions) are deposited at
+[Zenodo](https://zenodo.org). To cite this version of the tutorial:
+
+Johannes Rainer and Philippine Louil. xcmsTutorials version 1.1.0: Exploring and
+analyzing LC-MS data with Spectra and xcms. Zenodo, May
+13, 2024. https://doi.org/10.5281/zenodo.11185521.
+
+
 ## Installation
 
 The workshop files along with an R runtime environment including all required
