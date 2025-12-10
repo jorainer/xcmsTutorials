@@ -1,9 +1,9 @@
-FROM bioconductor/bioconductor_docker:RELEASE_3_19
+FROM bioconductor/bioconductor_docker:RELEASE_3_22
 
 LABEL name="jorainer/xcms_tutorials" \
       url="https://github.com/jorainer/xcmsTutorials" \
       maintainer="johannes.rainer@eurac.edu" \
-      description="Docker container to run xcms tutorials. This version bases on the Bioconductor release 3.19 docker image." \
+      description="Docker container to run xcms tutorials. This version bases on the Bioconductor release 3.22 docker image." \
       license="Artistic-2.0"
 
 WORKDIR /home/rstudio

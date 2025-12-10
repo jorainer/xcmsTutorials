@@ -34,13 +34,14 @@ opts_chunk$set(message = FALSE, error = FALSE, warning = FALSE,
 # Abstract
 
 In this document we discuss liquid chromatography (LC) mass spectrometry (MS)
-data handling and exploration using the `r Biocpkg("MsExperiment")` and
-`r Biocpkg("Spectra")` Bioconductor packages and perform the preprocessing of a
-small LC-MS data set using the `r Biocpkg("xcms")` package. Functionality from
-the `r Biocpkg("MetaboCoreUtils")` and `r Biocpkg("MsCoreUtils")` packages are
-used for general tasks frequently performed during metabolomics data
-analysis. Ultimately, the functionality from these packages can be combined to
-build custom, data set-specific (and reproducible) analysis workflows.
+data handling and exploration using the `r Biocpkg("MsExperiment")` and `r
+Biocpkg("Spectra")` Bioconductor packages and perform the preprocessing of a
+small LC-MS data set using the `r Biocpkg("xcms")` package
+[@louail_xcms_2025]. Functionality from the `r Biocpkg("MetaboCoreUtils")` and
+`r Biocpkg("MsCoreUtils")` packages are used for general tasks frequently
+performed during metabolomics data analysis. Ultimately, the functionality from
+these packages can be combined to build custom, data set-specific (and
+reproducible) analysis workflows.
 
 In the present workshop, we first focus on data import, access and visualization
 which is followed by the description of a simple data centroiding approach and
@@ -1257,7 +1258,7 @@ In *xcms*, the alignment can be performed with the `adjustRtime()` function and
 one of the available alignment algorithms, that can be selected, and configured,
 with the respective parameter objects:
 
-- `PeakGroupsParam`: the *peakGroups* [@Smith:2006ic] method aligns samples
+- `PeakGroupsParam`: the *peakGroups* [@louail_xcms_2025] method aligns samples
   based on the retention times of a set of so called *anchor peaks* (or
   housekeeping peaks) in the different samples of an experiment. These peaks are
   supposed to represent signal from ions expected to be present in most of the
@@ -1451,7 +1452,7 @@ respective parameter objects:
 
 - `PeakDensityParam`: performs a simple and fast correspondence analysis based
   on the density of chromatographic peaks (from different samples) along the
-  retention time axis within slices of small *m/z* ranges [@Smith:2006ic].
+  retention time axis within slices of small *m/z* ranges [@louail_xcms_2025].
 
 Both methods group chromatographic peaks from different samples with similar
 *m/z* and retention times into features. For our example we use the *peak

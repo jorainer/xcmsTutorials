@@ -1,3 +1,9 @@
+# xcmsTutorials 1.2
+
+## Changes in 1.2.0
+
+- Update to Bioconductor release 3.22 and add *xcms* reference.
+
 # xcmsTutorials 1.1
 
 ## Changes in 1.1.2
