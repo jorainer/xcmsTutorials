@@ -670,9 +670,9 @@ bps
     ## 2         1     0.275         1
     ##  ... 34 more variables/columns.
     ## Processing:
-    ##  Switch backend from MsBackendMzR to MsBackendMemory [Wed Dec 10 11:20:38 2025]
-    ##  Switch backend from MsBackendMzR to MsBackendMemory [Wed Dec 10 11:20:40 2025]
-    ##  Merge 2 Spectra into one [Wed Dec 10 11:20:40 2025]
+    ##  Switch backend from MsBackendMzR to MsBackendMemory [Fri Dec 12 08:40:51 2025]
+    ##  Switch backend from MsBackendMzR to MsBackendMemory [Fri Dec 12 08:40:53 2025]
+    ##  Merge 2 Spectra into one [Fri Dec 12 08:40:53 2025]
 
 `bps` is thus a `Spectra` with two spectra representing the BPS of the
 two data files. Below we plot these.
@@ -764,7 +764,7 @@ sps
     ## 20171016_POOL_POS_1_105-134.mzML
     ## 20171016_POOL_POS_3_105-134.mzML
     ## Processing:
-    ##  Filter: select retention time [180..181] on MS level(s)  [Wed Dec 10 11:20:41 2025]
+    ##  Filter: select retention time [180..181] on MS level(s)  [Fri Dec 12 08:40:54 2025]
 
 For the present data set there are 6 spectra measured within this one
 second in both samples. By extracting the data as a `Spectra` object we
@@ -820,7 +820,7 @@ spectra(mse_sub[1])
     ## file(s):
     ## 20171016_POOL_POS_1_105-134.mzML
     ## Processing:
-    ##  Filter: select retention time [180..181] on MS level(s)  [Wed Dec 10 11:20:41 2025]
+    ##  Filter: select retention time [180..181] on MS level(s)  [Fri Dec 12 08:40:55 2025]
 
 For the present purpose it is however not important to keep the sample
 association intact and we thus proceed to plot the previously extracted
@@ -1324,9 +1324,9 @@ chromPeaks(serine_chr)
 ```
 
     ##             mz    mzmin    mzmax      rt   rtmin  rtmax     into     intb
-    ## mzmin 106.0499 106.0449 106.0549 181.072 178.282 187.21 70373.61 70032.73
+    ## mzmin 106.0499 106.0449 106.0549 181.072 178.282 187.21 70373.61 70042.87
     ##           maxo  sn row column
-    ## mzmin 38517.76 610   1      2
+    ## mzmin 38517.76 609   1      2
 
 The result is returned as a `matrix` with each row representing one
 identified chromatographic peak. The retention time ranges of the peaks
@@ -1468,7 +1468,7 @@ mse
     ##  Sample data links:
     ##   - spectra: 2 sample(s) to 1862 element(s).
     ##  xcms results:
-    ##   - chromatographic peaks: 653 in MS level(s): 1
+    ##   - chromatographic peaks: 644 in MS level(s): 1
 
 We can extract the results from the peak detection step (as above) with
 the [`chromPeaks()`](https://rdrr.io/pkg/xcms/man/XCMSnExp-class.html)
@@ -1484,23 +1484,23 @@ chromPeaks(mse, mz = c(106, 108), rt = c(150, 190))
 ```
 
     ##             mz    mzmin    mzmax      rt   rtmin   rtmax       into       intb
-    ## CP133 106.0625 106.0606 106.0636 173.264 171.869 174.380   516.3588   510.5323
-    ## CP146 107.0653 107.0652 107.0653 173.543 171.032 179.682 11318.2801 11308.5538
-    ## CP156 107.0532 107.0522 107.0537 181.356 179.682 183.309  2905.1158  2899.2205
-    ## CP167 106.0506 106.0505 106.0506 181.356 178.845 187.773 74181.7823 73916.8683
-    ## CP475 106.0633 106.0609 106.0652 172.701 170.748 174.654   559.5491   553.2785
-    ## CP482 107.0656 107.0655 107.0657 172.980 169.632 178.003 11372.6845 11166.3372
-    ## CP497 107.0538 107.0510 107.0540 181.072 178.840 183.304  3155.0100  3149.2053
-    ## CP516 106.0496 106.0494 106.0508 181.072 178.282 187.210 70373.6099 70106.7152
-    ##             maxo  sn sample
-    ## CP133   426.6084  38      1
-    ## CP146  4936.6783 833      1
-    ## CP156  1628.9510 129      1
-    ## CP167 37664.9371 688      1
-    ## CP475   381.6084  53      2
-    ## CP482  4569.1399  79      2
-    ## CP497  2297.7972 230      2
-    ## CP516 38517.7622 826      2
+    ## CP133 106.0625 106.0606 106.0636 173.264 171.869 174.380   516.3588   509.4463
+    ## CP146 107.0653 107.0652 107.0653 173.543 171.032 179.682 11318.2801 11309.9091
+    ## CP157 107.0532 107.0522 107.0537 181.356 179.682 183.309  2905.1158  2901.7678
+    ## CP167 106.0506 106.0505 106.0506 181.356 178.845 187.773 74181.7823 73905.2115
+    ## CP469 106.0633 106.0609 106.0652 172.701 170.748 174.654   559.5491   553.7921
+    ## CP477 107.0656 107.0655 107.0657 172.980 169.632 178.003 11372.6845 11166.3372
+    ## CP492 107.0538 107.0510 107.0540 181.072 178.840 183.304  3155.0100  3149.2053
+    ## CP512 106.0496 106.0494 106.0508 181.072 178.282 187.210 70373.6099 70109.3562
+    ##             maxo   sn sample
+    ## CP133   426.6084   35      1
+    ## CP146  4936.6783 4936      1
+    ## CP157  1628.9510  186      1
+    ## CP167 37664.9371  685      1
+    ## CP469   381.6084   54      2
+    ## CP477  4569.1399   79      2
+    ## CP492  2297.7972  230      2
+    ## CP512 38517.7622  830      2
 
 Again, each row in this matrix contains one identified chromatographic
 peak with columns `"mz"`, `"mzmin"`, `"mzmax"`, `"rt"`, `"rtmin"` and
@@ -1530,7 +1530,7 @@ chromPeaks(mse)[, "sample"] |>
 
     ## 
     ##   1   2 
-    ## 326 327
+    ## 323 321
 
 About the same number of peaks was identified, which is to be expected
 since both files contain measurements from the same sample (the QC
@@ -1587,10 +1587,10 @@ mz_rt
 ```
 
     ##         rtmin   rtmax    mzmin    mzmax
-    ## CP110 147.919 173.220 118.0813 118.0914
-    ## CP158 172.472 195.262 132.6337 132.6454
-    ## CP064  67.007  91.471 122.9179 122.9312
-    ## CP483 164.096 188.003 115.5466 115.5582
+    ## CP110 141.781 167.919 118.0812 118.0915
+    ## CP158 170.798 193.309 108.0477 108.0606
+    ## CP064  64.217  88.960 117.0796 117.0912
+    ## CP483 167.444 191.072 129.6296 129.6445
 
 For our example we however manually define *m/z* - retention time
 regions (similarly as it could be done for known compounds). Below we
@@ -1676,7 +1676,7 @@ chromPeaks(mse)[, "sample"] |>
 
     ## 
     ##   1   2 
-    ## 298 297
+    ## 297 292
 
 Also,
 [`refineChromPeaks()`](https://rdrr.io/pkg/xcms/man/refineChromPeaks.html)
@@ -1690,7 +1690,7 @@ chromatographic peak:
 chromPeakData(mse)
 ```
 
-    ## DataFrame with 595 rows and 3 columns
+    ## DataFrame with 589 rows and 3 columns
     ##        ms_level is_filled    merged
     ##       <integer> <logical> <logical>
     ## CP001         1     FALSE     FALSE
@@ -1699,11 +1699,11 @@ chromPeakData(mse)
     ## CP004         1     FALSE     FALSE
     ## CP005         1     FALSE     FALSE
     ## ...         ...       ...       ...
-    ## CP679         1     FALSE      TRUE
-    ## CP680         1     FALSE      TRUE
-    ## CP681         1     FALSE      TRUE
-    ## CP682         1     FALSE      TRUE
-    ## CP683         1     FALSE      TRUE
+    ## CP669         1     FALSE      TRUE
+    ## CP670         1     FALSE      TRUE
+    ## CP671         1     FALSE      TRUE
+    ## CP672         1     FALSE      TRUE
+    ## CP673         1     FALSE      TRUE
 
 And the number of merged peaks is thus:
 
@@ -1712,7 +1712,7 @@ And the number of merged peaks is thus:
 sum(chromPeakData(mse)$merged)
 ```
 
-    ## [1] 30
+    ## [1] 29
 
 ### Retention time alignment
 
@@ -1853,10 +1853,10 @@ head(pgm)
 ```
 
     ##       20171016_POOL_POS_1_105-134.mzML 20171016_POOL_POS_3_105-134.mzML
-    ## FT133                           22.601                           24.270
+    ## FT136                           22.601                           24.270
     ## FT163                           25.391                           25.665
     ## FT030                           25.670                           25.665
-    ## FT214                           26.507                           26.502
+    ## FT212                           26.507                           26.502
     ## FT056                           26.786                           27.060
     ## FT162                           28.739                           28.734
 
@@ -1870,8 +1870,8 @@ distribution of retention times of the anchor peaks in the first sample.
 quantile(pgm[, 1])
 ```
 
-    ##       0%      25%      50%      75%     100% 
-    ##  22.6010 160.5695 181.3560 194.3295 259.4780
+    ##      0%     25%     50%     75%    100% 
+    ##  22.601 155.408 180.240 194.190 259.478
 
 Anchor peaks cover thus most of the retention time range.
 
@@ -2182,9 +2182,9 @@ mse
     ##  Sample data links:
     ##   - spectra: 2 sample(s) to 1862 element(s).
     ##  xcms results:
-    ##   - chromatographic peaks: 595 in MS level(s): 1 
+    ##   - chromatographic peaks: 589 in MS level(s): 1 
     ##   - adjusted retention times
-    ##   - correspondence results: 360 features in MS level(s): 1
+    ##   - correspondence results: 357 features in MS level(s): 1
 
 The present data set is restricted to a quite narrow *m/z* range, thus,
 the parameter `ppm` does not have a strong impact. For *real* data sets,
@@ -2275,19 +2275,19 @@ featureDefinitions(mse) |>
 ```
 
     ##          mzmed    mzmin    mzmax     rtmed     rtmin     rtmax npeaks POOL
-    ## FT001 105.0418 105.0417 105.0418 167.68552 167.48562 167.88542      2    2
-    ## FT002 105.0415 105.0415 105.0415 157.73930 157.73930 157.73930      1    1
-    ## FT003 105.0697 105.0691 105.0703  31.80794  31.69005  31.92584      2    2
-    ## FT004 105.1103 105.1100 105.1105  63.75033  63.35725  64.14341      2    2
-    ## FT005 105.4734 105.4732 105.4736 201.57570 201.36108 201.79031      2    2
-    ## FT006 105.7166 105.7160 105.7172 181.21578 181.08901 181.34255      2    2
+    ## FT001 105.0418 105.0417 105.0418 167.68958 167.50191 167.87725      2    2
+    ## FT002 105.0415 105.0415 105.0415 157.72336 157.72336 157.72336      1    1
+    ## FT003 105.0697 105.0691 105.0703  31.80810  31.67412  31.94208      2    2
+    ## FT004 105.1103 105.1100 105.1105  63.75036  63.45657  64.04414      2    2
+    ## FT005 105.4734 105.4732 105.4736 201.57632 201.37059 201.78204      2    2
+    ## FT006 105.7166 105.7160 105.7172 181.21537 181.08482 181.34592      2    2
     ##        peakidx ms_level
-    ## FT001 112, 396        1
-    ## FT002      111        1
-    ## FT003  19, 317        1
-    ## FT004  48, 348        1
-    ## FT005 260, 580        1
-    ## FT006 135, 444        1
+    ## FT001 115, 393        1
+    ## FT002      114        1
+    ## FT003  21, 317        1
+    ## FT004  49, 348        1
+    ## FT005 261, 573        1
+    ## FT006 138, 440        1
 
 Each row defines one feature and provides information on it’s *m/z*
 (column `"mzmed"`) and retention time (column `"rtmed"`). The *-min* and
@@ -2399,7 +2399,7 @@ values before and after running
 sum(is.na(featureValues(mse)))
 ```
 
-    ## [1] 135
+    ## [1] 133
 
 ``` r
 
@@ -2410,7 +2410,7 @@ mse <- fillChromPeaks(mse, param = ChromPeakAreaParam())
 sum(is.na(featureValues(mse)))
 ```
 
-    ## [1] 28
+    ## [1] 25
 
 With
 [`fillChromPeaks()`](https://rdrr.io/pkg/xcms/man/fillChromPeaks.html)
@@ -2538,19 +2538,19 @@ summary(l)
     ## 
     ## Residuals:
     ##     Min      1Q  Median      3Q     Max 
-    ## -3.5154 -0.4037  0.1539  0.7275  2.2150 
+    ## -4.4598 -0.3337  0.2518  0.7176  1.6402 
     ## 
     ## Coefficients:
     ##                  Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept)       -1.5250     0.4717  -3.233  0.00164 ** 
-    ## log2(avg_detect)   1.0361     0.0459  22.572  < 2e-16 ***
+    ## (Intercept)      -1.34738    0.48180  -2.797  0.00613 ** 
+    ## log2(avg_detect)  1.01347    0.04751  21.333  < 2e-16 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
-    ## Residual standard error: 1.097 on 105 degrees of freedom
-    ##   (28 observations deleted due to missingness)
-    ## Multiple R-squared:  0.8291, Adjusted R-squared:  0.8275 
-    ## F-statistic: 509.5 on 1 and 105 DF,  p-value: < 2.2e-16
+    ## Residual standard error: 1.114 on 106 degrees of freedom
+    ##   (25 observations deleted due to missingness)
+    ## Multiple R-squared:  0.8111, Adjusted R-squared:  0.8093 
+    ## F-statistic: 455.1 on 1 and 106 DF,  p-value: < 2.2e-16
 
 With a value of 1.007, the slope of the line is thus very close to the
 slope of the identity line and the two sets of values are also highly
@@ -2577,7 +2577,7 @@ processHistory(mse)
     ## [[1]]
     ## Object of class "XProcessHistory"
     ##  type: Peak detection 
-    ##  date: Wed Dec 10 11:20:52 2025 
+    ##  date: Fri Dec 12 08:41:06 2025 
     ##  info:  
     ##  fileIndex: 1,2 
     ##  Parameter class: CentWaveParam 
@@ -2586,7 +2586,7 @@ processHistory(mse)
     ## [[2]]
     ## Object of class "XProcessHistory"
     ##  type: Peak refinement 
-    ##  date: Wed Dec 10 11:20:54 2025 
+    ##  date: Fri Dec 12 08:41:08 2025 
     ##  info:  
     ##  fileIndex: 1,2 
     ##  Parameter class: MergeNeighboringPeaksParam 
@@ -2595,7 +2595,7 @@ processHistory(mse)
     ## [[3]]
     ## Object of class "XProcessHistory"
     ##  type: Peak grouping 
-    ##  date: Wed Dec 10 11:20:56 2025 
+    ##  date: Fri Dec 12 08:41:10 2025 
     ##  info:  
     ##  fileIndex: 1,2 
     ##  Parameter class: PeakDensityParam 
@@ -2604,7 +2604,7 @@ processHistory(mse)
     ## [[4]]
     ## Object of class "XProcessHistory"
     ##  type: Retention time correction 
-    ##  date: Wed Dec 10 11:20:56 2025 
+    ##  date: Fri Dec 12 08:41:10 2025 
     ##  info:  
     ##  fileIndex: 1,2 
     ##  Parameter class: PeakGroupsParam 
@@ -2613,7 +2613,7 @@ processHistory(mse)
     ## [[5]]
     ## Object of class "XProcessHistory"
     ##  type: Peak grouping 
-    ##  date: Wed Dec 10 11:21:00 2025 
+    ##  date: Fri Dec 12 08:41:14 2025 
     ##  info:  
     ##  fileIndex: 1,2 
     ##  Parameter class: PeakDensityParam 
@@ -2622,7 +2622,7 @@ processHistory(mse)
     ## [[6]]
     ## Object of class "XProcessHistory"
     ##  type: Missing peak filling 
-    ##  date: Wed Dec 10 11:21:02 2025 
+    ##  date: Fri Dec 12 08:41:16 2025 
     ##  info:  
     ##  fileIndex: 1,2 
     ##  Parameter class: ChromPeakAreaParam 
@@ -2713,20 +2713,20 @@ colData(res)
 rowData(res)
 ```
 
-    ## DataFrame with 360 rows and 9 columns
+    ## DataFrame with 357 rows and 9 columns
     ##           mzmed     mzmin     mzmax     rtmed     rtmin     rtmax    npeaks
     ##       <numeric> <numeric> <numeric> <numeric> <numeric> <numeric> <numeric>
-    ## FT001   105.042   105.042   105.042  167.6855  167.4856  167.8854         2
-    ## FT002   105.042   105.042   105.042  157.7393  157.7393  157.7393         1
-    ## FT003   105.070   105.069   105.070   31.8079   31.6900   31.9258         2
-    ## FT004   105.110   105.110   105.111   63.7503   63.3572   64.1434         2
-    ## FT005   105.473   105.473   105.474  201.5757  201.3611  201.7903         2
+    ## FT001   105.042   105.042   105.042  167.6896  167.5019  167.8773         2
+    ## FT002   105.042   105.042   105.042  157.7234  157.7234  157.7234         1
+    ## FT003   105.070   105.069   105.070   31.8081   31.6741   31.9421         2
+    ## FT004   105.110   105.110   105.111   63.7504   63.4566   64.0441         2
+    ## FT005   105.473   105.473   105.474  201.5763  201.3706  201.7820         2
     ## ...         ...       ...       ...       ...       ...       ...       ...
-    ## FT356   133.929   133.929   133.929  193.3520  193.3267  193.3772         2
-    ## FT357   133.956   133.956   133.956  199.0660  198.9949  199.1370         2
-    ## FT358   133.960   133.960   133.961   30.8309   30.8053   30.8564         2
-    ## FT359   133.973   133.973   133.973  206.8707  206.3899  207.3516         2
-    ## FT360   133.973   133.973   133.973  200.2482  200.2482  200.2482         1
+    ## FT353   133.929   133.929   133.929  193.3516   193.322  193.3808         2
+    ## FT354   133.956   133.956   133.956  199.0666   198.990  199.1432         2
+    ## FT355   133.960   133.960   133.961   30.8309    30.821   30.8409         2
+    ## FT356   133.973   133.973   133.973  206.8718   206.405  207.3387         2
+    ## FT357   133.973   133.973   133.973  200.2561   200.256  200.2561         1
     ##            POOL  ms_level
     ##       <numeric> <integer>
     ## FT001         2         1
@@ -2735,11 +2735,11 @@ rowData(res)
     ## FT004         2         1
     ## FT005         2         1
     ## ...         ...       ...
+    ## FT353         2         1
+    ## FT354         2         1
+    ## FT355         2         1
     ## FT356         2         1
-    ## FT357         2         1
-    ## FT358         2         1
-    ## FT359         2         1
-    ## FT360         1         1
+    ## FT357         1         1
 
 The feature values are stored as an *assay* within the object. To access
 that we simply use the
@@ -2755,7 +2755,7 @@ assay(res) |>
 
     ##       20171016_POOL_POS_1_105-134.mzML 20171016_POOL_POS_3_105-134.mzML
     ## FT001                        3202.7445                        2285.2830
-    ## FT002                        3605.3915                        3185.0240
+    ## FT002                        3605.3915                        3191.7385
     ## FT003                         744.8752                        1057.4312
     ## FT004                       18126.4603                       19369.4039
     ## FT005                       23243.6129                       31960.3709
@@ -2875,11 +2875,11 @@ serine_pks
 ```
 
     ##             mz    mzmin    mzmax       rt    rtmin    rtmax     into     intb
-    ## CP167 106.0506 106.0505 106.0506 181.0890 178.5848 187.5065 74181.78 73916.87
-    ## CP516 106.0496 106.0494 106.0508 181.3426 178.5437 187.4816 70373.61 70106.72
+    ## CP167 106.0506 106.0505 106.0506 181.0848 178.5814 187.4950 74181.78 73905.21
+    ## CP512 106.0496 106.0494 106.0508 181.3459 178.5474 187.4925 70373.61 70109.36
     ##           maxo  sn sample
-    ## CP167 37664.94 688      1
-    ## CP516 38517.76 826      2
+    ## CP167 37664.94 685      1
+    ## CP512 38517.76 830      2
 
 The
 [`chromPeakChromatograms()`](https://rdrr.io/pkg/xcms/man/chromPeakChromatograms.html)
@@ -2960,12 +2960,12 @@ featureArea(mse) |>
 ```
 
     ##          mzmin    mzmax     rtmin     rtmax
-    ## FT001 105.0389 105.0448 162.47370 173.03102
-    ## FT002 105.0403 105.0434 154.65766 161.35962
-    ## FT003 105.0680 105.0727  30.57863  34.44764
-    ## FT004 105.1098 105.1114  61.10792  72.07009
-    ## FT005 105.4717 105.4747 198.85951 211.49955
-    ## FT006 105.7141 105.7183 179.69717 182.73745
+    ## FT001 105.0389 105.0448 162.48680 173.03646
+    ## FT002 105.0403 105.0434 154.65033 161.36642
+    ## FT003 105.0680 105.0727  30.56318  34.46556
+    ## FT004 105.1098 105.1114  61.19807  72.20464
+    ## FT005 105.4717 105.4747 198.86525 211.48482
+    ## FT006 105.7141 105.7183 179.69288 182.74128
 
 Additional analyses could now be performed on the full scan MS1 spectrum
 containing a mass peak for the \[M+H\]+ ion of serine. One possibility
@@ -3001,7 +3001,7 @@ iso_idx
 ```
 
     ## [[1]]
-    ## [1]  8 15
+    ## [1]  8 14
 
 The function thus identified two peaks that, based on their *m/z* values
 and differences in intensity, could represent isotopologues. We below
@@ -3039,25 +3039,28 @@ iso_idx
 ```
 
     ## [[1]]
-    ## [1]  8 15
+    ## [1]  3 17
     ## 
     ## [[2]]
-    ## [1] 35 41 44
+    ## [1]  8 14
     ## 
     ## [[3]]
-    ## [1] 43 51
+    ## [1] 34 40 43
     ## 
     ## [[4]]
-    ## [1] 68 76
+    ## [1] 42 50
     ## 
     ## [[5]]
-    ## [1] 80 87 90
+    ## [1] 66 74
     ## 
     ## [[6]]
-    ## [1] 103 107
+    ## [1] 78 85 88
     ## 
     ## [[7]]
-    ## [1] 112 124
+    ## [1] 100 104
+    ## 
+    ## [[8]]
+    ## [1] 109 121
 
 We can also highlight these in the spectrum plot.
 
@@ -3105,28 +3108,28 @@ head(iso_idx)
 ```
 
     ## [[1]]
-    ##       FT012 
-    ##     5    12 
+    ##       FT015 
+    ##     9    15 
     ## 
     ## [[2]]
-    ##       FT016 
-    ##     9    16 
+    ##       FT012 
+    ##    10    12 
     ## 
     ## [[3]]
-    ##       FT013 
-    ##    10    13 
+    ##       FT023 FT046 
+    ##    13    23    46 
     ## 
     ## [[4]]
-    ##       FT024 FT047 
-    ##    14    24    47 
+    ##       FT035 
+    ##    24    35 
     ## 
     ## [[5]]
-    ##       FT036 
-    ##    25    36 
+    ##       FT040 FT060 FT069 
+    ##    29    40    60    69 
     ## 
     ## [[6]]
-    ##       FT041 FT060 FT069 
-    ##    30    41    60    69
+    ##       FT061 FT087 
+    ##    31    61    87
 
 We thus identified potential isotopologues, but, because we ignored the
 retention times of the features in this simple approach, the list will
@@ -3140,12 +3143,14 @@ represent signal from isotopes of the same compound.
 featureDefinitions(mse)[iso_idx[[3]], ]
 ```
 
-    ##          mzmed    mzmin    mzmax    rtmed   rtmin    rtmax npeaks POOL  peakidx
-    ## FT010 106.0501 106.0496 106.0506 181.2158 181.089 181.3426      2    2 151, 463
-    ## FT013 107.0535 107.0532 107.0538 181.2158 181.089 181.3426      2    2 140, 447
-    ##       ms_level
-    ## FT010        1
-    ## FT013        1
+    ##          mzmed    mzmin    mzmax    rtmed    rtmin    rtmax npeaks POOL
+    ## FT013 107.0654 107.0653 107.0656 173.2621 173.2108 173.3134      2    2
+    ## FT023 109.0634 109.0632 109.0636 161.6905 161.6466 161.7343      2    2
+    ## FT046 111.0601 111.0601 111.0601 181.0848 181.0848 181.0848      1    1
+    ##        peakidx ms_level
+    ## FT013 132, 429        1
+    ## FT023  76, 374        1
+    ## FT046      140        1
 
 Others however could be real isotopes:
 
@@ -3154,12 +3159,12 @@ Others however could be real isotopes:
 featureDefinitions(mse)[iso_idx[[2]], ]
 ```
 
-    ##          mzmed    mzmin    mzmax     rtmed     rtmin     rtmax npeaks POOL
-    ## FT009 105.9534 105.9534 105.9535  30.83086  30.80527  30.85644      2    2
-    ## FT016 107.9476 107.9476 107.9476 194.15594 194.15594 194.15594      1    1
+    ##          mzmed    mzmin    mzmax    rtmed    rtmin    rtmax npeaks POOL
+    ## FT010 106.0501 106.0496 106.0506 181.2154 181.0848 181.3459      2    2
+    ## FT012 107.0535 107.0532 107.0538 181.2154 181.0848 181.3459      2    2
     ##        peakidx ms_level
-    ## FT009  22, 310        1
-    ## FT016 194, 656        1
+    ## FT010 153, 461        1
+    ## FT012 143, 444        1
 
 ### Additional visualizations
 
@@ -3205,7 +3210,7 @@ extracted by 4 seconds on either side.
 chrs_all <- chromPeakChromatograms(mse_1, expandRt = 4)
 ```
 
-While we could now simply proceed and plot each of the 357 EICs
+While we could now simply proceed and plot each of the 356 EICs
 separately, we instead use below the
 [`plotChromatogramsOverlay()`](https://rdrr.io/pkg/xcms/man/plotChromatogramsOverlay.html)
 function that allows to plot multiple EICs into the same plot hence
@@ -3317,11 +3322,11 @@ isotopologues(pks[, c("mz", "into")])
 ```
 
     ## [[1]]
-    ##       CP051 
+    ##       CP053 
     ##     2     3 
     ## 
     ## [[2]]
-    ##       CP052 
+    ##       CP054 
     ##     4     5
 
 Pairs of chromatographic peaks have been identified as being potential
@@ -3437,7 +3442,7 @@ sessionInfo()
     ##  [1] RColorBrewer_1.1-3          png_0.1-8                  
     ##  [3] MSnbase_2.36.0              mzR_2.44.0                 
     ##  [5] Rcpp_1.1.0                  SummarizedExperiment_1.40.0
-    ##  [7] Biobase_2.70.0              GenomicRanges_1.62.0       
+    ##  [7] Biobase_2.70.0              GenomicRanges_1.62.1       
     ##  [9] Seqinfo_1.0.0               IRanges_2.44.0             
     ## [11] MatrixGenerics_1.22.0       matrixStats_1.5.0          
     ## [13] MetaboCoreUtils_1.18.1      pheatmap_1.0.13            

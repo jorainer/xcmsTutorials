@@ -54,7 +54,14 @@ This workflow (and future versions) are deposited at
 
 Johannes Rainer and Philippine Louail. xcmsTutorials version 1.1.0:
 Exploring and analyzing LC-MS data with Spectra and xcms. Zenodo, May
-13, 2024. <https://doi.org/10.5281/zenodo.11185521>.
+13, 2024. <https://doi.org/10.5281/zenodo.11185521> .
+
+Louail P, Brunius C, Garcia-Aloy M, Kumler W, Storz N, Stanstrup J,
+Treutler H, Vangeenderhuysen P, Witting M, Neumann S, Rainer J. xcms in
+Peak Form: Now Anchoring a Complete Metabolomics Data Preprocessing and
+Analysis Software Ecosystem. Anal Chem. 2025 Dec 8. doi:
+[10.1021/acs.analchem.5c04338](https://doi.org/10.1021/acs.analchem.5c04338).
+Epub ahead of print. PMID: 41359826.
 
 ## Installation
 
@@ -66,8 +73,9 @@ evaluated within this environment (without the need to install any
 additional packages or files).
 
 This version of the workshop uses packages from **Bioconductor release
-3.19** (May 2024) and hence bases on Bioconductor’s docker container for
-that release (*RELEASE_3_19*). The required steps for installation are:
+3.22** (October 2025) and hence bases on Bioconductor’s docker container
+for that release (*RELEASE_3_22*). The required steps for installation
+are:
 
 - If you don’t already have, install [docker](https://www.docker.com/).
   Find installation information
@@ -75,7 +83,7 @@ that release (*RELEASE_3_19*). The required steps for installation are:
 - Get the [docker
   image](https://hub.docker.com/r/jorainer/xcms_tutorials) of this
   tutorial e.g. from the command line with
-  `docker pull jorainer/xcms_tutorials:RELEASE_3_19`.
+  `docker pull jorainer/xcms_tutorials:RELEASE_3_22`.
 - Start the docker container, either through the Docker Desktop, or on
   the command line with
 
@@ -84,7 +92,7 @@ that release (*RELEASE_3_19*). The required steps for installation are:
       docker run \
           -e PASSWORD=bioc \
           -p 8787:8787 \
-          jorainer/xcms_tutorials:RELEASE_3_19
+          jorainer/xcms_tutorials:RELEASE_3_22
 
 - Enter `http://localhost:8787` in a web browser and log in with
   username `rstudio` and password `bioc`.
@@ -92,7 +100,7 @@ that release (*RELEASE_3_19*). The required steps for installation are:
   files in the *vignettes* folder and evaluate the R code blocks in that
   document.
 
-For manual installation, an R version \>= 4.4.0 is required as well as
+For manual installation, an R version \>= 4.5.0 is required as well as
 recent versions of the packages `MsExperiment`, `Spectra` and in
 particular the `xcms`. These can be installed using the code below:
 

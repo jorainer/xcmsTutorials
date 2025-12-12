@@ -622,9 +622,9 @@ combine MS1 spectra with <code><a href="https://lgatto.github.io/MSnbase/referen
 <span><span class="co">## 2         1     0.275         1</span></span>
 <span><span class="co">##  ... 34 more variables/columns.</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Wed Dec 10 11:20:38 2025]</span></span>
-<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Wed Dec 10 11:20:40 2025]</span></span>
-<span><span class="co">##  Merge 2 Spectra into one [Wed Dec 10 11:20:40 2025]</span></span></code></pre>
+<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Fri Dec 12 08:40:51 2025]</span></span>
+<span><span class="co">##  Switch backend from MsBackendMzR to MsBackendMemory [Fri Dec 12 08:40:53 2025]</span></span>
+<span><span class="co">##  Merge 2 Spectra into one [Fri Dec 12 08:40:53 2025]</span></span></code></pre>
 <p><code>bps</code> is thus a <code>Spectra</code> with two spectra
 representing the BPS of the two data files. Below we plot these.</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
@@ -697,7 +697,7 @@ measured between 180 and 181 seconds.</p>
 <span><span class="co">## 20171016_POOL_POS_1_105-134.mzML</span></span>
 <span><span class="co">## 20171016_POOL_POS_3_105-134.mzML</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Filter: select retention time [180..181] on MS level(s)  [Wed Dec 10 11:20:41 2025]</span></span></code></pre>
+<span><span class="co">##  Filter: select retention time [180..181] on MS level(s)  [Fri Dec 12 08:40:54 2025]</span></span></code></pre>
 <p>For the present data set there are 6 spectra measured within this one
 second in both samples. By extracting the data as a <code>Spectra</code>
 object we have however lost now the direct (inherent) association
@@ -738,7 +738,7 @@ allows to apply any of the many filter functions available for
 <span><span class="co">## file(s):</span></span>
 <span><span class="co">## 20171016_POOL_POS_1_105-134.mzML</span></span>
 <span><span class="co">## Processing:</span></span>
-<span><span class="co">##  Filter: select retention time [180..181] on MS level(s)  [Wed Dec 10 11:20:41 2025]</span></span></code></pre>
+<span><span class="co">##  Filter: select retention time [180..181] on MS level(s)  [Fri Dec 12 08:40:55 2025]</span></span></code></pre>
 <p>For the present purpose it is however not important to keep the
 sample association intact and we thus proceed to plot the previously
 extracted spectra.</p>
@@ -1146,9 +1146,9 @@ information on identified chromatographic peaks from our object.</p>
 <code class="sourceCode R"><span><span class="co">#' Extract identified chromatographic peaks from the EIC</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-class.html" class="external-link">chromPeaks</a></span><span class="op">(</span><span class="va">serine_chr</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##             mz    mzmin    mzmax      rt   rtmin  rtmax     into     intb</span></span>
-<span><span class="co">## mzmin 106.0499 106.0449 106.0549 181.072 178.282 187.21 70373.61 70032.73</span></span>
+<span><span class="co">## mzmin 106.0499 106.0449 106.0549 181.072 178.282 187.21 70373.61 70042.87</span></span>
 <span><span class="co">##           maxo  sn row column</span></span>
-<span><span class="co">## mzmin 38517.76 610   1      2</span></span></code></pre>
+<span><span class="co">## mzmin 38517.76 609   1      2</span></span></code></pre>
 <p>The result is returned as a <code>matrix</code> with each row
 representing one identified chromatographic peak. The retention time
 ranges of the peaks are provided in columns <code>"rtmin"</code> and
@@ -1262,7 +1262,7 @@ preprocessing results.</p>
 <span><span class="co">##  Sample data links:</span></span>
 <span><span class="co">##   - spectra: 2 sample(s) to 1862 element(s).</span></span>
 <span><span class="co">##  xcms results:</span></span>
-<span><span class="co">##   - chromatographic peaks: 653 in MS level(s): 1</span></span></code></pre>
+<span><span class="co">##   - chromatographic peaks: 644 in MS level(s): 1</span></span></code></pre>
 <p>We can extract the results from the peak detection step (as above)
 with the <code><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-class.html" class="external-link">chromPeaks()</a></code> function. The optional parameters
 <code>rt</code> and <code>mz</code> would allow to extract peak
@@ -1274,23 +1274,23 @@ In our example we extract all chromatographic peaks between an
 <code class="sourceCode R"><span><span class="co">#' Access the peak detection results from a specific m/z - rt area</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-class.html" class="external-link">chromPeaks</a></span><span class="op">(</span><span class="va">mse</span>, mz <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">106</span>, <span class="fl">108</span><span class="op">)</span>, rt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">150</span>, <span class="fl">190</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##             mz    mzmin    mzmax      rt   rtmin   rtmax       into       intb</span></span>
-<span><span class="co">## CP133 106.0625 106.0606 106.0636 173.264 171.869 174.380   516.3588   510.5323</span></span>
-<span><span class="co">## CP146 107.0653 107.0652 107.0653 173.543 171.032 179.682 11318.2801 11308.5538</span></span>
-<span><span class="co">## CP156 107.0532 107.0522 107.0537 181.356 179.682 183.309  2905.1158  2899.2205</span></span>
-<span><span class="co">## CP167 106.0506 106.0505 106.0506 181.356 178.845 187.773 74181.7823 73916.8683</span></span>
-<span><span class="co">## CP475 106.0633 106.0609 106.0652 172.701 170.748 174.654   559.5491   553.2785</span></span>
-<span><span class="co">## CP482 107.0656 107.0655 107.0657 172.980 169.632 178.003 11372.6845 11166.3372</span></span>
-<span><span class="co">## CP497 107.0538 107.0510 107.0540 181.072 178.840 183.304  3155.0100  3149.2053</span></span>
-<span><span class="co">## CP516 106.0496 106.0494 106.0508 181.072 178.282 187.210 70373.6099 70106.7152</span></span>
-<span><span class="co">##             maxo  sn sample</span></span>
-<span><span class="co">## CP133   426.6084  38      1</span></span>
-<span><span class="co">## CP146  4936.6783 833      1</span></span>
-<span><span class="co">## CP156  1628.9510 129      1</span></span>
-<span><span class="co">## CP167 37664.9371 688      1</span></span>
-<span><span class="co">## CP475   381.6084  53      2</span></span>
-<span><span class="co">## CP482  4569.1399  79      2</span></span>
-<span><span class="co">## CP497  2297.7972 230      2</span></span>
-<span><span class="co">## CP516 38517.7622 826      2</span></span></code></pre>
+<span><span class="co">## CP133 106.0625 106.0606 106.0636 173.264 171.869 174.380   516.3588   509.4463</span></span>
+<span><span class="co">## CP146 107.0653 107.0652 107.0653 173.543 171.032 179.682 11318.2801 11309.9091</span></span>
+<span><span class="co">## CP157 107.0532 107.0522 107.0537 181.356 179.682 183.309  2905.1158  2901.7678</span></span>
+<span><span class="co">## CP167 106.0506 106.0505 106.0506 181.356 178.845 187.773 74181.7823 73905.2115</span></span>
+<span><span class="co">## CP469 106.0633 106.0609 106.0652 172.701 170.748 174.654   559.5491   553.7921</span></span>
+<span><span class="co">## CP477 107.0656 107.0655 107.0657 172.980 169.632 178.003 11372.6845 11166.3372</span></span>
+<span><span class="co">## CP492 107.0538 107.0510 107.0540 181.072 178.840 183.304  3155.0100  3149.2053</span></span>
+<span><span class="co">## CP512 106.0496 106.0494 106.0508 181.072 178.282 187.210 70373.6099 70109.3562</span></span>
+<span><span class="co">##             maxo   sn sample</span></span>
+<span><span class="co">## CP133   426.6084   35      1</span></span>
+<span><span class="co">## CP146  4936.6783 4936      1</span></span>
+<span><span class="co">## CP157  1628.9510  186      1</span></span>
+<span><span class="co">## CP167 37664.9371  685      1</span></span>
+<span><span class="co">## CP469   381.6084   54      2</span></span>
+<span><span class="co">## CP477  4569.1399   79      2</span></span>
+<span><span class="co">## CP492  2297.7972  230      2</span></span>
+<span><span class="co">## CP512 38517.7622  830      2</span></span></code></pre>
 <p>Again, each row in this matrix contains one identified
 chromatographic peak with columns <code>"mz"</code>,
 <code>"mzmin"</code>, <code>"mzmax"</code>, <code>"rt"</code>,
@@ -1315,7 +1315,7 @@ sample.</p>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
 <span><span class="co">##   1   2 </span></span>
-<span><span class="co">## 326 327</span></span></code></pre>
+<span><span class="co">## 323 321</span></span></code></pre>
 <p>About the same number of peaks was identified, which is to be
 expected since both files contain measurements from the same sample (the
 QC pool).</p>
@@ -1360,10 +1360,10 @@ peaks could be defined using the example code below.</p>
 <span><span class="co">#' Display the randomly selected regions</span></span>
 <span><span class="va">mz_rt</span></span></code></pre></div>
 <pre><code><span><span class="co">##         rtmin   rtmax    mzmin    mzmax</span></span>
-<span><span class="co">## CP110 147.919 173.220 118.0813 118.0914</span></span>
-<span><span class="co">## CP158 172.472 195.262 132.6337 132.6454</span></span>
-<span><span class="co">## CP064  67.007  91.471 122.9179 122.9312</span></span>
-<span><span class="co">## CP483 164.096 188.003 115.5466 115.5582</span></span></code></pre>
+<span><span class="co">## CP110 141.781 167.919 118.0812 118.0915</span></span>
+<span><span class="co">## CP158 170.798 193.309 108.0477 108.0606</span></span>
+<span><span class="co">## CP064  64.217  88.960 117.0796 117.0912</span></span>
+<span><span class="co">## CP483 167.444 191.072 129.6296 129.6445</span></span></code></pre>
 <p>For our example we however manually define <em>m/z</em> - retention
 time regions (similarly as it could be done for known compounds). Below
 we extract the EICs for these regions with the
@@ -1429,14 +1429,14 @@ below.</p>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
 <span><span class="co">##   1   2 </span></span>
-<span><span class="co">## 298 297</span></span></code></pre>
+<span><span class="co">## 297 292</span></span></code></pre>
 <p>Also, <code><a href="https://rdrr.io/pkg/xcms/man/refineChromPeaks.html" class="external-link">refineChromPeaks()</a></code> adds information on the peak
 refinement to the object’s <code><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-class.html" class="external-link">chromPeakData()</a></code> data frame which
 provides additional metadata information for each chromatographic
 peak:</p>
 <div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-class.html" class="external-link">chromPeakData</a></span><span class="op">(</span><span class="va">mse</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## DataFrame with 595 rows and 3 columns</span></span>
+<pre><code><span><span class="co">## DataFrame with 589 rows and 3 columns</span></span>
 <span><span class="co">##        ms_level is_filled    merged</span></span>
 <span><span class="co">##       &lt;integer&gt; &lt;logical&gt; &lt;logical&gt;</span></span>
 <span><span class="co">## CP001         1     FALSE     FALSE</span></span>
@@ -1445,15 +1445,15 @@ peak:</p>
 <span><span class="co">## CP004         1     FALSE     FALSE</span></span>
 <span><span class="co">## CP005         1     FALSE     FALSE</span></span>
 <span><span class="co">## ...         ...       ...       ...</span></span>
-<span><span class="co">## CP679         1     FALSE      TRUE</span></span>
-<span><span class="co">## CP680         1     FALSE      TRUE</span></span>
-<span><span class="co">## CP681         1     FALSE      TRUE</span></span>
-<span><span class="co">## CP682         1     FALSE      TRUE</span></span>
-<span><span class="co">## CP683         1     FALSE      TRUE</span></span></code></pre>
+<span><span class="co">## CP669         1     FALSE      TRUE</span></span>
+<span><span class="co">## CP670         1     FALSE      TRUE</span></span>
+<span><span class="co">## CP671         1     FALSE      TRUE</span></span>
+<span><span class="co">## CP672         1     FALSE      TRUE</span></span>
+<span><span class="co">## CP673         1     FALSE      TRUE</span></span></code></pre>
 <p>And the number of merged peaks is thus:</p>
 <div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-class.html" class="external-link">chromPeakData</a></span><span class="op">(</span><span class="va">mse</span><span class="op">)</span><span class="op">$</span><span class="va">merged</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 30</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 29</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="retention-time-alignment">Retention time alignment<a class="anchor" aria-label="anchor" href="#retention-time-alignment"></a>
@@ -1575,10 +1575,10 @@ method:</p>
 <span><span class="va">pgm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/adjustRtime.html" class="external-link">adjustRtimePeakGroups</a></span><span class="op">(</span><span class="va">mse</span>, <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/adjustRtime.html" class="external-link">PeakGroupsParam</a></span><span class="op">(</span>minFraction <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pgm</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##       20171016_POOL_POS_1_105-134.mzML 20171016_POOL_POS_3_105-134.mzML</span></span>
-<span><span class="co">## FT133                           22.601                           24.270</span></span>
+<span><span class="co">## FT136                           22.601                           24.270</span></span>
 <span><span class="co">## FT163                           25.391                           25.665</span></span>
 <span><span class="co">## FT030                           25.670                           25.665</span></span>
-<span><span class="co">## FT214                           26.507                           26.502</span></span>
+<span><span class="co">## FT212                           26.507                           26.502</span></span>
 <span><span class="co">## FT056                           26.786                           27.060</span></span>
 <span><span class="co">## FT162                           28.739                           28.734</span></span></code></pre>
 <p>Ideally, if possible, the anchor peaks should span most of the
@@ -1588,8 +1588,8 @@ first sample.</p>
 <div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Evaluate distribution of anchor peaks' rt in the first sample</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">pgm</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##       0%      25%      50%      75%     100% </span></span>
-<span><span class="co">##  22.6010 160.5695 181.3560 194.3295 259.4780</span></span></code></pre>
+<pre><code><span><span class="co">##      0%     25%     50%     75%    100% </span></span>
+<span><span class="co">##  22.601 155.408 180.240 194.190 259.478</span></span></code></pre>
 <p>Anchor peaks cover thus most of the retention time range.</p>
 <p>After having identified the features that should be used as anchor
 peaks (based on the <code>minFraction</code> parameter) the algorithm
@@ -1858,9 +1858,9 @@ in <code>&gt;=</code> 40% of samples of at least one sample group.</p>
 <span><span class="co">##  Sample data links:</span></span>
 <span><span class="co">##   - spectra: 2 sample(s) to 1862 element(s).</span></span>
 <span><span class="co">##  xcms results:</span></span>
-<span><span class="co">##   - chromatographic peaks: 595 in MS level(s): 1 </span></span>
+<span><span class="co">##   - chromatographic peaks: 589 in MS level(s): 1 </span></span>
 <span><span class="co">##   - adjusted retention times</span></span>
-<span><span class="co">##   - correspondence results: 360 features in MS level(s): 1</span></span></code></pre>
+<span><span class="co">##   - correspondence results: 357 features in MS level(s): 1</span></span></code></pre>
 <p>The present data set is restricted to a quite narrow <em>m/z</em>
 range, thus, the parameter <code>ppm</code> does not have a strong
 impact. For <em>real</em> data sets, this parameter results in an
@@ -1932,19 +1932,19 @@ definition of the features and display the first 6 rows.</p>
 <span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-class.html" class="external-link">featureDefinitions</a></span><span class="op">(</span><span class="va">mse</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##          mzmed    mzmin    mzmax     rtmed     rtmin     rtmax npeaks POOL</span></span>
-<span><span class="co">## FT001 105.0418 105.0417 105.0418 167.68552 167.48562 167.88542      2    2</span></span>
-<span><span class="co">## FT002 105.0415 105.0415 105.0415 157.73930 157.73930 157.73930      1    1</span></span>
-<span><span class="co">## FT003 105.0697 105.0691 105.0703  31.80794  31.69005  31.92584      2    2</span></span>
-<span><span class="co">## FT004 105.1103 105.1100 105.1105  63.75033  63.35725  64.14341      2    2</span></span>
-<span><span class="co">## FT005 105.4734 105.4732 105.4736 201.57570 201.36108 201.79031      2    2</span></span>
-<span><span class="co">## FT006 105.7166 105.7160 105.7172 181.21578 181.08901 181.34255      2    2</span></span>
+<span><span class="co">## FT001 105.0418 105.0417 105.0418 167.68958 167.50191 167.87725      2    2</span></span>
+<span><span class="co">## FT002 105.0415 105.0415 105.0415 157.72336 157.72336 157.72336      1    1</span></span>
+<span><span class="co">## FT003 105.0697 105.0691 105.0703  31.80810  31.67412  31.94208      2    2</span></span>
+<span><span class="co">## FT004 105.1103 105.1100 105.1105  63.75036  63.45657  64.04414      2    2</span></span>
+<span><span class="co">## FT005 105.4734 105.4732 105.4736 201.57632 201.37059 201.78204      2    2</span></span>
+<span><span class="co">## FT006 105.7166 105.7160 105.7172 181.21537 181.08482 181.34592      2    2</span></span>
 <span><span class="co">##        peakidx ms_level</span></span>
-<span><span class="co">## FT001 112, 396        1</span></span>
-<span><span class="co">## FT002      111        1</span></span>
-<span><span class="co">## FT003  19, 317        1</span></span>
-<span><span class="co">## FT004  48, 348        1</span></span>
-<span><span class="co">## FT005 260, 580        1</span></span>
-<span><span class="co">## FT006 135, 444        1</span></span></code></pre>
+<span><span class="co">## FT001 115, 393        1</span></span>
+<span><span class="co">## FT002      114        1</span></span>
+<span><span class="co">## FT003  21, 317        1</span></span>
+<span><span class="co">## FT004  49, 348        1</span></span>
+<span><span class="co">## FT005 261, 573        1</span></span>
+<span><span class="co">## FT006 138, 440        1</span></span></code></pre>
 <p>Each row defines one feature and provides information on it’s
 <em>m/z</em> (column <code>"mzmed"</code>) and retention time (column
 <code>"rtmed"</code>). The <em>-min</em> and <em>-max</em> columns list
@@ -2041,14 +2041,14 @@ before and after running <code><a href="https://rdrr.io/pkg/xcms/man/fillChromPe
 <div class="sourceCode" id="cb130"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Number of missing values</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-peak-grouping-results.html" class="external-link">featureValues</a></span><span class="op">(</span><span class="va">mse</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 135</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 133</span></span></code></pre>
 <div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Perform gap filling</span></span>
 <span><span class="va">mse</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/fillChromPeaks.html" class="external-link">fillChromPeaks</a></span><span class="op">(</span><span class="va">mse</span>, param <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/fillChromPeaks.html" class="external-link">ChromPeakAreaParam</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#' Number of missing values after gap filling</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-peak-grouping-results.html" class="external-link">featureValues</a></span><span class="op">(</span><span class="va">mse</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 28</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 25</span></span></code></pre>
 <p>With <code><a href="https://rdrr.io/pkg/xcms/man/fillChromPeaks.html" class="external-link">fillChromPeaks()</a></code> we could thus <em>rescue</em>
 signal for all but 26 features. Also for the 4 example features from
 above a signal was filled-in. Below we visualize the gap-filled
@@ -2153,19 +2153,19 @@ linear regression line to the data and summarize its result.</p>
 <span><span class="co">## </span></span>
 <span><span class="co">## Residuals:</span></span>
 <span><span class="co">##     Min      1Q  Median      3Q     Max </span></span>
-<span><span class="co">## -3.5154 -0.4037  0.1539  0.7275  2.2150 </span></span>
+<span><span class="co">## -4.4598 -0.3337  0.2518  0.7176  1.6402 </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Coefficients:</span></span>
 <span><span class="co">##                  Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">## (Intercept)       -1.5250     0.4717  -3.233  0.00164 ** </span></span>
-<span><span class="co">## log2(avg_detect)   1.0361     0.0459  22.572  &lt; 2e-16 ***</span></span>
+<span><span class="co">## (Intercept)      -1.34738    0.48180  -2.797  0.00613 ** </span></span>
+<span><span class="co">## log2(avg_detect)  1.01347    0.04751  21.333  &lt; 2e-16 ***</span></span>
 <span><span class="co">## ---</span></span>
 <span><span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## Residual standard error: 1.097 on 105 degrees of freedom</span></span>
-<span><span class="co">##   (28 observations deleted due to missingness)</span></span>
-<span><span class="co">## Multiple R-squared:  0.8291, Adjusted R-squared:  0.8275 </span></span>
-<span><span class="co">## F-statistic: 509.5 on 1 and 105 DF,  p-value: &lt; 2.2e-16</span></span></code></pre>
+<span><span class="co">## Residual standard error: 1.114 on 106 degrees of freedom</span></span>
+<span><span class="co">##   (25 observations deleted due to missingness)</span></span>
+<span><span class="co">## Multiple R-squared:  0.8111, Adjusted R-squared:  0.8093 </span></span>
+<span><span class="co">## F-statistic: 455.1 on 1 and 106 DF,  p-value: &lt; 2.2e-16</span></span></code></pre>
 <p>With a value of 1.007, the slope of the line is thus very close to
 the slope of the identity line and the two sets of values are also
 highly correlated (R squared of 0.81).</p>
@@ -2187,7 +2187,7 @@ function:</p>
 <pre><code><span><span class="co">## [[1]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak detection </span></span>
-<span><span class="co">##  date: Wed Dec 10 11:20:52 2025 </span></span>
+<span><span class="co">##  date: Fri Dec 12 08:41:06 2025 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: CentWaveParam </span></span>
@@ -2196,7 +2196,7 @@ function:</p>
 <span><span class="co">## [[2]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak refinement </span></span>
-<span><span class="co">##  date: Wed Dec 10 11:20:54 2025 </span></span>
+<span><span class="co">##  date: Fri Dec 12 08:41:08 2025 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: MergeNeighboringPeaksParam </span></span>
@@ -2205,7 +2205,7 @@ function:</p>
 <span><span class="co">## [[3]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak grouping </span></span>
-<span><span class="co">##  date: Wed Dec 10 11:20:56 2025 </span></span>
+<span><span class="co">##  date: Fri Dec 12 08:41:10 2025 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakDensityParam </span></span>
@@ -2214,7 +2214,7 @@ function:</p>
 <span><span class="co">## [[4]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Retention time correction </span></span>
-<span><span class="co">##  date: Wed Dec 10 11:20:56 2025 </span></span>
+<span><span class="co">##  date: Fri Dec 12 08:41:10 2025 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakGroupsParam </span></span>
@@ -2223,7 +2223,7 @@ function:</p>
 <span><span class="co">## [[5]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Peak grouping </span></span>
-<span><span class="co">##  date: Wed Dec 10 11:21:00 2025 </span></span>
+<span><span class="co">##  date: Fri Dec 12 08:41:14 2025 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: PeakDensityParam </span></span>
@@ -2232,7 +2232,7 @@ function:</p>
 <span><span class="co">## [[6]]</span></span>
 <span><span class="co">## Object of class "XProcessHistory"</span></span>
 <span><span class="co">##  type: Missing peak filling </span></span>
-<span><span class="co">##  date: Wed Dec 10 11:21:02 2025 </span></span>
+<span><span class="co">##  date: Fri Dec 12 08:41:16 2025 </span></span>
 <span><span class="co">##  info:  </span></span>
 <span><span class="co">##  fileIndex: 1,2 </span></span>
 <span><span class="co">##  Parameter class: ChromPeakAreaParam </span></span>
@@ -2300,20 +2300,20 @@ used to extract the feature value matrix.</p>
 <div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Get feature annotations</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">rowData</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## DataFrame with 360 rows and 9 columns</span></span>
+<pre><code><span><span class="co">## DataFrame with 357 rows and 9 columns</span></span>
 <span><span class="co">##           mzmed     mzmin     mzmax     rtmed     rtmin     rtmax    npeaks</span></span>
 <span><span class="co">##       &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;</span></span>
-<span><span class="co">## FT001   105.042   105.042   105.042  167.6855  167.4856  167.8854         2</span></span>
-<span><span class="co">## FT002   105.042   105.042   105.042  157.7393  157.7393  157.7393         1</span></span>
-<span><span class="co">## FT003   105.070   105.069   105.070   31.8079   31.6900   31.9258         2</span></span>
-<span><span class="co">## FT004   105.110   105.110   105.111   63.7503   63.3572   64.1434         2</span></span>
-<span><span class="co">## FT005   105.473   105.473   105.474  201.5757  201.3611  201.7903         2</span></span>
+<span><span class="co">## FT001   105.042   105.042   105.042  167.6896  167.5019  167.8773         2</span></span>
+<span><span class="co">## FT002   105.042   105.042   105.042  157.7234  157.7234  157.7234         1</span></span>
+<span><span class="co">## FT003   105.070   105.069   105.070   31.8081   31.6741   31.9421         2</span></span>
+<span><span class="co">## FT004   105.110   105.110   105.111   63.7504   63.4566   64.0441         2</span></span>
+<span><span class="co">## FT005   105.473   105.473   105.474  201.5763  201.3706  201.7820         2</span></span>
 <span><span class="co">## ...         ...       ...       ...       ...       ...       ...       ...</span></span>
-<span><span class="co">## FT356   133.929   133.929   133.929  193.3520  193.3267  193.3772         2</span></span>
-<span><span class="co">## FT357   133.956   133.956   133.956  199.0660  198.9949  199.1370         2</span></span>
-<span><span class="co">## FT358   133.960   133.960   133.961   30.8309   30.8053   30.8564         2</span></span>
-<span><span class="co">## FT359   133.973   133.973   133.973  206.8707  206.3899  207.3516         2</span></span>
-<span><span class="co">## FT360   133.973   133.973   133.973  200.2482  200.2482  200.2482         1</span></span>
+<span><span class="co">## FT353   133.929   133.929   133.929  193.3516   193.322  193.3808         2</span></span>
+<span><span class="co">## FT354   133.956   133.956   133.956  199.0666   198.990  199.1432         2</span></span>
+<span><span class="co">## FT355   133.960   133.960   133.961   30.8309    30.821   30.8409         2</span></span>
+<span><span class="co">## FT356   133.973   133.973   133.973  206.8718   206.405  207.3387         2</span></span>
+<span><span class="co">## FT357   133.973   133.973   133.973  200.2561   200.256  200.2561         1</span></span>
 <span><span class="co">##            POOL  ms_level</span></span>
 <span><span class="co">##       &lt;numeric&gt; &lt;integer&gt;</span></span>
 <span><span class="co">## FT001         2         1</span></span>
@@ -2322,11 +2322,11 @@ used to extract the feature value matrix.</p>
 <span><span class="co">## FT004         2         1</span></span>
 <span><span class="co">## FT005         2         1</span></span>
 <span><span class="co">## ...         ...       ...</span></span>
+<span><span class="co">## FT353         2         1</span></span>
+<span><span class="co">## FT354         2         1</span></span>
+<span><span class="co">## FT355         2         1</span></span>
 <span><span class="co">## FT356         2         1</span></span>
-<span><span class="co">## FT357         2         1</span></span>
-<span><span class="co">## FT358         2         1</span></span>
-<span><span class="co">## FT359         2         1</span></span>
-<span><span class="co">## FT360         1         1</span></span></code></pre>
+<span><span class="co">## FT357         1         1</span></span></code></pre>
 <p>The feature values are stored as an <em>assay</em> within the object.
 To access that we simply use the <code><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay()</a></code> function.</p>
 <div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
@@ -2335,7 +2335,7 @@ To access that we simply use the <code><a href="https://rdrr.io/pkg/SummarizedEx
 <span>    <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##       20171016_POOL_POS_1_105-134.mzML 20171016_POOL_POS_3_105-134.mzML</span></span>
 <span><span class="co">## FT001                        3202.7445                        2285.2830</span></span>
-<span><span class="co">## FT002                        3605.3915                        3185.0240</span></span>
+<span><span class="co">## FT002                        3605.3915                        3191.7385</span></span>
 <span><span class="co">## FT003                         744.8752                        1057.4312</span></span>
 <span><span class="co">## FT004                       18126.4603                       19369.4039</span></span>
 <span><span class="co">## FT005                       23243.6129                       31960.3709</span></span>
@@ -2443,11 +2443,11 @@ would match the <em>m/z</em> of serine.</p>
 <span><span class="va">serine_pks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-class.html" class="external-link">chromPeaks</a></span><span class="op">(</span><span class="va">mse</span>, mz <span class="op">=</span> <span class="va">serine_mz</span>, ppm <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
 <span><span class="va">serine_pks</span></span></code></pre></div>
 <pre><code><span><span class="co">##             mz    mzmin    mzmax       rt    rtmin    rtmax     into     intb</span></span>
-<span><span class="co">## CP167 106.0506 106.0505 106.0506 181.0890 178.5848 187.5065 74181.78 73916.87</span></span>
-<span><span class="co">## CP516 106.0496 106.0494 106.0508 181.3426 178.5437 187.4816 70373.61 70106.72</span></span>
+<span><span class="co">## CP167 106.0506 106.0505 106.0506 181.0848 178.5814 187.4950 74181.78 73905.21</span></span>
+<span><span class="co">## CP512 106.0496 106.0494 106.0508 181.3459 178.5474 187.4925 70373.61 70109.36</span></span>
 <span><span class="co">##           maxo  sn sample</span></span>
-<span><span class="co">## CP167 37664.94 688      1</span></span>
-<span><span class="co">## CP516 38517.76 826      2</span></span></code></pre>
+<span><span class="co">## CP167 37664.94 685      1</span></span>
+<span><span class="co">## CP512 38517.76 830      2</span></span></code></pre>
 <p>The <code><a href="https://rdrr.io/pkg/xcms/man/chromPeakChromatograms.html" class="external-link">chromPeakChromatograms()</a></code> function can then be used
 to extract the EIC of a specific chromatographic peak in a sample.</p>
 <div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
@@ -2506,12 +2506,12 @@ time area for features can also be extracted (and evaluated) using the
 <span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XcmsExperiment.html" class="external-link">featureArea</a></span><span class="op">(</span><span class="va">mse</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##          mzmin    mzmax     rtmin     rtmax</span></span>
-<span><span class="co">## FT001 105.0389 105.0448 162.47370 173.03102</span></span>
-<span><span class="co">## FT002 105.0403 105.0434 154.65766 161.35962</span></span>
-<span><span class="co">## FT003 105.0680 105.0727  30.57863  34.44764</span></span>
-<span><span class="co">## FT004 105.1098 105.1114  61.10792  72.07009</span></span>
-<span><span class="co">## FT005 105.4717 105.4747 198.85951 211.49955</span></span>
-<span><span class="co">## FT006 105.7141 105.7183 179.69717 182.73745</span></span></code></pre>
+<span><span class="co">## FT001 105.0389 105.0448 162.48680 173.03646</span></span>
+<span><span class="co">## FT002 105.0403 105.0434 154.65033 161.36642</span></span>
+<span><span class="co">## FT003 105.0680 105.0727  30.56318  34.46556</span></span>
+<span><span class="co">## FT004 105.1098 105.1114  61.19807  72.20464</span></span>
+<span><span class="co">## FT005 105.4717 105.4747 198.86525 211.48482</span></span>
+<span><span class="co">## FT006 105.7141 105.7183 179.69288 182.74128</span></span></code></pre>
 <p>Additional analyses could now be performed on the full scan MS1
 spectrum containing a mass peak for the [M+H]+ ion of serine. One
 possibility would be to identify potential isotope peaks of the
@@ -2538,7 +2538,7 @@ compound of interest.</p>
 <span><span class="va">iso_idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MetaboCoreUtils/man/isotopologues.html" class="external-link">isotopologues</a></span><span class="op">(</span><span class="va">pd</span>, seedMz <span class="op">=</span> <span class="va">serine_mz</span><span class="op">)</span></span>
 <span><span class="va">iso_idx</span></span></code></pre></div>
 <pre><code><span><span class="co">## [[1]]</span></span>
-<span><span class="co">## [1]  8 15</span></span></code></pre>
+<span><span class="co">## [1]  8 14</span></span></code></pre>
 <p>The function thus identified two peaks that, based on their
 <em>m/z</em> values and differences in intensity, could represent
 isotopologues. We below highlight these mass peaks in the full MS1
@@ -2567,25 +2567,28 @@ spectrum.</p>
 <span><span class="va">iso_idx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MetaboCoreUtils/man/isotopologues.html" class="external-link">isotopologues</a></span><span class="op">(</span><span class="va">pd</span><span class="op">)</span></span>
 <span><span class="va">iso_idx</span></span></code></pre></div>
 <pre><code><span><span class="co">## [[1]]</span></span>
-<span><span class="co">## [1]  8 15</span></span>
+<span><span class="co">## [1]  3 17</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## [[2]]</span></span>
-<span><span class="co">## [1] 35 41 44</span></span>
+<span><span class="co">## [1]  8 14</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## [[3]]</span></span>
-<span><span class="co">## [1] 43 51</span></span>
+<span><span class="co">## [1] 34 40 43</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## [[4]]</span></span>
-<span><span class="co">## [1] 68 76</span></span>
+<span><span class="co">## [1] 42 50</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## [[5]]</span></span>
-<span><span class="co">## [1] 80 87 90</span></span>
+<span><span class="co">## [1] 66 74</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## [[6]]</span></span>
-<span><span class="co">## [1] 103 107</span></span>
+<span><span class="co">## [1] 78 85 88</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## [[7]]</span></span>
-<span><span class="co">## [1] 112 124</span></span></code></pre>
+<span><span class="co">## [1] 100 104</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## [[8]]</span></span>
+<span><span class="co">## [1] 109 121</span></span></code></pre>
 <p>We can also highlight these in the spectrum plot.</p>
 <div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Define a color for all mass peaks and set it to transparent black</span></span>
@@ -2623,28 +2626,28 @@ function on it.</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">iso_idx</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [[1]]</span></span>
-<span><span class="co">##       FT012 </span></span>
-<span><span class="co">##     5    12 </span></span>
+<span><span class="co">##       FT015 </span></span>
+<span><span class="co">##     9    15 </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## [[2]]</span></span>
-<span><span class="co">##       FT016 </span></span>
-<span><span class="co">##     9    16 </span></span>
+<span><span class="co">##       FT012 </span></span>
+<span><span class="co">##    10    12 </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## [[3]]</span></span>
-<span><span class="co">##       FT013 </span></span>
-<span><span class="co">##    10    13 </span></span>
+<span><span class="co">##       FT023 FT046 </span></span>
+<span><span class="co">##    13    23    46 </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## [[4]]</span></span>
-<span><span class="co">##       FT024 FT047 </span></span>
-<span><span class="co">##    14    24    47 </span></span>
+<span><span class="co">##       FT035 </span></span>
+<span><span class="co">##    24    35 </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## [[5]]</span></span>
-<span><span class="co">##       FT036 </span></span>
-<span><span class="co">##    25    36 </span></span>
+<span><span class="co">##       FT040 FT060 FT069 </span></span>
+<span><span class="co">##    29    40    60    69 </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## [[6]]</span></span>
-<span><span class="co">##       FT041 FT060 FT069 </span></span>
-<span><span class="co">##    30    41    60    69</span></span></code></pre>
+<span><span class="co">##       FT061 FT087 </span></span>
+<span><span class="co">##    31    61    87</span></span></code></pre>
 <p>We thus identified potential isotopologues, but, because we ignored
 the retention times of the features in this simple approach, the list
 will contain also many false positives. The features of the isotope
@@ -2653,21 +2656,23 @@ not represent signal from isotopes of the same compound.</p>
 <div class="sourceCode" id="cb170"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Show a false positive finding</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-class.html" class="external-link">featureDefinitions</a></span><span class="op">(</span><span class="va">mse</span><span class="op">)</span><span class="op">[</span><span class="va">iso_idx</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span>, <span class="op">]</span></span></code></pre></div>
-<pre><code><span><span class="co">##          mzmed    mzmin    mzmax    rtmed   rtmin    rtmax npeaks POOL  peakidx</span></span>
-<span><span class="co">## FT010 106.0501 106.0496 106.0506 181.2158 181.089 181.3426      2    2 151, 463</span></span>
-<span><span class="co">## FT013 107.0535 107.0532 107.0538 181.2158 181.089 181.3426      2    2 140, 447</span></span>
-<span><span class="co">##       ms_level</span></span>
-<span><span class="co">## FT010        1</span></span>
-<span><span class="co">## FT013        1</span></span></code></pre>
+<pre><code><span><span class="co">##          mzmed    mzmin    mzmax    rtmed    rtmin    rtmax npeaks POOL</span></span>
+<span><span class="co">## FT013 107.0654 107.0653 107.0656 173.2621 173.2108 173.3134      2    2</span></span>
+<span><span class="co">## FT023 109.0634 109.0632 109.0636 161.6905 161.6466 161.7343      2    2</span></span>
+<span><span class="co">## FT046 111.0601 111.0601 111.0601 181.0848 181.0848 181.0848      1    1</span></span>
+<span><span class="co">##        peakidx ms_level</span></span>
+<span><span class="co">## FT013 132, 429        1</span></span>
+<span><span class="co">## FT023  76, 374        1</span></span>
+<span><span class="co">## FT046      140        1</span></span></code></pre>
 <p>Others however could be real isotopes:</p>
 <div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-class.html" class="external-link">featureDefinitions</a></span><span class="op">(</span><span class="va">mse</span><span class="op">)</span><span class="op">[</span><span class="va">iso_idx</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, <span class="op">]</span></span></code></pre></div>
-<pre><code><span><span class="co">##          mzmed    mzmin    mzmax     rtmed     rtmin     rtmax npeaks POOL</span></span>
-<span><span class="co">## FT009 105.9534 105.9534 105.9535  30.83086  30.80527  30.85644      2    2</span></span>
-<span><span class="co">## FT016 107.9476 107.9476 107.9476 194.15594 194.15594 194.15594      1    1</span></span>
+<pre><code><span><span class="co">##          mzmed    mzmin    mzmax    rtmed    rtmin    rtmax npeaks POOL</span></span>
+<span><span class="co">## FT010 106.0501 106.0496 106.0506 181.2154 181.0848 181.3459      2    2</span></span>
+<span><span class="co">## FT012 107.0535 107.0532 107.0538 181.2154 181.0848 181.3459      2    2</span></span>
 <span><span class="co">##        peakidx ms_level</span></span>
-<span><span class="co">## FT009  22, 310        1</span></span>
-<span><span class="co">## FT016 194, 656        1</span></span></code></pre>
+<span><span class="co">## FT010 153, 461        1</span></span>
+<span><span class="co">## FT012 143, 444        1</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="additional-visualizations">Additional visualizations<a class="anchor" aria-label="anchor" href="#additional-visualizations"></a>
@@ -2705,7 +2710,7 @@ side.</p>
 <div class="sourceCode" id="cb175"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Extract EICs for each identified chromatographic peak</span></span>
 <span><span class="va">chrs_all</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/chromPeakChromatograms.html" class="external-link">chromPeakChromatograms</a></span><span class="op">(</span><span class="va">mse_1</span>, expandRt <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
-<p>While we could now simply proceed and plot each of the 357 EICs
+<p>While we could now simply proceed and plot each of the 356 EICs
 separately, we instead use below the
 <code><a href="https://rdrr.io/pkg/xcms/man/plotChromatogramsOverlay.html" class="external-link">plotChromatogramsOverlay()</a></code> function that allows to plot
 multiple EICs into the same plot hence providing an overview of the full
@@ -2794,11 +2799,11 @@ signal expected for isotopes.</p>
 <span><span class="co">#' Test which signals could come from isotopes</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/MetaboCoreUtils/man/isotopologues.html" class="external-link">isotopologues</a></span><span class="op">(</span><span class="va">pks</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mz"</span>, <span class="st">"into"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [[1]]</span></span>
-<span><span class="co">##       CP051 </span></span>
+<span><span class="co">##       CP053 </span></span>
 <span><span class="co">##     2     3 </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## [[2]]</span></span>
-<span><span class="co">##       CP052 </span></span>
+<span><span class="co">##       CP054 </span></span>
 <span><span class="co">##     4     5</span></span></code></pre>
 <p>Pairs of chromatographic peaks have been identified as being
 potential isotopologues.</p>
@@ -2894,7 +2899,7 @@ Zinnen</em></a> (right tri-forked peak colored green).</p>
 <span><span class="co">##  [1] RColorBrewer_1.1-3          png_0.1-8                  </span></span>
 <span><span class="co">##  [3] MSnbase_2.36.0              mzR_2.44.0                 </span></span>
 <span><span class="co">##  [5] Rcpp_1.1.0                  SummarizedExperiment_1.40.0</span></span>
-<span><span class="co">##  [7] Biobase_2.70.0              GenomicRanges_1.62.0       </span></span>
+<span><span class="co">##  [7] Biobase_2.70.0              GenomicRanges_1.62.1       </span></span>
 <span><span class="co">##  [9] Seqinfo_1.0.0               IRanges_2.44.0             </span></span>
 <span><span class="co">## [11] MatrixGenerics_1.22.0       matrixStats_1.5.0          </span></span>
 <span><span class="co">## [13] MetaboCoreUtils_1.18.1      pheatmap_1.0.13            </span></span>
